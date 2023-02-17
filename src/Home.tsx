@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
+import { useQuery, useQueryClient } from "react-query";
+import movieList from "./api";
 
 export const Header = styled.header`
     width: 100%;
@@ -38,6 +40,7 @@ export const Main = styled.div`
 `
 export const Box1 = styled.div`
     background-color: black;
+    color:white;
     height: 30px;
     border-radius: 50px;
     padding: 2%;
@@ -49,6 +52,7 @@ export const Box1 = styled.div`
 `
 
 const Home = () => {
+    movieList();
     return (
         <>
             <Helmet>
