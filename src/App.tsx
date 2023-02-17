@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Outlet } from 'react-router-dom';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { Darktheme, Lighttheme } from './theme';
 const GlobalStyle = createGlobalStyle`
 @font-face {
     font-family: 'LINESeedKR-Bd';
@@ -35,8 +37,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: normal;
-	background-color: white;
-	color:black;
+	background-color: ${(props) => props.theme.bodyBgColor};
+	color:${(props) => props.theme.bodyFtColor};
 	font-family: "LINESeedKR-Bd", "Open Sans", "Helvetica Neue", sans-serif;
 }
 ol, ul {
@@ -59,13 +61,32 @@ a{
     text-decoration: none;
 }
 `
+const Header = styled.header`
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+const Title = styled.span`
+    font-size: x-large;
+    margin: 7%;
+    font-weight: 800;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+`
 const App = () => {
+	const [isDark, setIsDark] = useState<boolean>(true);
 
 	return (
 		<>
+			<ThemeProvider theme={isDark ? Darktheme : Lighttheme}>
 				<GlobalStyle />
-				<Outlet></Outlet>
+				<Header>
+					<Title></Title>
+				</Header>
+				<Outlet context={[setIsDark]}></Outlet>
 				<ReactQueryDevtools initialIsOpen={true} />
+			</ThemeProvider>
 		</>
 	);
 }
