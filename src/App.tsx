@@ -2,7 +2,12 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { Outlet } from 'react-router-dom';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: local("LINESeedKR"),url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -20,8 +25,8 @@ time, mark, audio, video {
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
+	font-family: inherit;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
@@ -32,6 +37,7 @@ body {
 	line-height: normal;
 	background-color: white;
 	color:black;
+	font-family: "LINESeedKR-Bd", "Open Sans", "Helvetica Neue", sans-serif;
 }
 ol, ul {
 	list-style: none;
