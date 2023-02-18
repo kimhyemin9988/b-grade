@@ -4,6 +4,7 @@ import movieList from "./api";
 import { useState } from 'react';
 import { useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
+import { AnimatePresence, motion } from "framer-motion";
 
 export const Main = styled.div`
     width: 100%;
@@ -29,6 +30,7 @@ export const ToggleThemeBtn = styled.button`
     transition: ease background-color 250ms;
     padding: 0 1.5rem;
     border: 1px solid black;
+    position: absolute;
     &:hover{
         background-color: white;
         color: black;
@@ -36,8 +38,7 @@ export const ToggleThemeBtn = styled.button`
 `
 interface movieData {
     adult: boolean;
-    backdrop_path: object;
-    genre_ids: object;
+    backdrop_path : string;
     id: number;
     original_language: string;
     original_title: string;
@@ -49,16 +50,81 @@ interface movieData {
     video: boolean;
     vote_average: number;
     vote_count: number;
-}
+};
+
+
+const Wrapper = styled.div`
+  background: black;
+`;
+
+const Loader = styled.div`
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Banner = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 60px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  background-size: cover;
+`;
+
+const Title = styled.h2`
+  font-size: 68px;
+  margin-bottom: 20px; ;
+`;
+
+const Overview = styled.p`
+  font-size: 30px;
+  width: 50%;
+`;
+
+const Slider = styled.div`
+  position: relative;
+  top: -100px;
+`;
+
+const Row = styled(motion.div)`
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(6, 1fr);
+  position: absolute;
+  width: 100%;
+`;
+
+const Box = styled(motion.div)`
+  background-color: white;
+  height: 200px;
+  color: red;
+  font-size: 66px;
+`;
+
+const rowVariants = {
+    hidden: {
+        x: window.outerWidth + 10,
+    },
+    visible: {
+        x: 0,
+    },
+    exit: {
+        x: -window.outerWidth - 10,
+    },
+};
 const Home = () => {
+    /* 테마 버튼 */
     const [themeText, setThemeText] = useState("라이트 모드로 보기");
     const [setIsDark] = useOutletContext<React.Dispatch<React.SetStateAction<boolean>>[]>();
-    const { data, isLoading } = useQuery(["movies"], movieList);
-
     const toggleTheme = () => {
         setIsDark((element) => (!element));
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
+
+    const { data, isLoading } = useQuery<movieData>(["movies"], movieList);
 
     return (
         <>
@@ -66,9 +132,46 @@ const Home = () => {
                 <title>B-Grade</title>
             </Helmet>
             <Main>
+                <Wrapper>
+                    {isLoading ? (
+                        <Loader>Loading...</Loader>
+                    ) : (
+                        <>
+                            <Banner>
+                                <Title>{data?.title}</Title>
+                                <Overview>{data?.overview}</Overview>
+                            </Banner>
+                            <Slider>
+                                <Row
+                                    variants={rowVariants}
+                                    initial="hidden"
+                                    animate="visible"
+                                    exit="exit"
+                                    transition={{ type: "tween", duration: 1 }}
+                                >
+                                    {[1, 2, 3, 4, 5, 6].map((i) => (
+                                        <Box key={i}>{i}</Box>
+                                    ))}
+                                </Row>
+                            </Slider>
+                        </>
+                    )}
+                </Wrapper>
             </Main>
             <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
         </>
     );
 };
 export default Home;
+/*                                 onClick={incraseIndex}
+                                bgPhoto={data?.poster_path}
+
+
+                                <AnimatePresence  onClick={incraseIndex}
+                                bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")} >                                </AnimatePresence>
+
+                            https://image.tmdb.org/t/p/original/2lVjRgp5g6iMwF1cs9r5flPi011.jpg"
+
+                            https://image.tmdb.org/t/p/original/gjzpFDcyIrw0nZ36BR0WNHF3oDj.jpg
+                                */
+//https://image.tmdb.org/t/p/original/backdrop-img(큰이미지)

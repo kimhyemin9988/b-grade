@@ -1,14 +1,17 @@
 export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 
 const movieList = async () => {
-    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&region=kr&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&vote_average.gte=4.0&vote_average.lte=6.0&with_watch_monetization_types=flatrat`)
+    const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&vote_average.gte=4.0&vote_average.lte=6.0&with_watch_monetization_types=flatrat&region=kr`)
     const json = await response.json();
-    return json;
+    return json.results;
 }
 export default movieList;
 
 
 /*
+
+
+https://api.themoviedb.org/3/discover/movie?api_key=0bc81ab4612512071ffe14dfe9bdca6b&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&vote_average.gte=6.0&vote_average.lte=8.0&with_watch_monetization_types=flatrat&include_backdrop_path=string
 
 https://api.themoviedb.org/3/discover/movie?api_key=0bc81ab4612512071ffe14dfe9bdca6b&region=kr&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&vote_average.gte=4.0&vote_average.lte=6.0&with_watch_monetization_types=flatrate
 
