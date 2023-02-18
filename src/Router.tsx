@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, createBrowserRouter } from 'rea
 import NotFound from './NotFound';
 import App from './App';
 import Home from './Home';
+import Movie from './Movie';
+import Search from './Search';
 
 const RouterApp = createBrowserRouter([
     {
@@ -14,6 +16,14 @@ const RouterApp = createBrowserRouter([
                 path: "",
                 element: <Home />,
             },
+            {
+                path: "movie",
+                element: <Movie></Movie>,
+            },
+            {
+                path: "search",
+                element: <Search></Search>,
+            }
         ],
         errorElement: <NotFound></NotFound>,
     }], { basename: "/b-grade/" });

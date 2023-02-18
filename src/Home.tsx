@@ -6,7 +6,7 @@ import { useOutletContext } from "react-router-dom";
 
 export const Main = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 200vh;
 `
 export const Box1 = styled.div`
     height: 30px;
@@ -33,6 +33,7 @@ export const ToggleThemeBtn = styled.button`
         color: black;
     }
 `
+
 const Home = () => {
     const [themeText, setThemeText] = useState("라이트 모드로 보기");
     const [setIsDark] = useOutletContext<React.Dispatch<React.SetStateAction<boolean>>[]>();
@@ -41,14 +42,13 @@ const Home = () => {
         setIsDark((element) => (!element));
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
-    movieList();
+    //movieList();
     return (
         <>
             <Helmet>
                 <title>B-Grade</title>
             </Helmet>
             <Main>
-                <Box1>사과</Box1>
             </Main>
             <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
         </>

@@ -1,11 +1,15 @@
 import { DefaultTheme } from "styled-components";
 
 export const Lighttheme: DefaultTheme = {
-    bodyBgColor: "#FFF",
-    bodyFtColor: "black",
+    bodyBgColor: "#FFF",//white
+    bodyFtColor: "#131417", //black
+    hoverNavItem : "#959596", // gray
+    hoverColor2 : "#C7C9D8",
 };
 
 export const Darktheme: DefaultTheme = {
-    bodyBgColor: "black",
-    bodyFtColor: "#FFF",
+    bodyBgColor: "#131417", //black
+    bodyFtColor: "#FFF", //white
+    hoverNavItem : "#959596", //// gray
+    hoverColor2 : "#C7C9D8",
 };
