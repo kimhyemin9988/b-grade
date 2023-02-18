@@ -1,4 +1,4 @@
-import { motion, useAnimation, useScroll } from 'framer-motion';
+import { motion, useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { Link, Outlet, useMatch } from 'react-router-dom';
@@ -140,15 +140,6 @@ const logoVariants = {
 		},
 	},
 };
-/* 
-const navVariants = {
-	top: {
-		Opacity:1,
-	},
-	scroll: {
-		Opacity:0.2,
-	},
-  }; */
 
 
 const App = () => {

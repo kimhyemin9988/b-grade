@@ -3,7 +3,7 @@ export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 const movieList = async () => {
     const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&region=kr&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&vote_average.gte=4.0&vote_average.lte=6.0&with_watch_monetization_types=flatrat`)
     const json = await response.json();
-    console.log(json);
+    return json;
 }
 export default movieList;
 

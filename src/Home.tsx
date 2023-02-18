@@ -3,10 +3,11 @@ import { Helmet } from "react-helmet";
 import movieList from "./api";
 import { useState } from 'react';
 import { useOutletContext } from "react-router-dom";
+import { useQuery } from "react-query";
 
 export const Main = styled.div`
     width: 100%;
-    height: 200vh;
+    height: 100vh;
 `
 export const Box1 = styled.div`
     height: 30px;
@@ -33,16 +34,32 @@ export const ToggleThemeBtn = styled.button`
         color: black;
     }
 `
-
+interface movieData {
+    adult: boolean;
+    backdrop_path: object;
+    genre_ids: object;
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+}
 const Home = () => {
     const [themeText, setThemeText] = useState("라이트 모드로 보기");
     const [setIsDark] = useOutletContext<React.Dispatch<React.SetStateAction<boolean>>[]>();
+    const { data, isLoading } = useQuery(["movies"], movieList);
 
     const toggleTheme = () => {
         setIsDark((element) => (!element));
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
-    //movieList();
+
     return (
         <>
             <Helmet>
