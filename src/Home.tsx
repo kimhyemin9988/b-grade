@@ -69,7 +69,7 @@ const Banner = styled.div<{ bgPhoto: string | undefined }>`
   flex-direction: column;
   justify-content: center;
   padding: 10%;
-  background-image: url(${(props)=>props.bgPhoto});
+  background-image: linear-gradient(rgba(0,0,0,0) 20%, ${(props)=> props.theme.bodyBgColor}), url(${(props) => props.bgPhoto});
   background-size: cover;
   height: 100vh;
 `;
@@ -136,10 +136,10 @@ const Home = () => {
                         <Loader>Loading...</Loader>
                     ) : (
                         <>
-                        <Banner bgPhoto={data && `https://image.tmdb.org/t/p/original/${data[4].backdrop_path}`}>
-                            <Title>{data && data[4].original_title}</Title>
-                            <Overview>{data && data[4].overview}</Overview>
-                        </Banner>
+                            <Banner bgPhoto={data && `https://image.tmdb.org/t/p/original/${data[4].backdrop_path}`}>
+                                <Title>{data && data[4].original_title}</Title>
+                                <Overview>{data && data[4].overview}</Overview>
+                            </Banner>
                             <Slider>
                                 <Row
                                     variants={rowVariants}

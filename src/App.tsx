@@ -91,6 +91,7 @@ const Header = styled(motion.header)`
 	justify-content: space-between;
     align-items: center;
 	position: fixed;
+	background-color: ${(props)=>props.theme.bodyBgColor};
 `
 
 const HomeLogo = styled(motion.svg)`
