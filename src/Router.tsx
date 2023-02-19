@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, createBrowserRouter } from 'react-router-dom';
 import NotFound from './NotFound';
 import App from './App';
-import Home from './Home';
+import Home, { BoxModal, Overlay } from './Home';
 import Movie from './Movie';
 import Search from './Search';
 
@@ -15,6 +15,11 @@ const RouterApp = createBrowserRouter([
 
                 path: "",
                 element: <Home />,
+                children:[
+                    {
+                        path:"movie/:movieId"
+                    }
+                ]
             },
             {
                 path: "movie",

@@ -2,23 +2,13 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import movieList from "./api";
 import { useState } from 'react';
-import { useOutletContext } from "react-router-dom";
+import { Link, Outlet, useLocation, useMatch, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { AnimatePresence, motion } from "framer-motion";
 
 export const Main = styled.div`
     width: 100%;
     height: 100vh;
-`
-export const Box1 = styled.div`
-    height: 30px;
-    border-radius: 50px;
-    padding: 2%;
-    margin: 1%;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 `
 
 export const ToggleThemeBtn = styled.button`
@@ -36,7 +26,7 @@ export const ToggleThemeBtn = styled.button`
         color: black;
     }
 `
-interface movieData {
+export interface movieData {
     adult: boolean;
     backdrop_path: string;
     id: number;
@@ -69,10 +59,12 @@ const Banner = styled.div<{ bgPhoto: string | undefined }>`
   flex-direction: column;
   justify-content: center;
   padding: 10%;
-  background-image: linear-gradient(rgba(0,0,0,0) 20%, ${(props)=> props.theme.bodyBgColor}), url(${(props) => props.bgPhoto});
+  background-image: linear-gradient(rgba(0,0,0,0) 20%, ${(props) => props.theme.bodyBgColor}), url(${(props) => props.bgPhoto});
   background-size: cover;
   height: 100vh;
 `;
+
+
 
 const Title = styled.p`
   margin-bottom: 5%;
@@ -85,24 +77,48 @@ const Overview = styled.p`
 `;
 
 const Slider = styled.div`
-  position: relative;
   top: -100px;
+  height: 100vh;
 `;
 
 const Row = styled(motion.div)`
   display: grid;
   gap: 10px;
-  grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
+    @media screen and (max-width: 550px){
+        grid-template-columns: repeat(2,1fr);
+    }
+    grid-template-columns: repeat(6, 1fr);
+    width: 100%;
+    margin-top: 10px;
+    position: absolute;
 `;
 
-const Box = styled(motion.div)`
-  background-color: white;
-  height: 200px;
-  color: red;
-  font-size: 66px;
+const Box = styled(motion.article) <{ posterbg: string | undefined }>`
+  height: 40vh;
+  font-size: 100%;
+  background-image: url(${(props) => props.posterbg});
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
+
+const boxVariants = {
+    normal: {
+        scale: 1,
+    },
+    hover: {
+        scale: 1.2,
+        y: -80,
+        transition: {
+            delay: 0.3,
+            duaration: 0.3,
+            type: "tween",
+        },
+    },
+};
 
 const rowVariants = {
     hidden: {
@@ -115,7 +131,57 @@ const rowVariants = {
         x: -window.outerWidth - 10,
     },
 };
+
+const Info = styled(motion.div)`
+  background-color: ${(props) => props.theme.hoverNavItem};
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  p {
+    text-align: center;
+    font-size: 0.3rem;
+  }
+`;
+
+const infoVariants = {
+    hover: {
+        opacity: 1,
+        transition: {
+            delay: 0.3,
+            duaration: 0.3,
+            type: "tween",
+        },
+    },
+};
+/* 모달창 */
+export const BoxModal = styled(motion.div)`
+  width: 5rem;
+  height:  5rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+  background-color: white;
+`;
+
+
+const overlay = {
+    hidden: { backgroundColor: "rgba(0, 0, 0, 0)" },
+    visible: { backgroundColor: "#3b3636c5" },
+    exit: { backgroundColor: "rgba(0, 0, 0, 0)" },
+};
+
+export const Overlay = styled(motion.div)`
+  width: 100%;
+  height: 200vh;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const Home = () => {
+    /* 데이터 받아오기 */
+    const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);
     /* 테마 버튼 */
     const [themeText, setThemeText] = useState("라이트 모드로 보기");
     const [setIsDark] = useOutletContext<React.Dispatch<React.SetStateAction<boolean>>[]>();
@@ -123,8 +189,30 @@ const Home = () => {
         setIsDark((element) => (!element));
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
+    const [index, setIndex] = useState(0);
+    const [leaving, setLeaving] = useState(false);
+    const incraseIndex = () => {
+        if (leaving) return;
+        else {
+            setLeaving(true);
+            setIndex((prev) => index > 1 ? 0 : prev + 1);
+        }
+    }
+    const posterImg = data?.filter((i) => i.poster_path !== null)
+    /* onExitComplete :  끝났을 때 실행
+    애니메이션이 끝나기 전에 다음 boxs가 생기면 겹친다
+    눌렀을때 아직 박스가 없어지지 않았다면 클릭해도 함수가 실행되지 않도록 하며
+    박스가 없어졌다면 다음 박스를 추가한다
+    onExitComplete을 이용하여 애니메이션이 끝나면 박스가 떠난것을 확인하는것을 다시 false로 돌린다
+    */
+    /* 모달창 */
+    //const pricematch = useMatch("movie/:movieId");
+    const [id, setId] = useState<null | string>(null);
+    const navigate = useNavigate();
 
-    const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);
+    const bigMovieMatch = useMatch("/movies/:movieId");
+  console.log(bigMovieMatch);
+
     return (
         <>
             <Helmet>
@@ -136,22 +224,59 @@ const Home = () => {
                         <Loader>Loading...</Loader>
                     ) : (
                         <>
-                            <Banner bgPhoto={data && `https://image.tmdb.org/t/p/original/${data[4].backdrop_path}`}>
-                                <Title>{data && data[4].original_title}</Title>
-                                <Overview>{data && data[4].overview}</Overview>
+                            <AnimatePresence>
+                                {id ? (
+                                    <Overlay
+                                        variants={overlay}
+                                        onClick={() => setId(null)}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                    >
+                                        <BoxModal layoutId={id}/>
+                                    </Overlay>
+                                ) : null}
+                            </AnimatePresence>
+                            <Banner
+                                onClick={incraseIndex}
+                                bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
+                                <Title>{data?.[0].original_title}</Title>
+                                <Overview>{data?.[0].overview}</Overview>
                             </Banner>
                             <Slider>
-                                <Row
-                                    variants={rowVariants}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                    transition={{ type: "tween", duration: 1 }}
-                                >
-                                    {[1, 2, 3, 4, 5, 6].map((i) => (
-                                        <Box key={i}>{i}</Box>
-                                    ))}
-                                </Row>
+                                <AnimatePresence initial={false} onExitComplete={() => {
+                                    setLeaving((prev) => !prev);
+                                }}>
+                                    <Row
+                                        variants={rowVariants}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                        transition={{ type: "tween", duration: 1 }}
+                                        key={index}
+                                    >
+                                        {posterImg?.slice(1).slice(6 * index, (6 * (index + 1))).map((i) => (
+                                            <>
+                                                <Box key={i.id}
+                                                    posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
+                                                    whileHover="hover"
+                                                    initial="normal"
+                                                    variants={boxVariants}
+                                                    transition={{ type: "tween" }}
+                                                    onClick={() => {
+                                                        setId(`${i.id}`);
+                                                        navigate(`movie/${i.id}`)
+                                                    }
+                                                    } layoutId={`${i.id}`}
+                                                >
+                                                    <Info variants={infoVariants}>
+                                                        <p>{i.title}</p>
+                                                    </Info>
+                                                </Box>
+                                            </>
+                                        ))}
+                                    </Row>
+                                </AnimatePresence>
                             </Slider>
                         </>
                     )}
@@ -174,3 +299,5 @@ export default Home;
                             https://image.tmdb.org/t/p/original/gjzpFDcyIrw0nZ36BR0WNHF3oDj.jpg
                                 */
 //https://image.tmdb.org/t/p/original/backdrop-img(큰이미지)
+
+
