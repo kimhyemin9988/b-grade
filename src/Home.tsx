@@ -4,7 +4,7 @@ import movieList from "./api";
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useMatch, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
 
 export const Main = styled.div`
     width: 100%;
@@ -18,13 +18,14 @@ export const ToggleThemeBtn = styled.button`
     text-align: center;
     cursor: pointer;
     transition: ease background-color 250ms;
-    padding: 0 1.5rem;
     border: 1px solid black;
-    position: absolute;
     &:hover{
         background-color: white;
         color: black;
     }
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
 `
 export interface movieData {
     adult: boolean;
@@ -45,6 +46,7 @@ export interface movieData {
 
 const Wrapper = styled.div`
     color: ${(props) => props.theme.bodyFtColor};
+    overflow-x: hidden;
 `;
 
 const Loader = styled.div`
@@ -79,18 +81,20 @@ const Overview = styled.p`
 const Slider = styled.div`
   top: -100px;
   height: 100vh;
+  position: relative;
 `;
 
 const Row = styled(motion.div)`
   display: grid;
   gap: 10px;
-    @media screen and (max-width: 550px){
+  @media screen and (max-width: 550px){
         grid-template-columns: repeat(2,1fr);
     }
     grid-template-columns: repeat(6, 1fr);
     width: 100%;
     margin-top: 10px;
     position: absolute;
+
 `;
 
 const Box = styled(motion.article) <{ posterbg: string | undefined }>`
@@ -172,11 +176,12 @@ const overlay = {
 
 export const Overlay = styled(motion.div)`
   width: 100%;
-  height: 200vh;
-  position: absolute;
+  height: 100%;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
+  top: 0;
 `;
 
 const Home = () => {
@@ -210,8 +215,7 @@ const Home = () => {
     const [id, setId] = useState<null | string>(null);
     const navigate = useNavigate();
 
-    const bigMovieMatch = useMatch("/movies/:movieId");
-  console.log(bigMovieMatch);
+    //const bigMovieMatch = useMatch("/movies/:movieId");
 
     return (
         <>
@@ -219,24 +223,12 @@ const Home = () => {
                 <title>B-Grade</title>
             </Helmet>
             <Main>
+            <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
                 <Wrapper>
                     {isLoading ? (
                         <Loader>Loading...</Loader>
                     ) : (
                         <>
-                            <AnimatePresence>
-                                {id ? (
-                                    <Overlay
-                                        variants={overlay}
-                                        onClick={() => setId(null)}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
-                                    >
-                                        <BoxModal layoutId={id}/>
-                                    </Overlay>
-                                ) : null}
-                            </AnimatePresence>
                             <Banner
                                 onClick={incraseIndex}
                                 bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
@@ -278,11 +270,23 @@ const Home = () => {
                                     </Row>
                                 </AnimatePresence>
                             </Slider>
+                            <AnimatePresence>
+                                {id ? (
+                                    <Overlay
+                                        variants={overlay}
+                                        onClick={() => setId(null)}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                    >
+                                        <BoxModal layoutId={id}/>
+                                    </Overlay>
+                                ) : null}
+                            </AnimatePresence>
                         </>
                     )}
                 </Wrapper>
             </Main>
-            <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
         </>
     );
 };
