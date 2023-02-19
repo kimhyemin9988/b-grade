@@ -1,9 +1,10 @@
 import { motion, useMotionValue, useMotionValueEvent, useScroll } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { Link, Outlet, useMatch } from 'react-router-dom';
+import { Link, Outlet, useMatch, useNavigate } from 'react-router-dom';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { Darktheme, Lighttheme } from './theme';
+import { useForm } from "react-hook-form";
 const GlobalStyle = createGlobalStyle`
 @font-face {
     font-family: 'LINESeedKR-Bd';
@@ -91,7 +92,7 @@ const Header = styled(motion.header)`
 	justify-content: space-between;
     align-items: center;
 	position: fixed;
-	background-color: ${(props)=>props.theme.bodyBgColor};
+	background-color: ${(props) => props.theme.bodyBgColor};
 `
 
 const HomeLogo = styled(motion.svg)`
@@ -119,7 +120,7 @@ const Item = styled.div`
   }
 `;
 
-const SearchDiv = styled.div`
+const SearchDiv = styled.form`
 	width: 30%;
   	height: 30px;
 	margin: 1%;
@@ -127,7 +128,9 @@ const SearchDiv = styled.div`
     justify-content: flex-end;
 	align-items: center;
 `
-
+interface IForm {
+	keyword: string;
+}
 
 const SearchIcon = styled(motion.svg)`
 	height: 100%;
@@ -171,7 +174,12 @@ const App = () => {
 	const homeMatch = useMatch('/');
 	const tvMatch = useMatch('movie');
 	const toggleSearch = () => setSearchOpen((prev) => !prev);
+	const navigate = useNavigate();
+	const { register, handleSubmit } = useForm<IForm>();
 
+	const onValid = (data: IForm) => {
+		navigate(`/search?keyword=${data.keyword}`);
+	};
 	return (
 		<>
 			<ThemeProvider theme={isDark ? Darktheme : Lighttheme}>
@@ -202,7 +210,7 @@ const App = () => {
 							</Link>
 						</Item>
 					</Col>
-					<SearchDiv>
+					<SearchDiv onSubmit={handleSubmit(onValid)}>
 						<Input
 							transition={{ type: "linear" }}
 							initial={{ width: 0, height: 0, }}
@@ -212,6 +220,7 @@ const App = () => {
 								height: "30px",
 							}}
 							placeholder="Search for movie or tv show..."
+							{...register("keyword", { required: true, minLength: 2 })}
 						/>
 						<SearchIcon
 							onClick={toggleSearch}
