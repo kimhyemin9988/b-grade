@@ -38,7 +38,7 @@ export const ToggleThemeBtn = styled.button`
 `
 interface movieData {
     adult: boolean;
-    backdrop_path : string;
+    backdrop_path: string;
     id: number;
     original_language: string;
     original_title: string;
@@ -54,7 +54,7 @@ interface movieData {
 
 
 const Wrapper = styled.div`
-  background: black;
+    color: ${(props) => props.theme.bodyFtColor};
 `;
 
 const Loader = styled.div`
@@ -64,24 +64,24 @@ const Loader = styled.div`
   align-items: center;
 `;
 
-const Banner = styled.div`
-  height: 100vh;
+const Banner = styled.div<{ bgPhoto: string | undefined }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 60px;
-  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+  padding: 10%;
+  background-image: url(${(props)=>props.bgPhoto});
   background-size: cover;
+  height: 100vh;
 `;
 
-const Title = styled.h2`
-  font-size: 68px;
-  margin-bottom: 20px; ;
+const Title = styled.p`
+  margin-bottom: 5%;
+  font-size: 80%;
 `;
 
 const Overview = styled.p`
-  font-size: 30px;
-  width: 50%;
+  font-size: 10%;
+  width: 100%;
 `;
 
 const Slider = styled.div`
@@ -124,8 +124,7 @@ const Home = () => {
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
 
-    const { data, isLoading } = useQuery<movieData>(["movies"], movieList);
-
+    const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);
     return (
         <>
             <Helmet>
@@ -137,10 +136,10 @@ const Home = () => {
                         <Loader>Loading...</Loader>
                     ) : (
                         <>
-                            <Banner>
-                                <Title>{data?.title}</Title>
-                                <Overview>{data?.overview}</Overview>
-                            </Banner>
+                        <Banner bgPhoto={data && `https://image.tmdb.org/t/p/original/${data[4].backdrop_path}`}>
+                            <Title>{data && data[4].original_title}</Title>
+                            <Overview>{data && data[4].overview}</Overview>
+                        </Banner>
                             <Slider>
                                 <Row
                                     variants={rowVariants}

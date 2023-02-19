@@ -42,6 +42,27 @@ body {
 	color:${(props) => props.theme.bodyFtColor};
 	font-family: "LINESeedKR-Bd", "Open Sans", "Helvetica Neue", sans-serif;
 }
+
+@media screen and (max-width: 425px) { //480이하인 경우 모바일
+	html, body {
+		font-size: 20px;
+	}
+}
+
+/* large */
+@media screen and (max-width: 768px){
+	html, body {
+		font-size: 40px;
+	}
+
+}
+@media screen and (min-width: 769px){
+	html, body {
+		font-size: 60px;
+	}
+
+}
+
 ol, ul {
 	list-style: none;
 }
@@ -73,8 +94,8 @@ const Header = styled(motion.header)`
 `
 
 const HomeLogo = styled(motion.svg)`
-	width: 100%;
-	height: 100%;
+	width: 90%;
+	height: 90%;
   	transition: color 0.3s ease-in-out;
   path {
     stroke-width: 6px;
@@ -88,6 +109,7 @@ const Col = styled.div`
   margin: 10px;
 `;
 const Item = styled.div`
+	font-size: 40%;
   margin-left: 5%;
   color: ${(props) => props.theme.bodyFtColor};
   transition: color 0.3s ease-in-out;
