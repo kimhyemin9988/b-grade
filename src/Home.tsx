@@ -160,11 +160,11 @@ const infoVariants = {
 };
 /* 모달창 */
 export const BoxModal = styled(motion.div)`
-  width: 5rem;
-  height:  5rem;
+  width: 10rem;
+  height:  8rem;
   border-radius: 10px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  background-color: white;
+  background-color: ${(props)=>props.theme.bodyBgColor};
 `;
 
 
@@ -184,6 +184,29 @@ export const Overlay = styled(motion.div)`
   top: 0;
 `;
 
+
+const BigCover = styled.div<{ bgPhoto: string | undefined }>`
+  width: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(${(props) => props.bgPhoto});
+  height: 70%;
+`;
+
+const BigTitle = styled.h3`
+  color: ${(props) => props.theme.bodyFtColor};
+  font-size: 0.4rem;
+  position: relative;
+  padding: 5px;
+`;
+
+const BigOverview = styled.p`
+  font-size: 0.2rem;
+  position: relative;
+  color: ${(props) => props.theme.bodyFtColor};
+  padding: 5px;
+`;
+
 const Home = () => {
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);
@@ -196,6 +219,7 @@ const Home = () => {
     };
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
+    const [content, setContent] = useState<movieData>();
     const incraseIndex = () => {
         if (leaving) return;
         else {
@@ -214,8 +238,7 @@ const Home = () => {
     //const pricematch = useMatch("movie/:movieId");
     const [id, setId] = useState<null | string>(null);
     const navigate = useNavigate();
-
-    //const bigMovieMatch = useMatch("/movies/:movieId");
+    const bigMovieMatch = useMatch("/movies/:movieId");
 
     return (
         <>
@@ -223,7 +246,7 @@ const Home = () => {
                 <title>B-Grade</title>
             </Helmet>
             <Main>
-            <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
+                <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
                 <Wrapper>
                     {isLoading ? (
                         <Loader>Loading...</Loader>
@@ -257,9 +280,9 @@ const Home = () => {
                                                     transition={{ type: "tween" }}
                                                     onClick={() => {
                                                         setId(`${i.id}`);
-                                                        navigate(`movie/${i.id}`)
-                                                    }
-                                                    } layoutId={`${i.id}`}
+                                                        setContent(i);
+                                                        navigate(`movie/${i.id}`);
+                                                    }} layoutId={`${i.id}`}
                                                 >
                                                     <Info variants={infoVariants}>
                                                         <p>{i.title}</p>
@@ -279,7 +302,17 @@ const Home = () => {
                                         animate="visible"
                                         exit="exit"
                                     >
-                                        <BoxModal layoutId={id}/>
+                                        <BoxModal layoutId={id}>
+                                            {id &&
+                                                (
+                                                    <>
+                                                        <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+                                                        <BigTitle>{content?.title}</BigTitle>
+                                                        <BigOverview>{content?.overview}</BigOverview>
+                                                    </>
+                                                )
+                                            }
+                                        </BoxModal>
                                     </Overlay>
                                 ) : null}
                             </AnimatePresence>
