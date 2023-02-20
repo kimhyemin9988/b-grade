@@ -137,7 +137,24 @@ export { upcomingMovies };
 
 
 
+const SearchData = async (keyword: string | null) => {
+    let page = 1;
+    let dataArray: [] = [];
+    while (page < 6) {
+        const response = await fetch(`
+        https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${page}&include_adult=false`);
+        const json = await response.json();
+        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+        page++;
+        dataArray = [...dataArray, ...data];
+    }
+    return dataArray;
+}
+export { SearchData };
+
 /*
+https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&with_keywords=${keyword}&with_watch_monetization_types=flatrate
+
 데이터 3page까지 가져오기
 https://image.tmdb.org/t/p/original/d8Nt1NKzAoa26HRrE4LuMKkIbZ9.jpg
 
