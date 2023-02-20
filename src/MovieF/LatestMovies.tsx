@@ -11,7 +11,6 @@ const LatestMovies = () => {
 
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData>(["latestMovies"], latestMovies);
-    console.log(data);
     return (
         <>
             {isLoading ? (

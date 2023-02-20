@@ -86,7 +86,7 @@ export const Slider = styled.div`
   position: relative;
   height: 40vh;
   @media screen and (max-width: 550px){
-        height: 110vh;
+        height: 125vh;
     }
 `;
 

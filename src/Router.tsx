@@ -28,6 +28,11 @@ const RouterApp = createBrowserRouter([
             {
                 path:"tv",
                 element:<Tv></Tv>,
+                children:[
+                    {
+                        path:":tvId"
+                    }
+                ]
             }
 
         ],

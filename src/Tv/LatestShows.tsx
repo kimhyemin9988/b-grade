@@ -31,18 +31,18 @@ interface LatestShowsData {
 
 const LatestShows = () => {
     /* 데이터 받아오기 */
-    const { isLoading, data } = useQuery<LatestShowsData[]>(["tvLatest"], tvLatest);
+    const { isLoading, data } = useQuery<LatestShowsData>(["tvLatest"], tvLatest);
     return (
         <>
             {isLoading ? (
                 <Loader> Loading...</Loader >
             ) : (
                 <>
-                     <h1>Latest Show</h1>
-                     <Banner
-                        bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
-                        <BigTitle>{data?.[0].original_name}</BigTitle>
-                        <Overview>{data?.[0].overview}</Overview>
+                    <Banner bgPhoto="null" style={{height:"50vh"}}>
+                        <h1 style={{marginTop:"1rem"}}>Latest Show</h1>
+                        <BigTitle>title : {data?.name}</BigTitle>
+                        <Overview>overview : {data?.overview}</Overview>
+                        <h1>{data?.last_air_date}</h1>
                     </Banner>
                 </>
             )}
@@ -57,69 +57,4 @@ export default LatestShows;
 adult,backdrop_path,genre_ids,id,original_language,original_title,overview,popularity,poster_path,release_date,title,video,vote_average,vote_count
 
 
-            adult
-            backdrop_path
-            created_by
-            episode_run_time
-            first_air_date
-            genres
-            homepage
-            id
-            in_production
-            languages
-            last_air_date
-            last_episode_to_air
-            name
-            next_episode_to_air
-            networks
-            number_of_episodes
-            number_of_seasons
-            origin_country
-            original_language
-            original_name
-            overview
-            popularity
-            poster_path
-            production_companies
-            production_countries
-            seasons
-            spoken_languages
-            status
-            tagline
-            type
-            vote_average
-            vote_count
-
-            boolean
-            string
-            object
-            object
-            string
-            object
-            string
-            number
-            boolean
-            object
-            string
-            object
-            string
-            object
-            object
-            number
-            number
-            object
-            string
-            string
-            string
-            number
-            string
-            object
-            object
-            object
-            object
-            string
-            string
-            string
-            number
-            number
 */

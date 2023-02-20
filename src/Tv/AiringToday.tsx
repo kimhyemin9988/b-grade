@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 export interface tvData extends movieData {
     first_air_date : string;
     origin_country : string;
+    name : string;
   }
 
 const AiringToday = () => {
@@ -20,15 +21,27 @@ const AiringToday = () => {
     /* 모달창 */
     const [id, setId] = useState<null | string>(null);
     /*박스 클릭시 해당하는 tv프로그램의 데이터를 저장 */
-    const [content, setContent] = useState<movieData>();
+    const [content, setContent] = useState<tvData>();
     const navigate = useNavigate();
+    const incraseIndex = () => {
+        if (data) {
+            if (leaving) return;
+            else {
+                const dataLength = Math.floor(data?.length / 6); // 5
+                setLeaving(true);
+                setIndex((prev) => dataLength - 1 > index ? prev + 1 : 0);
+            }
+        }
+    }
     return (
         <>
             { isLoading ? (
                     <Loader> Loading...</Loader >
                 ) : (
                     <>
-                        <Slider>
+                    <h1>Airing Today TV</h1>
+                    <button onClick={incraseIndex} style={{width:"12em"}}>Next</button>
+                        <Slider style={{ top : "0"}}>
                                 <AnimatePresence
                                     initial={false} onExitComplete={() => {
                                         setLeaving((prev) => !prev);
@@ -53,11 +66,11 @@ const AiringToday = () => {
                                                 onClick={() => {
                                                     setId(`${i.id}`);
                                                     setContent(i);
-                                                    navigate(`movie/${i.id}`);
+                                                    navigate(`${i.id}`);
                                                 }} layoutId={`${i.id}`}
                                             >
                                                 <Info key={i.id} variants={infoVariants}>
-                                                    <p>{i.title}</p>
+                                                    <p>{i.name}</p>
                                                 </Info>
                                             </Box>
                                         ))}
@@ -78,7 +91,7 @@ const AiringToday = () => {
                                     >
                                         <BoxModal layoutId={id}>
                                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                                            <BigTitle>{content?.title}</BigTitle>
+                                            <BigTitle>{content?.name}</BigTitle>
                                             <BigOverview>{content?.overview}</BigOverview>
                                         </BoxModal>
                                     </Overlay>
