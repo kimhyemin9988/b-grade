@@ -1,17 +1,17 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import movieList from "./api";
+import { movieList } from "./api";
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useMatch, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import LatestMovies from "./MovieF/LatestMovies";
 import TopRatedMovies from "./MovieF/TopRatedMovies";
 import Upcoming from "./MovieF/Upcoming";
 
 export const Main = styled.div`
     width: 100%;
-    height: 100vh;
+    //    height: 100vh;
 `
 
 export const ToggleThemeBtn = styled.button`
@@ -47,12 +47,12 @@ export interface movieData {
 };
 
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
     color: ${(props) => props.theme.bodyFtColor};
     overflow-x: hidden;
 `;
 
-const Loader = styled.div`
+export const Loader = styled.div`
   height: 20vh;
   display: flex;
   justify-content: center;
@@ -83,7 +83,7 @@ const Overview = styled.p`
 
 const Slider = styled.div`
   top: -100px;
-  height: 100vh;
+  min-height: 110vh;
   position: relative;
 `;
 

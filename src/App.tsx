@@ -110,7 +110,7 @@ const Col = styled.div`
   align-items: center;
   margin: 10px;
 `;
-const Item = styled.div`
+const Item = styled(motion.div)`
 	font-size: 40%;
   margin-left: 5%;
   color: ${(props) => props.theme.bodyFtColor};
@@ -135,7 +135,7 @@ interface IForm {
 const SearchIcon = styled(motion.svg)`
 	height: 100%;
 `
-const Circle = styled.div`
+const Circle = styled(motion.div)`
   position: absolute;
   width: 5px;
   height: 5px;
@@ -171,9 +171,19 @@ const logoVariants = {
 const App = () => {
 	const [searchOpen, setSearchOpen] = useState(false);
 	const [isDark, setIsDark] = useState<boolean>(true);
-	const homeMatch = useMatch('/');
-	const movieMatch = useMatch('movie');
-	const tvMatch = useMatch('tv');
+	const Array = [
+		{
+			link: `/`,
+			match: useMatch('/'),
+			name: "Home",
+		},
+		{
+			link: `tv`,
+			match: useMatch('tv'),
+			name: "Tv",
+		}
+	];
+
 	const toggleSearch = () => setSearchOpen((prev) => !prev);
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm<IForm>();
@@ -200,21 +210,18 @@ const App = () => {
 								<path d="m236.84 36.84-26.04 3.79L229.65 59l.57 1.77-4.45 25.95 23.3-12.25h.93V12.15l-11.65 23.6-1.51 1.09z" fill="#f90" />
 							</svg>
 						</HomeLogo>
-						<Item>
-							<Link to="">Home
-								{homeMatch !== null && <Circle />}
-							</Link>
-						</Item>
-						<Item>
-							<Link to="movie">Movie
-								{movieMatch !== null && <Circle />}
-							</Link>
-						</Item>
-						<Item>
-							<Link to="tv">Movie
-								{tvMatch !== null && <Circle />}
-							</Link>
-						</Item>
+						{
+							Array.map((i) => {
+								return (
+									<Item key={i.link}>
+										<Link to={`${i.link}`}>{i.name}
+										</Link>
+										{i.match !== null && <Circle layoutId="circle" />}
+									</Item>
+								)
+
+							})
+						}
 					</Col>
 					<SearchDiv onSubmit={handleSubmit(onValid)}>
 						<Input
@@ -251,7 +258,13 @@ const App = () => {
 }
 
 export default App;
-/* {homeMatch !==null && <Circle />} */
+
+
+/* {homeMatch !==null && <Circle />}
+
+<Link to={`${i.link}`}>Home
+</Link>
+*/
 
 /* ! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. */
 /*
