@@ -227,7 +227,6 @@ const Home = () => {
             setIndex((prev) => index > 1 ? 0 : prev + 1);
         }
     }
-    const posterImg = data?.filter((i) => i.poster_path !== null)
     /* onExitComplete :  끝났을 때 실행
     애니메이션이 끝나기 전에 다음 boxs가 생기면 겹친다
     눌렀을때 아직 박스가 없어지지 않았다면 클릭해도 함수가 실행되지 않도록 하며
@@ -239,7 +238,7 @@ const Home = () => {
     const [id, setId] = useState<null | string>(null);
     const navigate = useNavigate();
     const bigMovieMatch = useMatch("/movies/:movieId");
-
+    console.log(data);
     return (
         <>
             <Helmet>
@@ -270,7 +269,7 @@ const Home = () => {
                                         transition={{ type: "tween", duration: 1 }}
                                         key={index}
                                     >
-                                        {posterImg?.slice(1).slice(6 * index, (6 * (index + 1))).map((i) => (
+                                        {data?.slice(1).slice(6 * index, (6 * (index + 1))).map((i) => (
                                             <>
                                                 <Box key={i.id}
                                                     posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
