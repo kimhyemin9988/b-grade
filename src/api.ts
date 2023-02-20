@@ -30,7 +30,7 @@ const tvPopular = async () => {
     while (page < 6) {
         const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
         const json = await response.json();
-        const data: [] = await json.results;
+        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
         dataArray = [...dataArray, ...data];
     }
@@ -48,7 +48,7 @@ const tvAiring = async () => {
     while (page < 6) {
         const response = await fetch(`https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=en-US&page=${page}`);
         const json = await response.json();
-        const data: [] = await json.results;
+        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
         dataArray = [...dataArray, ...data];
     }
@@ -67,7 +67,7 @@ const tvTopRated = async () => {
     while (page < 6) {
         const response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&${page}`);
         const json = await response.json();
-        const data: [] = await json.results;
+        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
         dataArray = [...dataArray, ...data];
     }
@@ -108,7 +108,7 @@ const topRatedMovies = async () => {
     while (page < 6) {
         const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&${page}`);
         const json = await response.json();
-        const data: [] = await json.results;
+        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
         dataArray = [...dataArray, ...data];
     }
@@ -127,7 +127,7 @@ const upcomingMovies = async () => {
     while (page < 6) {
         const response = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&${page}`);
         const json = await response.json();
-        const data: [] = await json.results;
+        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
         dataArray = [...dataArray, ...data];
     }

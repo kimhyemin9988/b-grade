@@ -59,7 +59,7 @@ export const Loader = styled.div`
   align-items: center;
 `;
 
-const Banner = styled.div<{ bgPhoto: string | undefined }>`
+export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,23 +71,26 @@ const Banner = styled.div<{ bgPhoto: string | undefined }>`
 
 
 
-const Title = styled.p`
+export const Title = styled.p`
   margin-bottom: 5%;
   font-size: 80%;
 `;
 
-const Overview = styled.p`
+export const Overview = styled.p`
   font-size: 10%;
   width: 100%;
 `;
 
-const Slider = styled.div`
+export const Slider = styled.div`
   top: -100px;
-  min-height: 110vh;
   position: relative;
+  height: 40vh;
+  @media screen and (max-width: 550px){
+        height: 110vh;
+    }
 `;
 
-const Row = styled(motion.div)`
+export const Row = styled(motion.div)`
   display: grid;
   gap: 10px;
   @media screen and (max-width: 550px){
@@ -100,7 +103,7 @@ const Row = styled(motion.div)`
 
 `;
 
-const Box = styled(motion.article) <{ posterbg: string | undefined }>`
+export const Box = styled(motion.article) <{ posterbg: string | undefined }>`
   height: 40vh;
   font-size: 100%;
   background-image: url(${(props) => props.posterbg});
@@ -112,7 +115,7 @@ const Box = styled(motion.article) <{ posterbg: string | undefined }>`
   }
 `;
 
-const boxVariants = {
+export const boxVariants = {
     normal: {
         scale: 1,
     },
@@ -127,7 +130,7 @@ const boxVariants = {
     },
 };
 
-const rowVariants = {
+export const rowVariants = {
     hidden: {
         x: window.outerWidth + 10,
     },
@@ -139,7 +142,7 @@ const rowVariants = {
     },
 };
 
-const Info = styled(motion.div)`
+export const Info = styled(motion.div)`
   background-color: ${(props) => props.theme.hoverNavItem};
   opacity: 0;
   position: absolute;
@@ -151,7 +154,7 @@ const Info = styled(motion.div)`
   }
 `;
 
-const infoVariants = {
+export const infoVariants = {
     hover: {
         opacity: 1,
         transition: {
@@ -171,7 +174,7 @@ export const BoxModal = styled(motion.div)`
 `;
 
 
-const overlay = {
+export const overlay = {
     hidden: { backgroundColor: "rgba(0, 0, 0, 0)" },
     visible: { backgroundColor: "#3b3636c5" },
     exit: { backgroundColor: "rgba(0, 0, 0, 0)" },
@@ -188,7 +191,7 @@ export const Overlay = styled(motion.div)`
 `;
 
 
-const BigCover = styled.div<{ bgPhoto: string | undefined }>`
+export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   width: 100%;
   background-size: cover;
   background-position: center center;
@@ -196,14 +199,14 @@ const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   height: 70%;
 `;
 
-const BigTitle = styled.h3`
+export const BigTitle = styled.h3`
   color: ${(props) => props.theme.bodyFtColor};
   font-size: 0.4rem;
   position: relative;
   padding: 5px;
 `;
 
-const BigOverview = styled.p`
+export const BigOverview = styled.p`
   font-size: 0.2rem;
   position: relative;
   color: ${(props) => props.theme.bodyFtColor};
@@ -221,6 +224,7 @@ const Home = () => {
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
     const [index, setIndex] = useState(0);
+
     const [leaving, setLeaving] = useState(false);
     const [content, setContent] = useState<movieData>();
     const incraseIndex = () => {

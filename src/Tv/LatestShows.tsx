@@ -1,6 +1,7 @@
+
 import { useQuery } from "react-query";
+import { Banner, BigTitle, Loader, Overview, Title } from "../Home";
 import { tvLatest } from "../api";
-import { Loader } from "../Home";
 
 interface LatestShowsData {
     adult: boolean;
@@ -30,15 +31,19 @@ interface LatestShowsData {
 
 const LatestShows = () => {
     /* 데이터 받아오기 */
-    const { isLoading, data } = useQuery(["tvLatest"], tvLatest);
-
+    const { isLoading, data } = useQuery<LatestShowsData[]>(["tvLatest"], tvLatest);
     return (
         <>
             {isLoading ? (
                 <Loader> Loading...</Loader >
             ) : (
                 <>
-                    <h1>로딩완료</h1>
+                     <h1>Latest Show</h1>
+                     <Banner
+                        bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
+                        <BigTitle>{data?.[0].original_name}</BigTitle>
+                        <Overview>{data?.[0].overview}</Overview>
+                    </Banner>
                 </>
             )}
         </>
