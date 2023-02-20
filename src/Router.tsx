@@ -5,6 +5,7 @@ import App from './App';
 import Home, { BoxModal, Overlay } from './Home';
 import Movie from './Movie';
 import Search from './Search';
+import Tv from './Tv';
 
 const RouterApp = createBrowserRouter([
     {
@@ -28,7 +29,12 @@ const RouterApp = createBrowserRouter([
             {
                 path: "search",
                 element: <Search></Search>,
+            },
+            {
+                path:"tv",
+                element:<Tv></Tv>,
             }
+
         ],
         errorElement: <NotFound></NotFound>,
     }], { basename: "/b-grade/" });

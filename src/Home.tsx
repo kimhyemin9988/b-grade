@@ -5,6 +5,9 @@ import { useState } from 'react';
 import { Link, Outlet, useLocation, useMatch, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { AnimatePresence, motion, useViewportScroll } from "framer-motion";
+import LatestMovies from "./MovieF/LatestMovies";
+import TopRatedMovies from "./MovieF/TopRatedMovies";
+import Upcoming from "./MovieF/Upcoming";
 
 export const Main = styled.div`
     width: 100%;
@@ -164,7 +167,7 @@ export const BoxModal = styled(motion.div)`
   height:  8rem;
   border-radius: 10px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  background-color: ${(props)=>props.theme.bodyBgColor};
+  background-color: ${(props) => props.theme.bodyBgColor};
 `;
 
 
@@ -221,12 +224,16 @@ const Home = () => {
     const [leaving, setLeaving] = useState(false);
     const [content, setContent] = useState<movieData>();
     const incraseIndex = () => {
-        if (leaving) return;
-        else {
-            setLeaving(true);
-            setIndex((prev) => index > 1 ? 0 : prev + 1);
+        if (data) {
+            if (leaving) return;
+            else {
+                const dataLength = Math.floor(data?.length / 6); // 5
+                setLeaving(true);
+                setIndex((prev) => dataLength - 1 > index ? prev + 1 : 0);
+            }
         }
     }
+
     /* onExitComplete :  끝났을 때 실행
     애니메이션이 끝나기 전에 다음 boxs가 생기면 겹친다
     눌렀을때 아직 박스가 없어지지 않았다면 클릭해도 함수가 실행되지 않도록 하며
@@ -238,7 +245,6 @@ const Home = () => {
     const [id, setId] = useState<null | string>(null);
     const navigate = useNavigate();
     const bigMovieMatch = useMatch("/movies/:movieId");
-    console.log(data);
     return (
         <>
             <Helmet>
@@ -258,9 +264,10 @@ const Home = () => {
                                 <Overview>{data?.[0].overview}</Overview>
                             </Banner>
                             <Slider>
-                                <AnimatePresence initial={false} onExitComplete={() => {
-                                    setLeaving((prev) => !prev);
-                                }}>
+                                <AnimatePresence
+                                    initial={false} onExitComplete={() => {
+                                        setLeaving((prev) => !prev);
+                                    }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
                                     <Row
                                         variants={rowVariants}
                                         initial="hidden"
@@ -269,25 +276,25 @@ const Home = () => {
                                         transition={{ type: "tween", duration: 1 }}
                                         key={index}
                                     >
+                                        {/* Row가 index가 0이 될때까지  반복, random한 수로 하면 오류남*/}
                                         {data?.slice(1).slice(6 * index, (6 * (index + 1))).map((i) => (
-                                            <>
-                                                <Box key={i.id}
-                                                    posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
-                                                    whileHover="hover"
-                                                    initial="normal"
-                                                    variants={boxVariants}
-                                                    transition={{ type: "tween" }}
-                                                    onClick={() => {
-                                                        setId(`${i.id}`);
-                                                        setContent(i);
-                                                        navigate(`movie/${i.id}`);
-                                                    }} layoutId={`${i.id}`}
-                                                >
-                                                    <Info variants={infoVariants}>
-                                                        <p>{i.title}</p>
-                                                    </Info>
-                                                </Box>
-                                            </>
+                                            /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남 */
+                                            <Box key={i.id}
+                                                posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
+                                                whileHover="hover"
+                                                initial="normal"
+                                                variants={boxVariants}
+                                                transition={{ type: "tween" }}
+                                                onClick={() => {
+                                                    setId(`${i.id}`);
+                                                    setContent(i);
+                                                    navigate(`movie/${i.id}`);
+                                                }} layoutId={`${i.id}`}
+                                            >
+                                                <Info key={i.id} variants={infoVariants}>
+                                                    <p>{i.title}</p>
+                                                </Info>
+                                            </Box>
                                         ))}
                                     </Row>
                                 </AnimatePresence>
@@ -296,21 +303,18 @@ const Home = () => {
                                 {id ? (
                                     <Overlay
                                         variants={overlay}
-                                        onClick={() => setId(null)}
+                                        onClick={() => {
+                                            setId(null)
+                                            navigate("");
+                                        }}
                                         initial="hidden"
                                         animate="visible"
                                         exit="exit"
                                     >
                                         <BoxModal layoutId={id}>
-                                            {id &&
-                                                (
-                                                    <>
-                                                        <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                                                        <BigTitle>{content?.title}</BigTitle>
-                                                        <BigOverview>{content?.overview}</BigOverview>
-                                                    </>
-                                                )
-                                            }
+                                            <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+                                            <BigTitle>{content?.title}</BigTitle>
+                                            <BigOverview>{content?.overview}</BigOverview>
                                         </BoxModal>
                                     </Overlay>
                                 ) : null}
@@ -318,6 +322,9 @@ const Home = () => {
                         </>
                     )}
                 </Wrapper>
+                <LatestMovies></LatestMovies>
+                <TopRatedMovies></TopRatedMovies>
+                <Upcoming></Upcoming>
             </Main>
         </>
     );

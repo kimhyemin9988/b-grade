@@ -172,7 +172,8 @@ const App = () => {
 	const [searchOpen, setSearchOpen] = useState(false);
 	const [isDark, setIsDark] = useState<boolean>(true);
 	const homeMatch = useMatch('/');
-	const tvMatch = useMatch('movie');
+	const movieMatch = useMatch('movie');
+	const tvMatch = useMatch('tv');
 	const toggleSearch = () => setSearchOpen((prev) => !prev);
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm<IForm>();
@@ -206,6 +207,11 @@ const App = () => {
 						</Item>
 						<Item>
 							<Link to="movie">Movie
+								{movieMatch !== null && <Circle />}
+							</Link>
+						</Item>
+						<Item>
+							<Link to="tv">Movie
 								{tvMatch !== null && <Circle />}
 							</Link>
 						</Item>
