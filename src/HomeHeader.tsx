@@ -95,8 +95,8 @@ const SearchIcon = styled(motion.svg)`
 const HomeHeader = () => {
     const Array = [
         {
-            link: `main`,
-            match: useMatch('main'),
+            link: `/`,
+            match: useMatch('/'),
             name: "Home",
         },
         {

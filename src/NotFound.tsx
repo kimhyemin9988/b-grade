@@ -36,7 +36,7 @@ const NotFound = () => {
                     <span>요청하신 페이지를 찾을 수 없습니다.</span><br />
                     <span>입력하신 경로가 정확한지 다시 한번 확인해 주시기 바랍니다.</span><br />
                     <HomeNavBtn>
-                        <Link to="main">
+                        <Link to="">
                             홈으로
                         </Link>
                     </HomeNavBtn>
