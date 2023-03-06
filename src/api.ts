@@ -1,6 +1,6 @@
-import { movieData } from "./Home";
+import { movieData } from "./MovieF/Movie";
 import { useState } from "react";
-import Tv from "./Tv";
+import Tv from "./Tv/Tv";
 
 export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 

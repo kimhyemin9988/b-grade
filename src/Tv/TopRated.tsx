@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Loader, movieData, overlay, Overlay, Row, rowVariants, Slider } from "../Home";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Loader, movieData, overlay, Overlay, Row, rowVariants, Slider } from "../MovieF/Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tvTopRated } from "../api";

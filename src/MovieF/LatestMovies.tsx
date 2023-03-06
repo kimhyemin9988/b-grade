@@ -1,6 +1,6 @@
 import { latestMovies } from "../api";
 import { useQuery } from "react-query";
-import { Banner, Loader, movieData, Overview, Title } from "../Home";
+import { Banner, Loader, movieData, Overview, Title } from "./Movie";
 import styled from "styled-components";
 export const Container = styled.div`
     width: 100%;

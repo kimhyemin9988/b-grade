@@ -2,9 +2,9 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, createBrowserRouter } from 'react-router-dom';
 import NotFound from './NotFound';
 import App from './App';
-import Home, { BoxModal, Overlay } from './Home';
-import Search from './Search';
-import Tv from './Tv';
+import Movie from './MovieF/Movie';
+import Search from './Search/Search';
+import Tv from './Tv/Tv';
 
 const RouterApp = createBrowserRouter([
     {
@@ -13,13 +13,13 @@ const RouterApp = createBrowserRouter([
         children: [
             {
 
-                path: "",
-                element: <Home />,
+                path: "main",
+                element: <Movie />,
                 children:[
                     {
                         path:"movie/:movieId"
                     }
-                ]
+                ],
             },
             {
                 path: "search",
@@ -32,9 +32,8 @@ const RouterApp = createBrowserRouter([
                     {
                         path:":tvId"
                     }
-                ]
-            }
-
+                ],
+            },
         ],
         errorElement: <NotFound></NotFound>,
     }], { basename: "/b-grade/" });

@@ -1,13 +1,13 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import { movieList } from "./api";
+import { movieList } from "../api";
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useMatch, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import LatestMovies from "./MovieF/LatestMovies";
-import TopRatedMovies from "./MovieF/TopRatedMovies";
-import Upcoming from "./MovieF/Upcoming";
+import LatestMovies from "./LatestMovies";
+import TopRatedMovies from "./TopRatedMovies";
+import Upcoming from "./Upcoming";
 
 export const Main = styled.div`
     width: 100%;
@@ -243,12 +243,12 @@ const Home = () => {
     눌렀을때 아직 박스가 없어지지 않았다면 클릭해도 함수가 실행되지 않도록 하며
     박스가 없어졌다면 다음 박스를 추가한다
     onExitComplete을 이용하여 애니메이션이 끝나면 박스가 떠난것을 확인하는것을 다시 false로 돌린다
+        const bigMovieMatch = useMatch("/movies/:movieId");
     */
     /* 모달창 */
     //const pricematch = useMatch("movie/:movieId");
     const [id, setId] = useState<null | string>(null);
     const navigate = useNavigate();
-    const bigMovieMatch = useMatch("/movies/:movieId");
     return (
         <>
             <Helmet>

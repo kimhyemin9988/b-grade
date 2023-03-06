@@ -1,8 +1,8 @@
-import { Main, Wrapper } from "./Home";
-import AiringToday from "./Tv/AiringToday";
-import LatestShows from "./Tv/LatestShows";
-import Popular from "./Tv/Popular";
-import TopRated from "./Tv/TopRated";
+import { Main, Wrapper } from "../MovieF/Movie";
+import AiringToday from "./AiringToday";
+import LatestShows from "./LatestShows";
+import Popular from "./Popular";
+import TopRated from "./TopRated";
 
 const Tv = () => {
     return (
