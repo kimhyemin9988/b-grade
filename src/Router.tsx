@@ -8,12 +8,12 @@ import Tv from './Tv/Tv';
 
 const RouterApp = createBrowserRouter([
     {
-        path: "",
+        path: "/",
         element: <App />,
         children: [
             {
 
-                path: "",
+                path:"",
                 element: <Movie />,
                 children:[
                     {
@@ -38,3 +38,13 @@ const RouterApp = createBrowserRouter([
         errorElement: <NotFound></NotFound>,
     }], { basename: "/b-grade/" });
 export default RouterApp;
+
+/*
+   React Router에서 특정 URL 접속 시 페이지를 찾을 수 없는 문제 원인 및 해결 방법
+   GitHub Pages server receives the new request
+   ex) example.tid/?/...
+   ignores the query string
+   and returns the index.html
+   script that checks for a redirect in the query string
+   before SPA is loaded
+*/
