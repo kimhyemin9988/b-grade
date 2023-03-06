@@ -8,12 +8,12 @@ import Tv from './Tv/Tv';
 
 const RouterApp = createBrowserRouter([
     {
-        path: "/",
+        path: "",
         element: <App />,
         children: [
             {
 
-                path: "main",
+                path: "",
                 element: <Movie />,
                 children:[
                     {
@@ -36,5 +36,5 @@ const RouterApp = createBrowserRouter([
             },
         ],
         errorElement: <NotFound></NotFound>,
-    }], { basename: "/b-grade/main" });
+    }], { basename: "/b-grade/" });
 export default RouterApp;
