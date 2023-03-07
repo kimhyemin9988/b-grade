@@ -7,14 +7,29 @@
       // Single Page Apps for GitHub Pages
       // MIT License
       // https://github.com/rafgraph/spa-github-pages
+      /*
+      이 스크립트는 현재 URL을 가져와 경로와 쿼리를 변환합니다.
+      문자열을 쿼리 문자열로 만든 다음 브라우저를 리디렉션합니다.
+      쿼리 문자열과 해시 조각 만있는 새 URL로,
+      예를 들어 https://www.foo.tld/one/two?a=b&c=d#qwe 는
+      https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+      */
       // This script takes the current url and converts the path and query
       // string into just a query string, and then redirects the browser
       // to the new url with only a query string and hash fragment,
       // e.g. https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
       // https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
       // Note: this 404.html file must be at least 512 bytes for it to work
+      /*
+      참고: 이 404.html 파일이 작동하려면 512바이트 이상이어야 합니다.
+      */
       // with Internet Explorer (it is currently > 512 bytes)
-
+      /*
+      프로젝트 페이지 사이트를 만들고 사용자 지정 도메인을 사용하지 않는 경우
+      그런 다음 pathSegmentsToKeep을 1로 설정합니다(엔터프라이즈 사용자는 > 1로 설정해야 할 수 있음).
+      이렇게하면 코드가 경로의 경로 부분 만 대체하고
+      앱이 있는 실제 디렉터리
+      */
       // If you're creating a Project Pages site and NOT using a custom domain,
       // then set pathSegmentsToKeep to 1 (enterprise users may need to set it to > 1).
       // This way the code will only replace the route part of the path, and not
@@ -23,8 +38,6 @@
       // https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
       // Otherwise, leave pathSegmentsToKeep as 0.
       var pathSegmentsToKeep = 1;
-      //저장소 이름이 /뒤에 오기 때문에 1을 선택하면
-      //저장소 이름을 선택할 수 있음
       var l = window.location;
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
