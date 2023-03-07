@@ -17,6 +17,7 @@ const Header = styled(motion.header)`
     align-items: center;
 	position: fixed;
 	background-color: ${(props) => props.theme.bodyBgColor};
+    z-index: 5;
 `
 
 const Col = styled.div`
@@ -76,13 +77,15 @@ const SearchDiv = styled.form`
     justify-content: flex-end;
 	align-items: center;
 `
-const Input = styled(motion.input)`
+const Input = styled.input`
   transform-origin: right center;
   background-color: ${(props) => props.theme.bodyFtColor};
   border-radius: 10px;
   border: 5px solid #ced6e0;
   outline: none;
   color: ${(props) => props.theme.bodyBgColor};
+  width: 60%;
+  height: 30px;
   &:hover,&:focus {
       border-color: #3d9cff;
     }
@@ -112,12 +115,6 @@ const HomeHeader = () => {
     const onValid = (data: IForm) => {
         navigate(`/search?keyword=${data.keyword}`);
     };
-
-    const [searchOpen, setSearchOpen] = useState(false);
-
-
-    const toggleSearch = () => setSearchOpen((prev) => !prev);
-
     return (
         <Header>
             <Col>
@@ -149,19 +146,10 @@ const HomeHeader = () => {
             </Col>
             <SearchDiv onSubmit={handleSubmit(onValid)}>
                 <Input
-                    transition={{ type: "linear" }}
-                    initial={{ width: 0, height: 0, }}
-                    animate={{
-                        scaleX: searchOpen ? 1 : 0,
-                        width: "60%",
-                        height: "30px",
-                    }}
                     placeholder="Search for movie or tv show..."
                     {...register("keyword", { required: true, minLength: 2 })}
                 />
                 <SearchIcon
-                    onClick={toggleSearch}
-                    transition={{ type: "linear" }}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     xmlns="http://www.w3.org/2000/svg"

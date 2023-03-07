@@ -29,6 +29,7 @@ export const ToggleThemeBtn = styled.button`
     position: fixed;
     bottom: 1rem;
     right: 1rem;
+    z-index: 10;
 `
 export interface movieData {
     adult: boolean;
@@ -49,14 +50,13 @@ export interface movieData {
 
 export const Wrapper = styled.div`
     color: ${(props) => props.theme.bodyFtColor};
-    overflow-x: hidden;
 `;
 
 export const Loader = styled.div`
-  height: 20vh;
+  height: 40vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items:end;
 `;
 
 export const Banner = styled.div<{ bgPhoto: string | undefined }>`
@@ -77,8 +77,11 @@ export const Title = styled.p`
 `;
 
 export const Overview = styled.p`
-  font-size: 10%;
+  font-size: 30%;
   width: 100%;
+  @media screen and (max-width: 550px){
+    font-size: 10%;
+    }
 `;
 
 export const Slider = styled.div`
@@ -93,18 +96,19 @@ export const Slider = styled.div`
 export const Row = styled(motion.div)`
   display: grid;
   gap: 10px;
-  @media screen and (max-width: 550px){
+    @media screen and (max-width: 550px){
         grid-template-columns: repeat(2,1fr);
     }
     grid-template-columns: repeat(6, 1fr);
     width: 100%;
-    margin-top: 10px;
+    margin: 10px;
     position: absolute;
 
 `;
 
 export const Box = styled(motion.article) <{ posterbg: string | undefined }>`
-  height: 40vh;
+  width: 200px;
+  height: 300px;
   font-size: 100%;
   background-image: url(${(props) => props.posterbg});
   &:first-child {
@@ -216,13 +220,13 @@ export const BigOverview = styled.p`
 const Home = () => {
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);
-    /* 테마 버튼 */
-    const [themeText, setThemeText] = useState("라이트 모드로 보기");
-    const [setIsDark] = useOutletContext<React.Dispatch<React.SetStateAction<boolean>>[]>();
-    const toggleTheme = () => {
-        setIsDark((element) => (!element));
-        themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
-    };
+     /* 테마 버튼 */
+     const [themeText, setThemeText] = useState("라이트 모드로 보기");
+     const [setIsDark] = useOutletContext<React.Dispatch<React.SetStateAction<boolean>>[]>();
+     const toggleTheme = () => {
+         setIsDark((element) => (!element));
+         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
+     };
     const [index, setIndex] = useState(0);
 
     const [leaving, setLeaving] = useState(false);
@@ -255,7 +259,7 @@ const Home = () => {
                 <title>B-Grade</title>
             </Helmet>
             <Main>
-                <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
+            <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
                 <Wrapper>
                     {isLoading ? (
                         <Loader>Loading...</Loader>
@@ -348,3 +352,7 @@ export default Home;
 //https://image.tmdb.org/t/p/original/backdrop-img(큰이미지)
 
 
+/* 추가
+ + 로딩시 돌아가는 애니메이션
+ + 모바일 클릭 말고 눌러서 슬라이드 되게
+*/

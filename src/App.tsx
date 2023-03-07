@@ -42,6 +42,7 @@ body {
 	background-color: ${(props) => props.theme.bodyBgColor};
 	color:${(props) => props.theme.bodyFtColor};
 	font-family: "LINESeedKR-Bd", "Open Sans", "Helvetica Neue", sans-serif;
+	overflow-x: hidden;
 }
 
 @media screen and (max-width: 425px) { //480이하인 경우 모바일
@@ -107,11 +108,11 @@ export default App;
 	찾으시는 페이지가 없습니다.
 	요청하신 페이지를 찾을 수 없습니다.
 	입력하신 경로가 정확한지 다시 한번 확인해 주시기 바랍니다
-	-홈으로 버튼 만들기
+	-홈으로 버튼 만들기 + 
 	
-	2. 모바일에서 가로 스크롤 생기는것 막기
+	2. 모바일에서 가로 스크롤 생기는것 막기 + 
 
-	3. 사진 크기 변환해서 가져오기
+	3. 사진 크기 변환해서 가져오기 + 
 
 	4. 라이트 모드 버튼 사진 뒤로가는것 고치기
 
