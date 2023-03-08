@@ -27,7 +27,7 @@ const Col = styled.div`
 `;
 
 
-const HomeLogo = styled(motion.svg)`
+export const HomeLogo = styled(motion.svg)`
 	width: 90%;
 	height: 90%;
   	transition: color 0.3s ease-in-out;
