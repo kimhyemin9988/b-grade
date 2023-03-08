@@ -158,14 +158,21 @@ export const boxVariants = {
 };
 
 export const rowVariants = {
-    hidden: {
-        x: window.outerWidth + 10,
+    hidden: (sliderDirection: number) => {
+        console.log(sliderDirection);
+        return {
+            x : sliderDirection > 0 ? 1200 :  -1200 
+            };
     },
     visible: {
         x: 0,
+        zIndex: 1,
     },
-    exit: {
-        x: -window.outerWidth - 10,
+    exit: (sliderDirection: number) => {
+        console.log(sliderDirection); // 전의 방향대로 움직임..........
+        return {
+            x : sliderDirection < 0 ? 1200 :  -1200 
+            };
     },
 };
 
@@ -185,7 +192,7 @@ export const infoVariants = {
     hover: {
         opacity: 1,
         transition: {
-            delay: 0.3,
+            delay: 0.1,
             duaration: 0.3,
             type: "tween",
         },
@@ -242,14 +249,14 @@ export const BigOverview = styled.p`
 
 const SliderContainer = styled.div`
     top: -150px;
-    width: 1000px;
+    width: 1200px;
     height: 460px;
     border-radius: 20px;
     align-items: center;
     display: flex;
     position : relative;
     overflow-x: hidden;
-    border: 1px solid ${(props)=>props.theme.bodyFtColor};
+    border: 1px solid ${(props) => props.theme.bodyFtColor};
 `
 const RatingStar = styled(HomeLogo)`
     width:30px;
@@ -279,17 +286,29 @@ const Home = () => {
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
     const [index, setIndex] = useState(0);
-
+    const [sliderDirection, setSliderDirection] = useState(0);
+    // 오른쪽으로 움직이면 그 전에 있던 박스 왼쪽으로 사라지기
+    //왼쪽으로 움직이면 그 전에 있던 박스 오른쪽으로 사라지기
     const [leaving, setLeaving] = useState(false);
     const [content, setContent] = useState<movieData>();
-    const incraseIndex = () => {
+    const incraseIndex = (indexN: number) => {
         if (data) {
             if (leaving) return;
             else {
-                const dataLength = Math.floor(data?.length / 6); // 5
-                setLeaving(true);
-                setIndex((prev) => dataLength - 1 > index ? prev + 1 : 0);
+                setSliderDirection(indexN);
+                if (indexN === 1) {
+                    const dataLength = Math.floor(data?.length / 5); // 5
+                    setLeaving(true);
+                    setIndex((prev) => dataLength - 1 > index ? prev + 1 : 0);
+                }
+                else if (indexN === -1) {
+                    const dataLength = Math.floor(data?.length / 5);
+                    setLeaving(true);
+                    setIndex((prev) => index > 0 ? prev - 1 : dataLength - 2);
+                }
+                //0~5, -1 잘리는것 빼기
             }
+            //애니메이션 왼쪽에서 나오게..
         }
     }
 
@@ -328,10 +347,10 @@ const Home = () => {
                                         {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
                                     </RatingStar>
                                     <RatingSpan>RATING (4.5 ~ 5.5)</RatingSpan>
-                                    <RatingSpan style={{color:"gray"}}>/10</RatingSpan>
+                                    <RatingSpan style={{ color: "gray" }}>/10</RatingSpan>
                                 </RatingContainer>
-                                <MovingSlider>{`<`}</MovingSlider>
-                                <MovingSlider style={{ right: "0" }} onClick={incraseIndex}>{`>`}</MovingSlider>
+                                <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
+                                <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
                                 <Slider>
                                     <AnimatePresence
                                         initial={false} onExitComplete={() => {
@@ -339,15 +358,23 @@ const Home = () => {
                                         }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
                                         <Row
                                             variants={rowVariants}
+                                            custom={sliderDirection}
                                             initial="hidden"
                                             animate="visible"
                                             exit="exit"
-                                            transition={{ type: "tween", duration: 1 }}
+                                            transition={{ type: "tween", duration: 0.5 }}
                                             key={index}
                                         >
-                                            {/* Row가 index가 0이 될때까지  반복, random한 수로 하면 오류남*/}
-                                            {data?.slice(1).slice(6 * index, (6 * (index + 1))).map((i) => (
-                                                /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남 */
+                                            {/* Row가 index가 0이 될때까지  반복, random한 수로 하면 오류남
+                                            slice(0, 6)
+                                            
+                                            */}
+                                            {data?.slice(0).slice(5 * index, (5 * (index + 1))).map((i) => (
+                                                /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남
+                                                0 1 2 3 4(짤림) 5 //5 5제외(0,5) => 0~4
+                                                5, 6, 7, 8, 9, 10 // 4,5,6,7,8
+                                                9 10 11 12 13
+                                                */
                                                 <Box key={i.id}
                                                     posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
                                                     whileHover="hover"
