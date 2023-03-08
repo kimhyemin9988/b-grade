@@ -9,7 +9,6 @@ export const GlobalStyle = createGlobalStyle`
 @font-face {
     font-family: 'LINESeedKR-Bd';
     src: local("LINESeedKR"),url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
-    font-weight: 700;
     font-style: normal;
 }
 html, body, div, span, applet, object, iframe,
@@ -114,17 +113,25 @@ export default App;
 
 	3. 사진 크기 변환해서 가져오기 + 
 
-	4. 라이트 모드 버튼 사진 뒤로가는것 고치기
+	4. 라이트 모드 버튼 사진 뒤로가는것 고치기 +
 
-	5. 헤더 고정하기
+	5. 헤더 고정하기 + 
 
-	6. overview 크기 넘는것 ...으로 만들기
+	6. overview 크기 넘는것 ...으로 만들기 + 
 
+	9. 포스터 잘리는 것 고치기 + 
+
+	
 	7. 페이지 마지막 마진 주기
 
-	8. tv에서 Latest show 말고 가장 인기있는 쇼로 배경 고치기
-
-	9. 포스터 잘리는 것 고치기
+	8. tv에서 Latest show 말고 가장 인기있는 쇼로 배경 고치기 
 
 	11. search에서 로딩중 화면 만들기
+
+	12. 인기있는 영화 장르 찾기 + 동영상이나 트레일러 넣기(동영상이나 트레일러는 가져오는데 오래걸리니 필요한것만 가져오기)
+
+	13. 슬라이드 전부 고치기
+
+	14. Section 타이틀 마다 icon 넣기
+
 	*/

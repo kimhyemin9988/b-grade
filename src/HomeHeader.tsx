@@ -17,7 +17,7 @@ const Header = styled(motion.header)`
     align-items: center;
 	position: fixed;
 	background-color: ${(props) => props.theme.bodyBgColor};
-    z-index: 5;
+    z-index: 10;
 `
 
 const Col = styled.div`

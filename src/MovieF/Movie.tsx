@@ -4,11 +4,13 @@ import { movieList } from "../api";
 import { useState } from 'react';
 import { Link, Outlet, useLocation, useMatch, useNavigate, useOutletContext, useParams } from "react-router-dom";
 import { useQuery } from "react-query";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, delay, motion } from "framer-motion";
 import LatestMovies from "./LatestMovies";
 import TopRatedMovies from "./TopRatedMovies";
 import Upcoming from "./Upcoming";
 import { HomeLogo } from "../HomeHeader";
+
+
 
 export const Main = styled.div`
     width: 100%;
@@ -159,7 +161,6 @@ export const boxVariants = {
 
 export const rowVariants = {
     hidden: (sliderDirection: number) => {
-        console.log(sliderDirection);
         return {
             x : sliderDirection > 0 ? 1200 :  -1200 
             };
@@ -169,7 +170,6 @@ export const rowVariants = {
         zIndex: 1,
     },
     exit: (sliderDirection: number) => {
-        console.log(sliderDirection); // 전의 방향대로 움직임..........
         return {
             x : sliderDirection < 0 ? 1200 :  -1200 
             };
@@ -222,6 +222,7 @@ export const Overlay = styled(motion.div)`
   justify-content: center;
   align-items: center;
   top: 0;
+  z-index: 15;
 `;
 
 
@@ -266,6 +267,7 @@ const RatingStar = styled(HomeLogo)`
 const RatingSpan = styled(Title)`
     font-size:30px;
     margin:0;
+    font-weight: 100;
 `
 const RatingContainer = styled.div`
     display: flex;
@@ -353,6 +355,7 @@ const Home = () => {
                                 <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
                                 <Slider>
                                     <AnimatePresence
+                                        custom={sliderDirection}
                                         initial={false} onExitComplete={() => {
                                             setLeaving((prev) => !prev);
                                         }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
@@ -387,9 +390,6 @@ const Home = () => {
                                                         navigate(`movie/${i.id}`);
                                                     }} layoutId={`${i.id}`}
                                                 >
-                                                    <Info key={i.id} variants={infoVariants}>
-                                                        <p>{i.title}</p>
-                                                    </Info>
                                                 </Box>
                                             ))}
                                         </Row>
@@ -411,7 +411,11 @@ const Home = () => {
                                         <BoxModal layoutId={id}>
                                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                             <BigTitle>{content?.title}</BigTitle>
-                                            <BigOverview>{content?.overview}</BigOverview>
+                                            <BigOverview>
+                                                {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
+                                                {content && content?.overview.length > 350 ? "..." : "."}
+                                                {/* overview 긴것 자름 */}
+                                            </BigOverview>
                                         </BoxModal>
                                     </Overlay>
                                 ) : null}
@@ -444,11 +448,4 @@ export default Home;
 /* 추가
  + 로딩시 돌아가는 애니메이션
  + 모바일 클릭 말고 눌러서 슬라이드 되게
-*/
-
-/*
- 배경 회색인것 고치기
- 박스 중앙에 두기
- 컨테이너 옆에 짤리는 것 5번째부터 불투명하게 하기
- 클릭하면 좌우 이동 가능하게 하기
 */

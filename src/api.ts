@@ -4,6 +4,7 @@ import Tv from "./Tv/Tv";
 
 export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 
+
 const movieList = async () => {
 
     let page = 1;
@@ -65,7 +66,7 @@ const tvTopRated = async () => {
     let page = 1;
     let dataArray: [] = [];
     while (page < 6) {
-        const response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&${page}`);
+        const response = await fetch(`https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
@@ -87,13 +88,21 @@ export { tvLatest };
 
 /******************* movie *******************/
 
-// Latest movies https://api.themoviedb.org/3/movie/latest?api_key=0bc81ab4612512071ffe14dfe9bdca6b&language=en-US
+// 상영중인 영화중 최신의 인기있는 영화
 
+const fullDate = new Date();
+
+const year = JSON.stringify(fullDate.getFullYear());
+const month = JSON.stringify(fullDate.getMonth() + 1);
+const dateArray = [year, month];
+const date = dateArray.join('-');
 
 const latestMovies = async () => {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/latest?api_key=${API_KEY}&language=en-US`);
-    const json = await response.json();
-    return json;
+
+        const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&release_date.lte=${date}&with_watch_monetization_types=flatrate`);
+        const json = await response.json();
+        const data = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+        return data;
 }
 export { latestMovies };
 
