@@ -136,6 +136,7 @@ export const Box = styled(motion.article) <{ posterbg: string | undefined }>`
   width: 200px;
   height: 300px;
   font-size: 100%;
+  background-color: ${(props) => props.theme.bodyFtColor};
   background-image: url(${(props) => props.posterbg});
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -455,7 +456,3 @@ export default Home;
 //https://image.tmdb.org/t/p/original/backdrop-img(큰이미지)
 
 
-/* 추가
- + 로딩시 돌아가는 애니메이션
- + 모바일 클릭 말고 눌러서 슬라이드 되게
-*/

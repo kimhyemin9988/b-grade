@@ -6,12 +6,12 @@ import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, info
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingC from "../miniModule/LoadingC";
+import { ErrorMain } from "../NotFound";
 interface SearchI {
     success: string,
     status_message: string,
 }
 const Search = () => {
-
     const location = useLocation();
     const keyword = new URLSearchParams(location.search).get("keyword");
     /* 데이터 받아오기 */
@@ -44,7 +44,7 @@ const Search = () => {
                 }
             }
         }
-    }
+    };
     return (
         <>
             {isLoading ? (
@@ -53,66 +53,74 @@ const Search = () => {
                 </Loader>
             ) : (
                 <>
-                    <SliderContainer style={{ top: "0" }}>
-                        <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
-                        <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
-                        <Slider style={{ top: "0" }}>
-                            <AnimatePresence
-                                custom={sliderDirection}
-                                initial={false} onExitComplete={() => {
-                                    setLeaving((prev) => !prev);
-                                }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
-                                <Row
-                                    variants={rowVariants}
-                                    custom={sliderDirection}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                    transition={{ type: "tween", duration: 1 }}
-                                    key={index}
-                                >
-                                    {data?.slice(5 * index, (5 * (index + 1))).map((i) => (
-                                        /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남 */
-                                        <Box key={i.id}
-                                            posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
-                                            whileHover="hover"
-                                            initial="normal"
-                                            variants={boxVariants}
-                                            transition={{ type: "tween" }}
-                                            onClick={async () => {
-                                                setId(`${i.id}`);
-                                                setContent(i);
-                                            }} layoutId={`${i.id}`}
+                    {data?.length === 0 ? 
+                    <ErrorMain>
+                        <span>검색 결과가 없습니다.</span><br />
+                        <span>다른 용어로 검색해주세요.</span>
+                    </ErrorMain> : (
+                            <>
+                                <SliderContainer style={{ top: "0" }}>
+                                    <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
+                                    <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
+                                    <Slider style={{ top: "0" }}>
+                                        <AnimatePresence
+                                            custom={sliderDirection}
+                                            initial={false} onExitComplete={() => {
+                                                setLeaving((prev) => !prev);
+                                            }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
+                                            <Row
+                                                variants={rowVariants}
+                                                custom={sliderDirection}
+                                                initial="hidden"
+                                                animate="visible"
+                                                exit="exit"
+                                                transition={{ type: "tween", duration: 1 }}
+                                                key={index}
+                                            >
+                                                {data?.slice(5 * index, (5 * (index + 1))).map((i) => (
+                                                    /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남 */
+                                                    <Box key={i.id}
+                                                        posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
+                                                        whileHover="hover"
+                                                        initial="normal"
+                                                        variants={boxVariants}
+                                                        transition={{ type: "tween" }}
+                                                        onClick={async () => {
+                                                            setId(`${i.id}`);
+                                                            setContent(i);
+                                                        }} layoutId={`${i.id}`}
+                                                    >
+                                                        <Info key={i.id} variants={infoVariants}>
+                                                            <p>{i.title}</p>
+                                                        </Info>
+                                                    </Box>
+                                                ))}
+                                            </Row>
+                                        </AnimatePresence>
+                                    </Slider>
+                                </SliderContainer>
+                                <AnimatePresence>
+                                    {id ? (
+                                        <Overlay
+                                            variants={overlay}
+                                            onClick={() => {
+                                                setId(null)
+                                                navigate(`?keyword=${keyword}`);
+                                            }}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="exit"
                                         >
-                                            <Info key={i.id} variants={infoVariants}>
-                                                <p>{i.title}</p>
-                                            </Info>
-                                        </Box>
-                                    ))}
-                                </Row>
-                            </AnimatePresence>
-                        </Slider>
-                    </SliderContainer>
-                    <AnimatePresence>
-                        {id ? (
-                            <Overlay
-                                variants={overlay}
-                                onClick={() => {
-                                    setId(null)
-                                    navigate(`?keyword=${keyword}`);
-                                }}
-                                initial="hidden"
-                                animate="visible"
-                                exit="exit"
-                            >
-                                <BoxModal layoutId={id}>
-                                    <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                                    <BigTitle>{content?.title}</BigTitle>
-                                    <BigOverview>{content?.overview}</BigOverview>
-                                </BoxModal>
-                            </Overlay>
-                        ) : null}
-                    </AnimatePresence>
+                                            <BoxModal layoutId={id}>
+                                                <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+                                                <BigTitle>{content?.title}</BigTitle>
+                                                <BigOverview>{content?.overview}</BigOverview>
+                                            </BoxModal>
+                                        </Overlay>
+                                    ) : null}
+                                </AnimatePresence>
+                            </>
+                        )}
                 </>
             )}
         </>

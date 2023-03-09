@@ -17,7 +17,7 @@ cursor: pointer;
 padding: 0 1.5rem;
 border: 1px solid ${props => props.theme.bodyFtColor};
 `
-const ErrorMain = styled(Main)`
+export const ErrorMain = styled(Main)`
     font-size: 20px;
     height: 80vh;
     display: flex;
