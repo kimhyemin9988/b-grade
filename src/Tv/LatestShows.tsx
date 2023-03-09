@@ -1,10 +1,9 @@
 
 import { useQuery } from "react-query";
-import { Banner, BigTitle, Loader, Overview, Title } from "../MovieF/Movie";
+import { Banner, BigTitle, Overview, Title } from "../MovieF/Movie";
 import { tvLatest } from "../api";
 import LoadingC from "../miniModule/LoadingC";
-
-interface LatestShowsData {
+export interface LatestShowsData {
     adult: boolean;
     backdrop_path: string;
     first_air_date: string;
@@ -32,23 +31,21 @@ interface LatestShowsData {
 
 const LatestShows = () => {
     /* 데이터 받아오기 */
-    const { isLoading, data } = useQuery<LatestShowsData>(["tvLatest"], tvLatest);
+     const { isLoading, data } = useQuery<LatestShowsData[]>(["tvLatest"], tvLatest);
     return (
         <>
-            {isLoading ? (
-                <Loader>
-                    <LoadingC></LoadingC>
-                </Loader>
+             {isLoading ? (
+                <LoadingC></LoadingC>
             ) : (
                 <>
-                    <Banner bgPhoto="null" style={{ height: "50vh" }}>
-                        <h1 style={{ marginTop: "1rem" }}>Latest Show</h1>
-                        <BigTitle>title : {data?.name}</BigTitle>
-                        <Overview>overview : {data?.overview}</Overview>
-                        <h1>{data?.last_air_date}</h1>
+                     <Banner
+                        bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
+                        <Title>{data?.[0].original_name}</Title>
+                        <Overview>{data?.[0].first_air_date}</Overview>
+                        <Overview>{data?.[0].overview}</Overview>
                     </Banner>
                 </>
-            )}
+            )} 
         </>
     );
 

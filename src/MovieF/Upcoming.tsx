@@ -3,7 +3,7 @@ import { upcomingMovies } from "../api";
 
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Loader, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "./Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "./Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingC from "../miniModule/LoadingC";
@@ -44,9 +44,7 @@ const Upcoming = () => {
     return (
         <>
             {isLoading ? (
-                <Loader>
-                    <LoadingC></LoadingC>
-                </Loader>
+                        <LoadingC></LoadingC>
             ) : (
                 <>                   <SliderContainer style={{ top: "0" }}>
                     <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>

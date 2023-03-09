@@ -14,6 +14,7 @@ import LoadingC from "../miniModule/LoadingC";
 
 
 
+
 export const Main = styled.div`
     width: 100%;
     //    height: 100vh;
@@ -61,14 +62,6 @@ export const Wrapper = styled.div`
     display: flex;
 `;
 
-export const Loader = styled.div`
-    justify-content: center;
-    align-items: end;
-    display: flex;
-    width: 100%;
-    height: 50vh;
-    margin: 20px;
-`;
 
 export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   display: flex;
@@ -300,7 +293,6 @@ const Home = () => {
     왼쪽으로 움직이면 그 전에 있던 박스 오른쪽으로 사라지기 */
     const [content, setContent] = useState<movieData>();
 
-
     const [sliderDirection, setSliderDirection] = useState(0);
     const incraseIndex = (indexN: number) => {
         if (data) {
@@ -317,12 +309,9 @@ const Home = () => {
                     setLeaving(true);
                     setIndex((prev) => index > 0 ? prev - 1 : dataLength - 2);
                 }
-                //0~5, -1 잘리는것 빼기
             }
-            //애니메이션 왼쪽에서 나오게..
         }
     }
-
     /* onExitComplete :  끝났을 때 실행
     애니메이션이 끝나기 전에 다음 boxs가 생기면 겹친다
     눌렀을때 아직 박스가 없어지지 않았다면 클릭해도 함수가 실행되지 않도록 하며
@@ -343,12 +332,10 @@ const Home = () => {
                 <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
                 <Wrapper>
                     {isLoading ? (
-                        <Loader>
-                            <LoadingC></LoadingC>
-                        </Loader>
+                        <LoadingC></LoadingC>
                     ) : (
                         <>
-                            <Banner
+                       <Banner
                                 bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
                                 <Title>{data?.[0].original_title}</Title>
                                 <Overview>{data?.[0].overview}</Overview>

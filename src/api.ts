@@ -1,10 +1,9 @@
 import { movieData } from "./MovieF/Movie";
-
+import { LatestShowsData } from "./Tv/LatestShows";
 export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 
 
 const movieList = async () => {
-
     let page = 1;
     let dataArray: [] = [];
     while (page < 10) {
@@ -77,9 +76,22 @@ export { tvTopRated };
 //https://api.themoviedb.org/3/tv/latest?api_key=0bc81ab4612512071ffe14dfe9bdca6b&language=en-US =>/tv/latest
 
 const tvLatest = async () => {
-    const response = await fetch(`https://api.themoviedb.org/3/tv/latest?api_key=${API_KEY}&language=en-US`);
-    const json = await response.json();
-    return json;
+    let page = 1;
+    const dataArray : LatestShowsData[] = [];
+    while (page < 6) {
+        const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&page=${page}`);
+        const json = await response.json();
+        const data: LatestShowsData[] = await json.results.filter((i: LatestShowsData) => i.poster_path !== null).filter((i: LatestShowsData) => i.original_language == "ko");
+        page++;
+        dataArray.push(...data);
+    }
+    const videoResponse = await fetch(`https://api.themoviedb.org/3/tv/${dataArray?.[0].id}?api_key=${API_KEY}`);
+    const videoJson = await videoResponse.json();
+
+    dataArray.push(videoJson);
+    const lastData = dataArray.filter((i: LatestShowsData) => i.id === dataArray?.[0].id);
+    return lastData;
+
 }
 export { tvLatest };
 

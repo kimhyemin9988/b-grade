@@ -1,7 +1,7 @@
 import { tvPopular } from "../api";
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Loader, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tvData } from "./AiringToday";
@@ -42,9 +42,7 @@ const Popular = () => {
     return (
         <>
             {isLoading ? (
-                <Loader>
-                    <LoadingC></LoadingC>
-                </Loader>
+                        <LoadingC></LoadingC>
             ) : (
                 <>
                     <SliderContainer style={{ top: "0" }}>

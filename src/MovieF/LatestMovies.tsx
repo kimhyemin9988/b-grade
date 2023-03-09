@@ -1,6 +1,6 @@
 import { latestMovies } from "../api";
 import { useQuery } from "react-query";
-import { Box, Loader, movieData, Overview, RatingContainer, Title, Wrapper } from "./Movie";
+import { Box, movieData, Overview, RatingContainer, Title, Wrapper } from "./Movie";
 import styled from "styled-components";
 import YouTube from 'react-youtube';
 import LoadingC from "../miniModule/LoadingC";
@@ -45,9 +45,7 @@ const LatestMovies = () => {
     return (
         <>
             {isLoading ? (
-                <Loader>
-                    <LoadingC></LoadingC>
-                </Loader>
+                <LoadingC></LoadingC>
             ) : (
                 <Wrapper style={{ alignItems: "flex-start" }}>
                     <Overview>Popular movies in theaters</Overview>

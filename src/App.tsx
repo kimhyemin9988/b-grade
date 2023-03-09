@@ -128,9 +128,11 @@ export default App;
 	11. search에서 로딩중 화면 만들기 -> 검색없음 화면 만들기+
 
 	
+
+
 	7. 컨테이너 앞뒤로 마지막 마진 주기
 
-	8. tv에서 Latest show 말고 가장 인기있는 쇼로 배경 고치기 
+	8. tv에서 Latest show 말고 가장 인기있는 한국 쇼로 배경 고치기 ->데이터는 받아옴.. 나머지 하기
 
 	14. Section 타이틀 마다 icon과 타이틀 넣기
 
@@ -159,4 +161,9 @@ export default App;
 	Stars Paul RuddEvangeline LillyMichael Douglas
 
 	25. back to top
+
+	26. section 장르별로 #태그 검색 가능
+
+	++트위터도 트위터 안같게....일단 전체 디자인은 노마드에서 가져오고 디테일한 부분 수정
+	++ 
 	*/
