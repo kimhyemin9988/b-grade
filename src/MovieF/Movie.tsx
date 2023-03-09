@@ -162,8 +162,8 @@ export const boxVariants = {
 export const rowVariants = {
     hidden: (sliderDirection: number) => {
         return {
-            x : sliderDirection > 0 ? 1200 :  -1200 
-            };
+            x: sliderDirection > 0 ? 1200 : -1200
+        };
     },
     visible: {
         x: 0,
@@ -171,8 +171,8 @@ export const rowVariants = {
     },
     exit: (sliderDirection: number) => {
         return {
-            x : sliderDirection < 0 ? 1200 :  -1200 
-            };
+            x: sliderDirection < 0 ? 1200 : -1200
+        };
     },
 };
 
@@ -290,11 +290,13 @@ const Home = () => {
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
     const [index, setIndex] = useState(0);
-    const [sliderDirection, setSliderDirection] = useState(0);
-    // 오른쪽으로 움직이면 그 전에 있던 박스 왼쪽으로 사라지기
-    //왼쪽으로 움직이면 그 전에 있던 박스 오른쪽으로 사라지기
     const [leaving, setLeaving] = useState(false);
+    /*  오른쪽으로 움직이면 그 전에 있던 박스 왼쪽으로 사라지기
+    왼쪽으로 움직이면 그 전에 있던 박스 오른쪽으로 사라지기 */
     const [content, setContent] = useState<movieData>();
+
+    
+    const [sliderDirection, setSliderDirection] = useState(0);
     const incraseIndex = (indexN: number) => {
         if (data) {
             if (leaving) return;

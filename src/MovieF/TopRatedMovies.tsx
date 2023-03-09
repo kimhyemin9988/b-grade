@@ -37,9 +37,7 @@ const TopRatedMovies = () => {
                     setLeaving(true);
                     setIndex((prev) => index > 0 ? prev - 1 : dataLength - 2);
                 }
-                //0~5, -1 잘리는것 빼기
             }
-            //애니메이션 왼쪽에서 나오게..
         }
     }
     return (
