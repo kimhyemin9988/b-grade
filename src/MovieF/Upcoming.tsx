@@ -3,7 +3,7 @@ import { upcomingMovies } from "../api";
 
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Loader, movieData, overlay, Overlay, Row, rowVariants, Slider } from "./Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Loader, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "./Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,13 +20,23 @@ const Upcoming = () => {
     /*박스 클릭시 해당하는 tv프로그램의 데이터를 저장 */
     const [content, setContent] = useState<movieData>();
     const navigate = useNavigate();
-    const incraseIndex = () => {
+
+    const [sliderDirection, setSliderDirection] = useState(0);
+    const incraseIndex = (indexN: number) => {
         if (data) {
             if (leaving) return;
             else {
-                const dataLength = Math.floor(data?.length / 6); // 5
-                setLeaving(true);
-                setIndex((prev) => dataLength - 1 > index ? prev + 1 : 0);
+                setSliderDirection(indexN);
+                if (indexN === 1) {
+                    const dataLength = Math.floor(data?.length / 5); // 5
+                    setLeaving(true);
+                    setIndex((prev) => dataLength - 1 > index ? prev + 1 : 0);
+                }
+                else if (indexN === -1) {
+                    const dataLength = Math.floor(data?.length / 5);
+                    setLeaving(true);
+                    setIndex((prev) => index > 0 ? prev - 1 : dataLength - 2);
+                }
             }
         }
     }
@@ -35,22 +45,26 @@ const Upcoming = () => {
             {isLoading ? (
                 <Loader> Loading...</Loader >
             ) : (
-                <>                    <button onClick={incraseIndex} style={{ width: "12em" }}>Next</button>
-                    <Slider  style={{ top : "0"}}>
+                <>                   <SliderContainer style={{ top: "0" }}>
+                    <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
+                    <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
+                    <Slider style={{ top: "0" }}>
                         <AnimatePresence
+                            custom={sliderDirection}
                             initial={false} onExitComplete={() => {
                                 setLeaving((prev) => !prev);
                             }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
                             <Row
                                 variants={rowVariants}
+                                custom={sliderDirection}
                                 initial="hidden"
                                 animate="visible"
                                 exit="exit"
-                                transition={{ type: "tween", duration: 1 }}
+                                transition={{ type: "tween", duration: 0.5 }}
                                 key={index}
                             >
                                 {/* Row가 index가 0이 될때까지  반복, random한 수로 하면 오류남*/}
-                                {data?.slice(1).slice(6 * index, (6 * (index + 1))).map((i) => (
+                                {data?.slice(5 * index, (5 * (index + 1))).map((i) => (
                                     /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남 */
                                     <Box key={i.id}
                                         posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
@@ -72,6 +86,7 @@ const Upcoming = () => {
                             </Row>
                         </AnimatePresence>
                     </Slider>
+                </SliderContainer>
                     <AnimatePresence>
                         {id ? (
                             <Overlay

@@ -59,7 +59,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-top: -100px;
+    top: -100px;
   height: 40vh;
   display: flex;
   justify-content: center;
@@ -99,7 +99,7 @@ export const Slider = styled.div`
     }
 
 `;
-const MovingSlider = styled.button`
+export const MovingSlider = styled.button`
     z-index: 5;
     position: absolute;
     background-color: #ffffff;
@@ -198,6 +198,7 @@ export const infoVariants = {
         },
     },
 };
+
 /* 모달창 */
 export const BoxModal = styled(motion.div)`
   width: 10rem;
@@ -248,7 +249,7 @@ export const BigOverview = styled.p`
   padding: 5px;
 `;
 
-const SliderContainer = styled.div`
+export const SliderContainer = styled.div`
     top: -150px;
     width: 1200px;
     height: 460px;
@@ -258,6 +259,7 @@ const SliderContainer = styled.div`
     position : relative;
     overflow-x: hidden;
     border: 1px solid ${(props) => props.theme.bodyFtColor};
+    overflow-y: hidden;
 `
 const RatingStar = styled(HomeLogo)`
     width:30px;
@@ -269,7 +271,7 @@ const RatingSpan = styled(Title)`
     margin:0;
     font-weight: 100;
 `
-const RatingContainer = styled.div`
+export const RatingContainer = styled.div`
     display: flex;
     position: absolute;
     top: 0;

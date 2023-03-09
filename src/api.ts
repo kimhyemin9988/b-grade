@@ -1,6 +1,5 @@
+import { videoData } from "./MovieF/LatestMovies";
 import { movieData } from "./MovieF/Movie";
-import { useState } from "react";
-import Tv from "./Tv/Tv";
 
 export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 
@@ -10,7 +9,7 @@ const movieList = async () => {
     let page = 1;
     let dataArray: [] = [];
     while (page < 10) {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&include_video=false&page=${page}&vote_average.gte=4.5&vote_average.lte=5.5&with_watch_monetization_types=flatrat`);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&include_video=false&page=${page}&vote_average.gte=4.5&vote_average.lte=5.5&with_watch_monetization_types=flatrat&include_video=false`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
@@ -99,13 +98,23 @@ const date = dateArray.join('-');
 
 const latestMovies = async () => {
 
-        const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&release_date.lte=${date}&with_watch_monetization_types=flatrate`);
-        const json = await response.json();
-        const data = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
-        return data;
+    const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&page=1&release_date.lte=${date}&with_watch_monetization_types=flatrate`);
+    const json = await response.json();
+    const data = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "").slice(2, 3);
+    return data;
 }
 export { latestMovies };
 
+const videoid = "315162";
+
+const playVideo = async () => {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${videoid}/videos?api_key=${API_KEY}`);
+    const json = await response.json();
+    const data = await json.results.filter((i : videoData)=>i.name == 'Official Trailer');
+    return data;
+}
+
+export { playVideo };
 
 //Top Rated Movies https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&${page}
 

@@ -1,38 +1,71 @@
-import { latestMovies } from "../api";
+import { latestMovies, playVideo } from "../api";
 import { useQuery } from "react-query";
-import { Banner, Box, Loader, movieData, Overview, Title, Wrapper } from "./Movie";
+import { Box, Loader, movieData, Overview, RatingContainer, Title, Wrapper } from "./Movie";
 import styled from "styled-components";
-export const Container = styled.div<{ bgPhoto: string | undefined }>`
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 10%;
-    background-image: linear-gradient(rgba(0,0,0,0) 20%, ${(props) => props.theme.bodyBgColor}), url(${(props) => props.bgPhoto});
-    background-size: cover;
-    height: 40vh;
-`
+import YouTube from 'react-youtube';
 
+export const Container = styled.section<{ bgPhoto: string | undefined }>`
+    width: 100%;
+    background-image: url(${(props) => props.bgPhoto});
+    background-size: cover;
+    height: 80vh;
+`
+const Blur = styled.div`
+    background-color: rgba(255, 255, 255, 0.034);
+    backdrop-filter: blur(50px);
+    height: 80vh;
+    display: grid;
+    grid-template-areas:
+    "title title title"
+    "video posterbg posterbg"
+    "overview overview overview";
+`
+const SqureBox = styled.article<{ posterbg: string | undefined }>`
+    width: 200px;
+    height: 300px; 
+    background-image: url(${(props) => props.posterbg});
+`
+const OverviewContainer = styled.div`
+    grid-area: overview;
+    padding: 20px;
+`
+const opts = {
+    height: '300',
+    width: '600',
+};
+export interface videoData {
+    name: string;
+    key: string;
+};
 const LatestMovies = () => {
 
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["latestMovies"], latestMovies);
+    const { isLoading: videoLoading, data: video } = useQuery<videoData[]>(["video"], playVideo);
     return (
         <>
             {isLoading ? (
                 <Loader> Loading...</Loader >
             ) : (
-                <Wrapper>
-                    <Title>Popular movies in theaters</Title>
+                <Wrapper style={{ alignItems: "flex-start" }}>
+                    <Overview>Popular movies in theaters</Overview>
                     <Container
-                        bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[11].backdrop_path}`}>
-                        <Title>{data?.[11].original_title}</Title>
-                        <Overview>{data?.[11].overview}</Overview>
+                        bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
+                        <Blur>
+                            <Overview style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}</Overview>
+                            <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w200/${data?.[0].poster_path}`}></SqureBox>
+                            <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={video?.[0].key} opts={opts} />
+                            <OverviewContainer>
+                                <Overview>{data?.[0].overview}</Overview>
+                            </OverviewContainer>
+                        </Blur>
                     </Container>
                 </Wrapper>
-            )}
+            )
+            }
         </>
     );
 
-}
+};
+
 export default LatestMovies;
