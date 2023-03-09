@@ -1,4 +1,3 @@
-import { videoData } from "./MovieF/LatestMovies";
 import { movieData } from "./MovieF/Movie";
 
 export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
@@ -96,15 +95,25 @@ const month = JSON.stringify(fullDate.getMonth() + 1);
 const dateArray = [year, month];
 const date = dateArray.join('-');
 
+interface videoData {
+    name: string;
+    key: string;
+};
+
 const latestMovies = async () => {
 
     const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&page=1&release_date.lte=${date}&with_watch_monetization_types=flatrate`);
     const json = await response.json();
     const data = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "").slice(2, 3);
+
+    const videoResponse = await fetch(`https://api.themoviedb.org/3/movie/${data?.[0].id}/videos?api_key=${API_KEY}`);
+    const videoJson = await videoResponse.json();
+    const videoObj = await videoJson.results.filter((i: videoData) => i.name == 'Official Trailer')[0];
+    await data.push(videoObj);
     return data;
 }
 export { latestMovies };
-
+/* 
 const videoid = "315162";
 
 const playVideo = async () => {
@@ -114,7 +123,7 @@ const playVideo = async () => {
     return data;
 }
 
-export { playVideo };
+export { playVideo }; */
 
 //Top Rated Movies https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&${page}
 

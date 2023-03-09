@@ -9,6 +9,8 @@ import LatestMovies from "./LatestMovies";
 import TopRatedMovies from "./TopRatedMovies";
 import Upcoming from "./Upcoming";
 import { HomeLogo } from "../HomeHeader";
+import Loading from "../miniModule/LoadingC";
+import LoadingC from "../miniModule/LoadingC";
 
 
 
@@ -48,6 +50,7 @@ export interface movieData {
     video: boolean;
     vote_average: number;
     vote_count: number;
+    key: string;
 };
 
 
@@ -59,11 +62,12 @@ export const Wrapper = styled.div`
 `;
 
 export const Loader = styled.div`
-    top: -100px;
-  height: 40vh;
-  display: flex;
-  justify-content: center;
-  align-items:end;
+    justify-content: center;
+    align-items: end;
+    display: flex;
+    width: 100%;
+    height: 50vh;
+    margin: 20px;
 `;
 
 export const Banner = styled.div<{ bgPhoto: string | undefined }>`
@@ -295,7 +299,7 @@ const Home = () => {
     왼쪽으로 움직이면 그 전에 있던 박스 오른쪽으로 사라지기 */
     const [content, setContent] = useState<movieData>();
 
-    
+
     const [sliderDirection, setSliderDirection] = useState(0);
     const incraseIndex = (indexN: number) => {
         if (data) {
@@ -338,7 +342,9 @@ const Home = () => {
                 <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
                 <Wrapper>
                     {isLoading ? (
-                        <Loader>Loading...</Loader>
+                        <Loader>
+                            <LoadingC></LoadingC>
+                        </Loader>
                     ) : (
                         <>
                             <Banner

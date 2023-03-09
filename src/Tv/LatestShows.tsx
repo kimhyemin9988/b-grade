@@ -2,6 +2,7 @@
 import { useQuery } from "react-query";
 import { Banner, BigTitle, Loader, Overview, Title } from "../MovieF/Movie";
 import { tvLatest } from "../api";
+import LoadingC from "../miniModule/LoadingC";
 
 interface LatestShowsData {
     adult: boolean;
@@ -35,11 +36,13 @@ const LatestShows = () => {
     return (
         <>
             {isLoading ? (
-                <Loader> Loading...</Loader >
+                <Loader>
+                    <LoadingC></LoadingC>
+                </Loader>
             ) : (
                 <>
-                    <Banner bgPhoto="null" style={{height:"50vh"}}>
-                        <h1 style={{marginTop:"1rem"}}>Latest Show</h1>
+                    <Banner bgPhoto="null" style={{ height: "50vh" }}>
+                        <h1 style={{ marginTop: "1rem" }}>Latest Show</h1>
                         <BigTitle>title : {data?.name}</BigTitle>
                         <Overview>overview : {data?.overview}</Overview>
                         <h1>{data?.last_air_date}</h1>

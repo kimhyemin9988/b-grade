@@ -4,6 +4,7 @@ import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, info
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { topRatedMovies } from "../api";
+import LoadingC from "../miniModule/LoadingC";
 
 
 const TopRatedMovies = () => {
@@ -43,10 +44,12 @@ const TopRatedMovies = () => {
     return (
         <>
             {isLoading ? (
-                <Loader> Loading...</Loader >
+                <Loader>
+                    <LoadingC></LoadingC>
+                </Loader>
             ) : (
                 <>
-                    <SliderContainer style={{top:"0"}}>
+                    <SliderContainer style={{ top: "0" }}>
                         <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
                         <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
                         <Slider style={{ top: "0" }}>

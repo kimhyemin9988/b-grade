@@ -5,6 +5,7 @@ import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, info
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tvData } from "./AiringToday";
+import LoadingC from "../miniModule/LoadingC";
 const Popular = () => {
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<tvData[]>(["tvPopular"], tvPopular);
@@ -41,7 +42,9 @@ const Popular = () => {
     return (
         <>
             {isLoading ? (
-                <Loader> Loading...</Loader >
+                <Loader>
+                    <LoadingC></LoadingC>
+                </Loader>
             ) : (
                 <>
                     <SliderContainer style={{ top: "0" }}>

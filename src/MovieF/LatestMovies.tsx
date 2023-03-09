@@ -1,8 +1,10 @@
-import { latestMovies, playVideo } from "../api";
+import { latestMovies } from "../api";
 import { useQuery } from "react-query";
 import { Box, Loader, movieData, Overview, RatingContainer, Title, Wrapper } from "./Movie";
 import styled from "styled-components";
 import YouTube from 'react-youtube';
+import LoadingC from "../miniModule/LoadingC";
+
 
 export const Container = styled.section<{ bgPhoto: string | undefined }>`
     width: 100%;
@@ -33,19 +35,19 @@ const opts = {
     height: '300',
     width: '600',
 };
-export interface videoData {
-    name: string;
-    key: string;
-};
 const LatestMovies = () => {
 
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["latestMovies"], latestMovies);
-    const { isLoading: videoLoading, data: video } = useQuery<videoData[]>(["video"], playVideo);
+    /*     const { isLoading: videoLoading, data: video } = useQuery<videoData[]>(["video"], playVideo); */
+    //console.log(data);
+    //console.log(data?.[1].key);
     return (
         <>
             {isLoading ? (
-                <Loader> Loading...</Loader >
+                <Loader>
+                    <LoadingC></LoadingC>
+                </Loader>
             ) : (
                 <Wrapper style={{ alignItems: "flex-start" }}>
                     <Overview>Popular movies in theaters</Overview>
@@ -54,7 +56,7 @@ const LatestMovies = () => {
                         <Blur>
                             <Overview style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}</Overview>
                             <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w200/${data?.[0].poster_path}`}></SqureBox>
-                            <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={video?.[0].key} opts={opts} />
+                            <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={opts} />
                             <OverviewContainer>
                                 <Overview>{data?.[0].overview}</Overview>
                             </OverviewContainer>

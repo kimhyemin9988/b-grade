@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Loader, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LoadingC from "../miniModule/LoadingC";
 interface SearchI {
     success: string,
     status_message: string,
@@ -47,7 +48,9 @@ const Search = () => {
     return (
         <>
             {isLoading ? (
-                <Loader> Loading...</Loader >
+                <Loader>
+                    <LoadingC></LoadingC>
+                </Loader>
             ) : (
                 <>
                     <SliderContainer style={{ top: "0" }}>

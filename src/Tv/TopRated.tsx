@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tvTopRated } from "../api";
 import { tvData } from "./AiringToday";
+import LoadingC from "../miniModule/LoadingC";
 const TopRated = () => {
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<tvData[]>(["tvTopRated"], tvTopRated);
@@ -42,7 +43,9 @@ const TopRated = () => {
     return (
         <>
             {isLoading ? (
-                <Loader> Loading...</Loader >
+                <Loader>
+                    <LoadingC></LoadingC>
+                </Loader>
             ) : (
                 <>
                     <SliderContainer style={{ top: "0" }}>
