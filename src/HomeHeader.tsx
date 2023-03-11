@@ -18,6 +18,7 @@ const Header = styled(motion.header)`
 	position: fixed;
 	background-color: ${(props) => props.theme.bodyBgColor};
     z-index: 10;
+    font-weight: 700;
 `
 
 const Col = styled.div`

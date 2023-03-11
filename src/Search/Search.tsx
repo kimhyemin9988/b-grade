@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { useLocation } from "react-router";
 import { SearchData } from "../api";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, movieData, MovingSlider, overlay, Overlay, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingC from "../miniModule/LoadingC";
@@ -88,9 +88,6 @@ const Search = () => {
                                                             setContent(i);
                                                         }} layoutId={`${i.id}`}
                                                     >
-                                                        <Info key={i.id} variants={infoVariants}>
-                                                            <p>{i.title}</p>
-                                                        </Info>
                                                     </Box>
                                                 ))}
                                             </Row>

@@ -1,5 +1,5 @@
 import { movieData } from "./MovieF/Movie";
-import { LatestShowsData } from "./Tv/LatestShows";
+import { LatestShowsData } from "./Tv/LatestTopShows";
 export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 
 
@@ -25,14 +25,41 @@ const tvPopular = async () => {
 
     let page = 1;
     let dataArray: [] = [];
-    while (page < 6) {
-        const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=${page}`);
+    while (page < 20) {
+        const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&page=${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
         dataArray = [...dataArray, ...data];
+        /* 각 나라별 40개가 되면 종료
+        배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료
+        */
+        let boolean = ['en', 'zh', 'ja', 'ko'].map((k) => dataArray.filter((i: movieData) => i.original_language === k).length > 10);
+        if (!boolean.includes(false)) {
+            break;
+        }
     }
+    dataArray.sort((a: movieData, b: movieData) => {
+        return b.popularity - a.popularity
+    });
     return dataArray;
+    /*
+            if(!boolean.includes(false))
+            {
+                break;
+            }
+    > 10
+    console.log(dataArray.map((i: movieData)=> if(i.original_language === 'en' > 10) return true));
+    dataArray의 길이가 10이 될때까지
+    > 10
+    dataArray.map((i: movieData)=> i.original_language)
+            if(dataArray.map((i: movieData)=> i.original_language))
+                break;
+        console.log(dataArray.filter((i: movieData)=> i.original_language === 'en'));
+        console.log(dataArray.filter((i: movieData)=> i.original_language === 'zh'));
+        console.log(dataArray.filter((i: movieData)=> i.original_language === 'ja'));
+        console.log(dataArray.filter((i: movieData)=> i.original_language === 'ko'));  */
+    /*     console.log(Array.from(new Set(dataArray.map((i: movieData)=> i.original_language))));  */
 }
 export { tvPopular };
 
@@ -44,7 +71,7 @@ const tvAiring = async () => {
     let page = 1;
     let dataArray: [] = [];
     while (page < 6) {
-        const response = await fetch(`https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=en-US&page=${page}`);
+        const response = await fetch(`https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
@@ -77,11 +104,11 @@ export { tvTopRated };
 
 const tvLatest = async () => {
     let page = 1;
-    const dataArray : LatestShowsData[] = [];
-    while (page < 6) {
+    const dataArray: LatestShowsData[] = [];
+    while (page < 3) {
         const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&page=${page}`);
         const json = await response.json();
-        const data: LatestShowsData[] = await json.results.filter((i: LatestShowsData) => i.poster_path !== null).filter((i: LatestShowsData) => i.original_language == "ko");
+        const data: LatestShowsData[] = await json.results.filter((i: LatestShowsData) => i.poster_path !== null);
         page++;
         dataArray.push(...data);
     }

@@ -1,6 +1,6 @@
 import { latestMovies } from "../api";
 import { useQuery } from "react-query";
-import { Box, movieData, Overview, RatingContainer, Title, Wrapper } from "./Movie";
+import { Box, movieData, Overview, RatingContainer, RatingSpan, Title, Wrapper } from "./Movie";
 import styled from "styled-components";
 import YouTube from 'react-youtube';
 import LoadingC from "../miniModule/LoadingC";
@@ -48,11 +48,11 @@ const LatestMovies = () => {
                 <LoadingC></LoadingC>
             ) : (
                 <Wrapper style={{ alignItems: "flex-start" }}>
-                    <Overview>Popular movies in theaters</Overview>
+                    <RatingSpan style={{ fontSize: "0.5rem", paddingLeft: "20px", marginBottom:"20px" }}>Popular Movies In Theaters</RatingSpan>
                     <Container
                         bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
                         <Blur>
-                            <Overview style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}</Overview>
+                            <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}</RatingSpan>
                             <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w200/${data?.[0].poster_path}`}></SqureBox>
                             <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={opts} />
                             <OverviewContainer>

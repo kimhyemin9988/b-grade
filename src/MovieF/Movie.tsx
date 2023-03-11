@@ -18,6 +18,7 @@ import LoadingC from "../miniModule/LoadingC";
 export const Main = styled.div`
     width: 100%;
     //    height: 100vh;
+    margin-bottom: 1rem;
 `
 
 export const ToggleThemeBtn = styled.button`
@@ -71,6 +72,7 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   background-image: linear-gradient(rgba(0,0,0,0) 20%, ${(props) => props.theme.bodyBgColor}), url(${(props) => props.bgPhoto});
   background-size: cover;
   height: 100vh;
+  font-weight: 600;
 `;
 
 
@@ -133,6 +135,7 @@ export const Box = styled(motion.article) <{ posterbg: string | undefined }>`
   background-image: url(${(props) => props.posterbg});
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+    position: relative;
   margin:10px;
   &:first-child {
     transform-origin: center left;
@@ -152,7 +155,6 @@ export const boxVariants = {
         transition: {
             delay: 0.3,
             duaration: 0.3,
-            type: "tween",
         },
     },
 };
@@ -173,29 +175,27 @@ export const rowVariants = {
         };
     },
 };
-
+/* 
 export const Info = styled(motion.div)`
-  background-color: ${(props) => props.theme.hoverNavItem};
-  opacity: 0;
+  background-color: ${(props) => props.theme.bodyBgColor};
   position: absolute;
   width: 100%;
-  bottom: 0;
+    bottom: 0;
+    opacity: 0;
   p {
     text-align: center;
     font-size: 0.3rem;
   }
-`;
+`; */
 
-export const infoVariants = {
+/* export const infoVariants = {
     hover: {
         opacity: 1,
         transition: {
-            delay: 0.1,
-            duaration: 0.3,
-            type: "tween",
+            delay: 0.3,
         },
     },
-};
+}; */
 
 /* 모달창 */
 export const BoxModal = styled(motion.div)`
@@ -259,15 +259,14 @@ export const SliderContainer = styled.div`
     border: 1px solid ${(props) => props.theme.bodyFtColor};
     overflow-y: hidden;
 `
-const RatingStar = styled(HomeLogo)`
-    width:30px;
-    height:30px;
-    margin-right: 10px;
+export const RatingStar = styled.svg`
+    height:0.7rem;
+    width: 0.7rem;
+    margin-right: 0.3em;
 `
-const RatingSpan = styled(Title)`
-    font-size:30px;
-    margin:0;
-    font-weight: 100;
+export const RatingSpan = styled.p`
+    font-size:0.5rem;
+    font-weight: 600;
 `
 export const RatingContainer = styled.div`
     display: flex;
@@ -299,14 +298,12 @@ const Home = () => {
             if (leaving) return;
             else {
                 setSliderDirection(indexN);
+                setLeaving(true);
+                const dataLength = Math.floor(data?.length / 5);
                 if (indexN === 1) {
-                    const dataLength = Math.floor(data?.length / 5); // 5
-                    setLeaving(true);
                     setIndex((prev) => dataLength - 1 > index ? prev + 1 : 0);
                 }
                 else if (indexN === -1) {
-                    const dataLength = Math.floor(data?.length / 5);
-                    setLeaving(true);
                     setIndex((prev) => index > 0 ? prev - 1 : dataLength - 2);
                 }
             }
@@ -335,18 +332,16 @@ const Home = () => {
                         <LoadingC></LoadingC>
                     ) : (
                         <>
-                       <Banner
+                            <Banner
                                 bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
                                 <Title>{data?.[0].original_title}</Title>
                                 <Overview>{data?.[0].overview}</Overview>
                             </Banner>
                             <SliderContainer>
                                 <RatingContainer>
-                                    <RatingStar>
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="#ffb804" /></svg>
-                                        {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
-                                    </RatingStar>
-                                    <RatingSpan>RATING (4.5 ~ 5.5)</RatingSpan>
+                                    <RatingStar xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="#ffb804" /></ RatingStar>
+                                    {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
+                                    <RatingSpan>Rating 4.5 ~ 5.5</RatingSpan>
                                     <RatingSpan style={{ color: "gray" }}>/10</RatingSpan>
                                 </RatingContainer>
                                 <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
@@ -386,7 +381,7 @@ const Home = () => {
                                                         setId(`${i.id}`);
                                                         setContent(i);
                                                         navigate(`movie/${i.id}`);
-                                                    }} layoutId={`${i.id}`}
+                                                    }} layoutId={`${i.id}a`}
                                                 >
                                                 </Box>
                                             ))}
@@ -406,7 +401,7 @@ const Home = () => {
                                         animate="visible"
                                         exit="exit"
                                     >
-                                        <BoxModal layoutId={id}>
+                                        <BoxModal layoutId={id+`a`}>
                                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                             <BigTitle>{content?.title}</BigTitle>
                                             <BigOverview>

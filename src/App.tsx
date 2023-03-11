@@ -7,8 +7,8 @@ import HomeHeader from './HomeHeader';
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
-    font-family: 'LINESeedKR-Bd';
-    src: local("LINESeedKR"),url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-family: 'LINESeedKR';
+    src: local("LINESeedKR"),url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR.woff2') format('woff2');
     font-style: normal;
 }
 html, body, div, span, applet, object, iframe,
@@ -127,14 +127,22 @@ export default App;
 	
 	11. search에서 로딩중 화면 만들기 -> 검색없음 화면 만들기+
 
+	7. 컨테이너 앞뒤로 마지막 마진 주기 + 
+
+	20. 포스터 호버시 회색배경화면 바꾸고 글씨도 thema마다 바뀌게 고치기 -> 포스터에 이름 써있음 필요x +
+
+	18. 레이아웃 번호를 같게 하니 애니메이션 이동됨 -> 수정 + 
+
+	14. Section 타이틀 마다 icon과 타이틀 넣기 +
+
+	21. 글씨 250자 이상이면 삭제되는것 다른 슬라이드 안고침 +
+
+
 	
 
+	27. tv는 on air과 poluar 겹치는 것 많아서 poluar에서 나라별로 카테고리 만들기
 
-	7. 컨테이너 앞뒤로 마지막 마진 주기
-
-	8. tv에서 Latest show 말고 가장 인기있는 한국 쇼로 배경 고치기 ->데이터는 받아옴.. 나머지 하기
-
-	14. Section 타이틀 마다 icon과 타이틀 넣기
+	8. tv에서 Latest show 말고 가장 인기있는 최신 쇼로 배경 고치기 ->데이터는 받아옴.. 나머지 하기
 
 	15. tv쇼는 시즌별로 select 가능하게
 
@@ -142,13 +150,7 @@ export default App;
 	
 	17. 검색시 무한 스크롤
 
-	18. 레이아웃 번호를 같게 하니 애니메이션 이동됨 -> 수정
-
 	19. 포스터 제목을 누르거나 more detail버튼 누르면 다른 창으로 이동됨
-
-	20. 포스터 호버시 회색배경화면 바꾸고 글씨도 thema마다 바뀌게 고치기
-
-	21. 글씨 250자 이상이면 삭제되는것 다른 슬라이드 안고침
 
 	22. rating에 별점 넣기
 
@@ -164,6 +166,4 @@ export default App;
 
 	26. section 장르별로 #태그 검색 가능
 
-	++트위터도 트위터 안같게....일단 전체 디자인은 노마드에서 가져오고 디테일한 부분 수정
-	++ 
 	*/

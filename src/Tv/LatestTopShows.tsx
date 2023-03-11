@@ -28,8 +28,8 @@ export interface LatestShowsData {
     vote_average: number;
     vote_count: number;
 }
-
-const LatestShows = () => {
+/*인기있는 최신 tv */
+const LatestTopShows = () => {
     /* 데이터 받아오기 */
      const { isLoading, data } = useQuery<LatestShowsData[]>(["tvLatest"], tvLatest);
     return (
@@ -40,7 +40,7 @@ const LatestShows = () => {
                 <>
                      <Banner
                         bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
-                        <Title>{data?.[0].original_name}</Title>
+                        <Title>{data?.[0].name}</Title>
                         <Overview>{data?.[0].first_air_date}</Overview>
                         <Overview>{data?.[0].overview}</Overview>
                     </Banner>
@@ -50,7 +50,7 @@ const LatestShows = () => {
     );
 
 }
-export default LatestShows;
+export default LatestTopShows;
 /*
             /* 데이터 받아오기 
             const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);

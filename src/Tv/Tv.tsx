@@ -1,17 +1,19 @@
 import { Main, Wrapper } from "../MovieF/Movie";
 import AiringToday from "./AiringToday";
-import LatestShows from "./LatestShows";
+import LatestTopShows from "./LatestTopShows";
 import Popular from "./Popular";
 import TopRated from "./TopRated";
 
 const Tv = () => {
     return (
-        <>
-            <LatestShows></LatestShows>
-            <AiringToday></AiringToday>
+        <Main>
+            <Wrapper>
+                <LatestTopShows></LatestTopShows>
+                <AiringToday></AiringToday>
+            </Wrapper>
             <Popular></Popular>
             <TopRated></TopRated>
-        </>
+        </Main>
     );
 
 }
