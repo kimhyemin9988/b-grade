@@ -1,15 +1,15 @@
 import { tvPopular } from "../api";
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, Title, Wrapper } from "../MovieF/Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer,  } from "../MovieF/Movie";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { tvData } from "./AiringToday";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
-import styled, { DefaultTheme } from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { DefalutEn, PopularLanguage } from "../Atoms";
+import styled from "styled-components";
+import { useRecoilValue } from "recoil";
+import { PopularLanguage } from "../Atoms";
 import Select from 'react-select';
 
 
@@ -47,16 +47,15 @@ const Popular = () => {
 
     const [handleValue, setHandleValue] = useState<tvData[]>();
     const handleChange = (e: any) => {
-        const { value } = e; // value ==  "Todo"
+        const { value } = e; 
         setHandleValue(data?.filter((i: tvData) => i.original_language === value) || []);
     }
     /* 데이터 받아오기 */
-    const [index, setIndex] = useState(0); //슬라이더 인덱스
+    const [index, setIndex] = useState(0); 
     const [leaving, setLeaving] = useState(false);
-    //슬라이더 박스 하나가 떠나고 다음것이 들어오는것 boolean
-    /* 모달창 */
+
     const [id, setId] = useState<null | string>(null);
-    /*박스 클릭시 해당하는 tv프로그램의 데이터를 저장 */
+
     const [content, setContent] = useState<tvData>();
     const navigate = useNavigate();
     const [sliderDirection, setSliderDirection] = useState(0);
@@ -71,7 +70,7 @@ const Popular = () => {
                 setSliderDirection(indexN);
                 setLeaving(true);
                 indexN === 1 ? (setIndex((prev) => prev = index === 0 ? 1 : 0)) : (setIndex((prev) => prev = index === 1 ? 0 : 1));
-                //1이면 오른쪽 이동, -1이면 왼쪽 이동, indexN는 0아니면 1이다
+                //1이면 오른쪽 이동, -1이면 왼쪽 이동, indexN는 0 or 1 뿐이다
             }
 
         }
@@ -104,7 +103,7 @@ const Popular = () => {
                                     custom={sliderDirection}
                                     initial={false} onExitComplete={() => {
                                         setLeaving((prev) => !prev);
-                                    }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
+                                    }}>
                                     <Row
                                         variants={rowVariants}
                                         custom={sliderDirection}
@@ -114,9 +113,7 @@ const Popular = () => {
                                         transition={{ type: "tween", duration: 0.5 }}
                                         key={index}
                                     >
-                                        {/* Row가 index가 0이 될때까지  반복, random한 수로 하면 오류남*/}
                                         {handleValue?.slice(5 * index, (5 * (index + 1))).map((i) => (
-                                            /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남 */
                                             <Box key={i.id}
                                                 posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
                                                 whileHover="hover"
@@ -172,8 +169,3 @@ const Popular = () => {
 
 }
 export default Popular;
-
-/*
-            /* 데이터 받아오기 
-            const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);
-*/

@@ -1,10 +1,10 @@
-import { useState } from "react";
+
 import { Link } from "react-router-dom";
 import styled, { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./App";
 import HomeHeader from "./HomeHeader";
 import { Main } from "./MovieF/Movie";
-import { Darktheme, Lighttheme } from './style/theme';
+import { Darktheme } from './style/theme';
 
 const HomeNavBtn = styled.button`
 background-color:${props => props.theme.bodyBgColor};

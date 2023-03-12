@@ -19,4 +19,3 @@ const Tv = () => {
 
 }
 export default Tv;
-/*Tv id page 추가 */

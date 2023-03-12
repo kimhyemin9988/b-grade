@@ -1,6 +1,6 @@
 
 import { useQuery } from "react-query";
-import { Banner, BigTitle, Overview, Title } from "../MovieF/Movie";
+import { Banner, Overview, Title } from "../MovieF/Movie";
 import { tvLatest } from "../api";
 import LoadingC from "../miniModule/LoadingC";
 export interface LatestShowsData {

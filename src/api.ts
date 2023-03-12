@@ -19,8 +19,6 @@ export { movieList };
 
 /******************* TV *******************/
 
-//https://api.themoviedb.org/3/tv/popular?api_key=0bc81ab4612512071ffe14dfe9bdca6b&language=en-US&${page} =>/tv/popular
-
 const tvPopular = async () => {
 
     let page = 1;
@@ -43,28 +41,8 @@ const tvPopular = async () => {
         return b.popularity - a.popularity
     });
     return dataArray;
-    /*
-            if(!boolean.includes(false))
-            {
-                break;
-            }
-    > 10
-    console.log(dataArray.map((i: movieData)=> if(i.original_language === 'en' > 10) return true));
-    dataArray의 길이가 10이 될때까지
-    > 10
-    dataArray.map((i: movieData)=> i.original_language)
-            if(dataArray.map((i: movieData)=> i.original_language))
-                break;
-        console.log(dataArray.filter((i: movieData)=> i.original_language === 'en'));
-        console.log(dataArray.filter((i: movieData)=> i.original_language === 'zh'));
-        console.log(dataArray.filter((i: movieData)=> i.original_language === 'ja'));
-        console.log(dataArray.filter((i: movieData)=> i.original_language === 'ko'));  */
-    /*     console.log(Array.from(new Set(dataArray.map((i: movieData)=> i.original_language))));  */
 }
 export { tvPopular };
-
-
-//https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}b&language=en-US&page=${page} =>/tv/airing_today
 
 const tvAiring = async () => {
 
@@ -82,9 +60,6 @@ const tvAiring = async () => {
 export { tvAiring };
 
 
-
-//https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&${page} =>/tv/top_rated
-
 const tvTopRated = async () => {
 
     let page = 1;
@@ -100,7 +75,7 @@ const tvTopRated = async () => {
 }
 export { tvTopRated };
 
-//https://api.themoviedb.org/3/tv/latest?api_key=0bc81ab4612512071ffe14dfe9bdca6b&language=en-US =>/tv/latest
+
 
 const tvLatest = async () => {
     let page = 1;
@@ -156,19 +131,6 @@ const latestMovies = async () => {
     return data;
 }
 export { latestMovies };
-/* 
-const videoid = "315162";
-
-const playVideo = async () => {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${videoid}/videos?api_key=${API_KEY}`);
-    const json = await response.json();
-    const data = await json.results.filter((i : videoData)=>i.name == 'Official Trailer');
-    return data;
-}
-
-export { playVideo }; */
-
-//Top Rated Movies https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&${page}
 
 
 const topRatedMovies = async () => {
@@ -185,9 +147,6 @@ const topRatedMovies = async () => {
     return dataArray;
 }
 export { topRatedMovies };
-
-
-//upcomingMovies https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&${page}
 
 
 const upcomingMovies = async () => {
@@ -222,16 +181,3 @@ const SearchData = async (keyword: string | null) => {
 }
 export { SearchData };
 
-/*
-https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.asc&include_adult=false&include_video=false&page=1&with_keywords=${keyword}&with_watch_monetization_types=flatrate
-
-데이터 3page까지 가져오기
-https://image.tmdb.org/t/p/original/d8Nt1NKzAoa26HRrE4LuMKkIbZ9.jpg
-
-한국영화
-인기 높은순
-성인 x
-비디오 x
-page 1
-별점 4.0~6.0
-*/

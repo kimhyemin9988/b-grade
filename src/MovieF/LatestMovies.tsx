@@ -39,9 +39,6 @@ const LatestMovies = () => {
 
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["latestMovies"], latestMovies);
-    /*     const { isLoading: videoLoading, data: video } = useQuery<videoData[]>(["video"], playVideo); */
-    //console.log(data);
-    //console.log(data?.[1].key);
     return (
         <>
             {isLoading ? (

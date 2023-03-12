@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, Wrapper } from "../MovieF/Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { tvTopRated } from "../api";
@@ -8,15 +8,14 @@ import { tvData } from "./AiringToday";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 const TopRated = () => {
-    /* 데이터 받아오기 */
+
     const { isLoading, data } = useQuery<tvData[]>(["tvTopRated"], tvTopRated);
 
-    const [index, setIndex] = useState(0); //슬라이더 인덱스
+    const [index, setIndex] = useState(0); 
     const [leaving, setLeaving] = useState(false);
-    //슬라이더 박스 하나가 떠나고 다음것이 들어오는것 boolean
-    /* 모달창 */
+
     const [id, setId] = useState<null | string>(null);
-    /*박스 클릭시 해당하는 tv프로그램의 데이터를 저장 */
+
     const [content, setContent] = useState<tvData>();
     const navigate = useNavigate();
 
@@ -69,9 +68,7 @@ const TopRated = () => {
                                         transition={{ type: "tween", duration: 0.5 }}
                                         key={index}
                                     >
-                                        {/* Row가 index가 0이 될때까지  반복, random한 수로 하면 오류남*/}
                                         {data?.slice(5 * index, (5 * (index + 1))).map((i) => (
-                                            /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남 */
                                             <Box key={i.id}
                                                 posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
                                                 whileHover="hover"
@@ -125,8 +122,3 @@ const TopRated = () => {
 }
 export default TopRated;
 
-
-/*
-            /* 데이터 받아오기 
-            const { isLoading, data } = useQuery<movieData[]>(["movies"], movieList);
-*/

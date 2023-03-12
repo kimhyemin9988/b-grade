@@ -290,10 +290,10 @@ const Home = () => {
         setIsDark((element) => (!element));
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
+    /* slideIndex Count */
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
-    /*  오른쪽으로 움직이면 그 전에 있던 박스 왼쪽으로 사라지기
-    왼쪽으로 움직이면 그 전에 있던 박스 오른쪽으로 사라지기 */
+
     const [content, setContent] = useState<movieData>();
 
     const [sliderDirection, setSliderDirection] = useState(0);
@@ -318,10 +318,8 @@ const Home = () => {
     눌렀을때 아직 박스가 없어지지 않았다면 클릭해도 함수가 실행되지 않도록 하며
     박스가 없어졌다면 다음 박스를 추가한다
     onExitComplete을 이용하여 애니메이션이 끝나면 박스가 떠난것을 확인하는것을 다시 false로 돌린다
-        const bigMovieMatch = useMatch("/movies/:movieId");
     */
-    /* 모달창 */
-    //const pricematch = useMatch("movie/:movieId");
+
     const [id, setId] = useState<null | string>(null);
     const navigate = useNavigate();
     return (
@@ -365,16 +363,8 @@ const Home = () => {
                                             transition={{ type: "tween", duration: 0.5 }}
                                             key={index}
                                         >
-                                            {/* Row가 index가 0이 될때까지  반복, random한 수로 하면 오류남
-                                            slice(0, 6)
-                                            
-                                            */}
-                                            {data?.slice(0).slice(5 * index, (5 * (index + 1))).map((i) => (
-                                                /* 유령컴포넌트로 Box위를 묶었더니 unique key값 필요하다고 오류남
-                                                0 1 2 3 4(짤림) 5 //5 5제외(0,5) => 0~4
-                                                5, 6, 7, 8, 9, 10 // 4,5,6,7,8
-                                                9 10 11 12 13
-                                                */
+                                            {/*Row가 index가 0이 될때까지  반복, random한 수로 하면 오류*/}
+                                            {data?.slice(0).slice(5 * index, (5 * (index + 1))).map((i) => (//유령컴포넌트로 Box위를 묶었더니 key값 필요하다고 오류남 
                                                 <Box key={i.id}
                                                     posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
                                                     whileHover="hover"
@@ -387,6 +377,7 @@ const Home = () => {
                                                         navigate(`movie/${i.id}`);
                                                     }} layoutId={`${i.id}a`}
                                                 >
+                                                    {/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 -> 문자추가*/}
                                                     <Info variants={infoVariants} key={i.id}>
                                                         <p>{i.title}</p>
                                                     </Info>
@@ -431,17 +422,5 @@ const Home = () => {
     );
 };
 export default Home;
-/*                                 onClick={incraseIndex}
-                                bgPhoto={data?.poster_path}
-
-
-                                <AnimatePresence  onClick={incraseIndex}
-                                bgPhoto={makeImagePath(data?.results[0].backdrop_path || "")} >                                </AnimatePresence>
-
-                            https://image.tmdb.org/t/p/original/2lVjRgp5g6iMwF1cs9r5flPi011.jpg"
-
-                            https://image.tmdb.org/t/p/original/gjzpFDcyIrw0nZ36BR0WNHF3oDj.jpg
-                                */
-//https://image.tmdb.org/t/p/original/backdrop-img(큰이미지)
 
 

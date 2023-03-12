@@ -34,7 +34,6 @@ const LoadingMotion = styled(motion.svg)`
     width: 200px;
     height: 200px;
 `
-//큰 loading과 작은 로딩 만들기
 const LoadingC = () => {
     return (
         <Loader>

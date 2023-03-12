@@ -10,6 +10,6 @@ export const Lighttheme: DefaultTheme = {
 export const Darktheme: DefaultTheme = {
     bodyBgColor: "#131417", //black
     bodyFtColor: "#FFF", //white
-    hoverNavItem : "#959596", //// gray
+    hoverNavItem : "#959596", // gray
     hoverColor2 : "#C7C9D8",
 };

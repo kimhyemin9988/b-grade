@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/client';
 import { QueryClientProvider, QueryClient } from 'react-query';
 import { RouterProvider } from 'react-router-dom';
 import { StrictMode } from 'react';
-import App, { GlobalStyle } from './App';
-import HomeHeader from './HomeHeader';
 import { RecoilRoot } from "recoil";
 
 const root = ReactDOM.createRoot(

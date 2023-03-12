@@ -44,7 +44,7 @@ body {
 	overflow-x: hidden;
 }
 
-@media screen and (max-width: 425px) { //480이하인 경우 모바일
+@media screen and (max-width: 425px) {
 	html, body {
 		font-size: 20px;
 	}
@@ -140,8 +140,8 @@ export default App;
 	27. tv는 on air과 poluar 겹치는 것 많아서 poluar에서 나라별로 카테고리 만들기 + 
 
 
-	
 
+	
 	8. tv에서 Latest show 말고 가장 인기있는 최신 쇼로 배경 고치기 ->데이터는 받아옴.. 나머지 하기
 
 	15. tv쇼는 시즌별로 select 가능하게

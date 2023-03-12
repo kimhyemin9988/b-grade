@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route, createBrowserRouter } from 'react-router-dom';
 import NotFound from './NotFound';
 import App from './App';
@@ -47,6 +46,5 @@ export default RouterApp;
    and returns the index.html
    script that checks for a redirect in the query string
    before SPA is loaded
-
    https://www.youtube.com/watch?v=fuGu-Ponjf8
 */
