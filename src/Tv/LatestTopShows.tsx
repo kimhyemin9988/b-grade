@@ -7,6 +7,10 @@ export interface LatestShowsData {
     adult: boolean;
     backdrop_path: string;
     first_air_date: string;
+    genres : [{
+        id: number;
+        name: string;
+    }]
     homepage: string;
     id: number;
     in_production: boolean;
@@ -43,6 +47,7 @@ const LatestTopShows = () => {
                         <Title>{data?.[0].name}</Title>
                         <Overview>{data?.[0].first_air_date}</Overview>
                         <Overview>{data?.[0].overview}</Overview>
+                        <p>{data?.[1].genres[0].name}</p>
                     </Banner>
                 </>
             )} 

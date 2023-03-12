@@ -1,15 +1,15 @@
 import { tvPopular } from "../api";
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, Title, Wrapper } from "../MovieF/Movie";
-import { useState } from "react";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, Title, Wrapper } from "../MovieF/Movie";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { tvData } from "./AiringToday";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { PopularLanguage } from "../Atoms";
+import { DefalutEn, PopularLanguage } from "../Atoms";
 import Select from 'react-select';
 
 
@@ -28,7 +28,7 @@ const SelectBox = styled.div`
     width: 2rem;
     font-size: 0.2rem;
     font-weight: 600;
-    z-index: 10;
+    z-index: 4;
     right: 0;
     margin-left : 1rem;
     color: ${(props) => props.theme.bodyBgColor};
@@ -36,14 +36,15 @@ const SelectBox = styled.div`
 const Popular = () => {
     const { isLoading, data } = useQuery<tvData[]>(["tvPopular"], tvPopular);
     /* 언어별 차트 */
+    useEffect(() => {
+        setHandleValue(data?.filter((i: tvData) => i.original_language === 'en'))
+    }, [data]);
+
     const [handleValue, setHandleValue] = useState<tvData[]>();
-    //data?.filter((i: tvData) => i.original_language === 'en') defalut값 en로 설정!
-    /* 언어 선택 */
     const handleChange = (e: any) => {
         const { value } = e; // value ==  "Todo"
-        setHandleValue(data?.filter((i: tvData) => i.original_language === value));
+        setHandleValue(data?.filter((i: tvData) => i.original_language === value) || []);
     }
-    //as number[]
     /* 데이터 받아오기 */
     const [index, setIndex] = useState(0); //슬라이더 인덱스
     const [leaving, setLeaving] = useState(false);
@@ -125,6 +126,9 @@ const Popular = () => {
                                                 <PopularBox>
                                                     <p>{handleValue?.indexOf(i) + 1}</p>
                                                 </PopularBox>
+                                                <Info variants={infoVariants} key={i.id}>
+                                                    <p>{i.name}</p>
+                                                </Info>
                                             </Box>
                                         ))}
                                     </Row>

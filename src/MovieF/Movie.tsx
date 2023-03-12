@@ -42,6 +42,7 @@ export interface movieData {
     adult: boolean;
     backdrop_path: string;
     id: number;
+    name: string;
     original_language: string;
     original_title: string;
     overview: string;
@@ -175,27 +176,30 @@ export const rowVariants = {
         };
     },
 };
-/* 
+
 export const Info = styled(motion.div)`
   background-color: ${(props) => props.theme.bodyBgColor};
   position: absolute;
   width: 100%;
     bottom: 0;
     opacity: 0;
+    border-end-end-radius: 10px;
+    border-end-start-radius: 10px;
+    padding: 5px;
   p {
     text-align: center;
     font-size: 0.3rem;
   }
-`; */
+`;
 
-/* export const infoVariants = {
+export const infoVariants = {
     hover: {
         opacity: 1,
         transition: {
-            delay: 0.3,
+            delay: 0.1,
         },
     },
-}; */
+};
 
 /* 모달창 */
 export const BoxModal = styled(motion.div)`
@@ -383,6 +387,9 @@ const Home = () => {
                                                         navigate(`movie/${i.id}`);
                                                     }} layoutId={`${i.id}a`}
                                                 >
+                                                    <Info variants={infoVariants} key={i.id}>
+                                                        <p>{i.title}</p>
+                                                    </Info>
                                                 </Box>
                                             ))}
                                         </Row>
@@ -401,7 +408,7 @@ const Home = () => {
                                         animate="visible"
                                         exit="exit"
                                     >
-                                        <BoxModal layoutId={id+`a`}>
+                                        <BoxModal layoutId={id + `a`}>
                                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                             <BigTitle>{content?.title}</BigTitle>
                                             <BigOverview>

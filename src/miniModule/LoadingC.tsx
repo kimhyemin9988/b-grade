@@ -6,17 +6,19 @@ const containerVariants = {
     visible: {
         scale: 1,
         transition: {
-            delayChildren: 0.1,
             staggerChildren: 0.1,
         },
-        repeat: Infinity,
-    }
+    },
 };
 
 const itemVariants = {
     hidden: { opacity: 0 },
     visible: {
-        opacity: 1
+        opacity: 1,
+        transition: {
+            repeat: Infinity,
+            duration: 2,
+        }
     }
 };
 const Loader = styled.div`
@@ -41,7 +43,8 @@ const LoadingC = () => {
                 initial="hidden"
                 animate="visible"
                 xmlns="http://www.w3.org/2000/svg" aria-label="Loading..." className="By4nA" viewBox="0 0 100 100">
-                <motion.rect variants={itemVariants} width="25" height="6" x="72" y="47" fill="white" opacity=".083" rx="3" ry="3" transform="rotate(-60 50 50)" />
+                <motion.rect variants={itemVariants}
+                width="25" height="6" x="72" y="47" fill="white" opacity=".083" rx="3" ry="3" transform="rotate(-60 50 50)" />
                 <motion.rect variants={itemVariants} width="25" height="6" x="72" y="47" fill="white" opacity=".167" rx="3" ry="3" transform="rotate(-30 50 50)" />
                 <motion.rect variants={itemVariants} width="25" height="6" x="72" y="47" fill="white" opacity=".25" rx="3" ry="3" />
                 <motion.rect variants={itemVariants} width="25" height="6" x="72" y="47" fill="white" opacity=".333" rx="3" ry="3" transform="rotate(30 50 50)" />

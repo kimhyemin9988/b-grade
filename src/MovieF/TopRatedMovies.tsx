@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, Wrapper } from "./Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, Wrapper } from "./Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { topRatedMovies } from "../api";
@@ -90,6 +90,9 @@ const TopRatedMovies = () => {
                                                     navigate(`movie/${i.id}`);
                                                 }} layoutId={`${i.id}b`}
                                             >
+                                                <Info variants={infoVariants} key={i.id}>
+                                                    <p>{i.title}</p>
+                                                </Info>
                                             </Box>
                                         ))}
                                     </Row>
@@ -108,13 +111,13 @@ const TopRatedMovies = () => {
                                     animate="visible"
                                     exit="exit"
                                 >
-                                    <BoxModal layoutId={id+`b`}>
+                                    <BoxModal layoutId={id + `b`}>
                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                         <BigTitle>{content?.title}</BigTitle>
                                         <BigOverview>
-                                                {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
-                                                {content && content?.overview.length > 350 ? "..." : "."}
-                                            </BigOverview>
+                                            {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
+                                            {content && content?.overview.length > 350 ? "..." : "."}
+                                        </BigOverview>
                                     </BoxModal>
                                 </Overlay>
                             ) : null}

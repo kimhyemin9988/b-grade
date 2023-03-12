@@ -137,10 +137,10 @@ export default App;
 
 	21. 글씨 250자 이상이면 삭제되는것 다른 슬라이드 안고침 +
 
+	27. tv는 on air과 poluar 겹치는 것 많아서 poluar에서 나라별로 카테고리 만들기 + 
+
 
 	
-
-	27. tv는 on air과 poluar 겹치는 것 많아서 poluar에서 나라별로 카테고리 만들기
 
 	8. tv에서 Latest show 말고 가장 인기있는 최신 쇼로 배경 고치기 ->데이터는 받아옴.. 나머지 하기
 

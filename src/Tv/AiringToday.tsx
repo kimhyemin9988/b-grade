@@ -1,7 +1,7 @@
 import { tvAiring } from "../api";
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoadingC from "../miniModule/LoadingC";
@@ -88,6 +88,9 @@ const AiringToday = () => {
                                                 navigate(`${i.id}`);
                                             }} layoutId={`${i.id}a`}
                                         >{/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 */}
+                                            <Info variants={infoVariants} key={i.id}>
+                                                <p>{i.name}</p>
+                                            </Info>
                                         </Box>
                                     ))}
                                 </Row>
@@ -106,7 +109,7 @@ const AiringToday = () => {
                                 animate="visible"
                                 exit="exit"
                             >
-                                <BoxModal layoutId={id+`a`}>
+                                <BoxModal layoutId={id + `a`}>
                                     <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                     <BigTitle>{content?.name}</BigTitle>
                                     <BigOverview>

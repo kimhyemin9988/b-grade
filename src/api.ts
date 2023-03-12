@@ -114,9 +114,13 @@ const tvLatest = async () => {
     }
     const videoResponse = await fetch(`https://api.themoviedb.org/3/tv/${dataArray?.[0].id}?api_key=${API_KEY}`);
     const videoJson = await videoResponse.json();
-
     dataArray.push(videoJson);
     const lastData = dataArray.filter((i: LatestShowsData) => i.id === dataArray?.[0].id);
+    /* detail 받아오기
+        const detailTvLatest = await fetch(`https://api.themoviedb.org/3/tv/${dataArray?.[0].id}/season/1?api_key=${API_KEY}&language=en-US`);
+    const detailJson = await detailTvLatest.json();
+    lastData.push(detailJson);
+    */
     return lastData;
 
 }
@@ -210,7 +214,7 @@ const SearchData = async (keyword: string | null) => {
         const response = await fetch(`
         https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${page}&include_adult=false`);
         const json = await response.json();
-        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "").filter((i: movieData) => Object.keys(i).includes("backdrop_path") === true);
         page++;
         dataArray = [...dataArray, ...data];
     }
