@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { tvData } from "./AiringToday";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { DefalutEn, PopularLanguage } from "../Atoms";
 import Select from 'react-select';
@@ -25,13 +25,18 @@ export const PopularBox = styled.div`
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
 `
 const SelectBox = styled.div`
-    width: 2rem;
+    width: 3rem;
     font-size: 0.2rem;
     font-weight: 600;
     z-index: 4;
     right: 0;
     margin-left : 1rem;
     color: ${(props) => props.theme.bodyBgColor};
+`
+export const MiniP = styled.p`
+    font-size:0.2rem;
+    font-weight: 600;
+    color: ${(props)=>props.theme.bodyFtColor};
 `
 const Popular = () => {
     const { isLoading, data } = useQuery<tvData[]>(["tvPopular"], tvPopular);
@@ -89,6 +94,7 @@ const Popular = () => {
                                         options={popularLanguage}
                                         onChange={handleChange} // 선택한 obj return
                                     />
+                                    <MiniP>Choose a drama by language</MiniP>
                                 </SelectBox>
                             </RatingContainer>
                             <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
