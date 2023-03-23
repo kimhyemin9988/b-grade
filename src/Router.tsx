@@ -35,7 +35,7 @@ const RouterApp = createBrowserRouter([
             },
         ],
         errorElement: <NotFound></NotFound>,
-    }], { basename: "/b-grade" });
+    }], { basename: "/b-grade/" });
 export default RouterApp;
 
 /*
