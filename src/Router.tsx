@@ -4,6 +4,8 @@ import App from './App';
 import Movie from './MovieF/Movie';
 import Search from './Search/Search';
 import Tv from './Tv/Tv';
+import Details from './Details/Details';
+import TotalImages from './Details/TotalImages';
 
 const RouterApp = createBrowserRouter([
     {
@@ -12,11 +14,11 @@ const RouterApp = createBrowserRouter([
         children: [
             {
 
-                path:"",
+                path: "",
                 element: <Movie />,
-                children:[
+                children: [
                     {
-                        path:"movie/:movieId"
+                        path: "movie/:movieId",
                     }
                 ],
             },
@@ -25,14 +27,18 @@ const RouterApp = createBrowserRouter([
                 element: <Search></Search>,
             },
             {
-                path:"tv",
-                element:<Tv></Tv>,
-                children:[
+                path: "tv",
+                element: <Tv></Tv>,
+                children: [
                     {
-                        path:":tvId"
+                        path: ":tvId"
                     }
                 ],
             },
+            {
+                path: "details/:movieId",
+                element: <Details />,
+            }
         ],
         errorElement: <NotFound></NotFound>,
     }], { basename: "/b-grade" });

@@ -31,7 +31,7 @@ const OverviewContainer = styled.div`
     grid-area: overview;
     padding: 20px;
 `
-const opts = {
+export const opts = {
     height: '300',
     width: '600',
 };
@@ -51,7 +51,7 @@ const LatestMovies = () => {
                         <Blur>
                             <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}</RatingSpan>
                             <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w200/${data?.[0].poster_path}`}></SqureBox>
-                            <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={opts} />
+                            <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={opts} />{/* latestMovies 배열의 [1]이 video data */}
                             <OverviewContainer>
                                 <Overview>{data?.[0].overview}</Overview>
                             </OverviewContainer>

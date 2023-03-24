@@ -2,14 +2,12 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { movieList } from "../api";
 import { useState } from 'react';
-import { Link, Outlet, useLocation, useMatch, useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
 import { AnimatePresence, delay, motion } from "framer-motion";
 import LatestMovies from "./LatestMovies";
 import TopRatedMovies from "./TopRatedMovies";
 import Upcoming from "./Upcoming";
-import { HomeLogo } from "../HomeHeader";
-import Loading from "../miniModule/LoadingC";
 import LoadingC from "../miniModule/LoadingC";
 
 
@@ -23,20 +21,19 @@ export const Main = styled.div`
 
 export const ToggleThemeBtn = styled.button`
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
-    border-radius: 0.3rem;
+    border-radius: 0.2rem;
     font-weight: 900;
     text-align: center;
     cursor: pointer;
-    transition: ease background-color 250ms;
     border: 1px solid black;
     &:hover{
-        background-color: white;
-        color: black;
+        background-color: #ffffffbc;
     }
     position: fixed;
     bottom: 1rem;
     right: 1rem;
     z-index: 10;
+    padding: 0.1rem;
 `
 export interface movieData {
     adult: boolean;
@@ -268,6 +265,10 @@ export const RatingStar = styled.svg`
     width: 0.7rem;
     margin-right: 0.3em;
 `
+export const ArrowSvg = styled.svg`
+    height:0.5rem;
+    width: 0.5rem;
+`
 export const RatingSpan = styled.p`
     font-size:0.5rem;
     font-weight: 600;
@@ -278,6 +279,25 @@ export const RatingContainer = styled.div`
     top: 0;
     left: 0;
     padding:20px;
+`
+
+export const DetailBtn = styled.button`
+    width: 3rem;
+    height: 0.7rem;
+    margin: 0.3rem;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 0.3rem;
+    font-weight: 900;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s  ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover{
+        background-color: #ffffff96;
+        color: black;
+    }
 `
 
 const Home = () => {
@@ -336,8 +356,14 @@ const Home = () => {
                         <>
                             <Banner
                                 bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
-                                <Title>{data?.[0].original_title}</Title>
+                                <Title>{data?.[0].title}</Title>
                                 <Overview>{data?.[0].overview}</Overview>
+                                <Link to={`details/${data?.[0].id}`}>
+                                    <DetailBtn>
+                                        <BigTitle style={{ color: "black" }}>Details</BigTitle>
+                                        <ArrowSvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">{/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}<path d="M0 55.2V426c0 12.2 9.9 22 22 22c6.3 0 12.4-2.7 16.6-7.5L121.2 346l58.1 116.3c7.9 15.8 27.1 22.2 42.9 14.3s22.2-27.1 14.3-42.9L179.8 320H297.9c12.2 0 22.1-9.9 22.1-22.1c0-6.3-2.7-12.3-7.4-16.5L38.6 37.9C34.3 34.1 28.9 32 23.2 32C10.4 32 0 42.4 0 55.2z" /></ArrowSvg>
+                                    </DetailBtn>
+                                </Link>
                             </Banner>
                             <SliderContainer>
                                 <RatingContainer>
@@ -364,7 +390,7 @@ const Home = () => {
                                             key={index}
                                         >
                                             {/*Row가 index가 0이 될때까지  반복, random한 수로 하면 오류*/}
-                                            {data?.slice(0).slice(5 * index, (5 * (index + 1))).map((i) => (//유령컴포넌트로 Box위를 묶었더니 key값 필요하다고 오류남 
+                                            {data?.slice(1).slice(5 * index, (5 * (index + 1))).map((i) => (//유령컴포넌트로 Box위를 묶었더니 key값 필요하다고 오류남 
                                                 <Box key={i.id}
                                                     posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
                                                     whileHover="hover"

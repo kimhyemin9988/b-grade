@@ -7,8 +7,9 @@ const movieList = async () => {
     let page = 1;
     let dataArray: [] = [];
     while (page < 10) {
-        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.asc&include_adult=false&include_video=false&page=${page}&vote_average.gte=4.5&vote_average.lte=5.5&with_watch_monetization_types=flatrat&include_video=false`);
+        const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=release_date.desc&include_adult=false&include_video=false&page=${page}&vote_average.gte=4.5&vote_average.lte=5.5&with_watch_monetization_types=flatrat&include_video=false`);
         const json = await response.json();
+        //&sort_by=popularity.asc
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
         dataArray = [...dataArray, ...data];
@@ -181,3 +182,37 @@ const SearchData = async (keyword: string | null) => {
 }
 export { SearchData };
 
+
+
+
+/* Details */
+
+const getDetails = async (id: string | undefined) => {
+
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`);
+    const json = await response.json();
+    return json;
+};
+export { getDetails };
+
+
+const getCredits = async (id: string | undefined) => {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`);
+    const json = await response.json();
+    return json;
+};
+export { getCredits };
+
+const getImages = async (id: string | undefined) => {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/images?api_key=${API_KEY}`);
+    const json = await response.json();
+    return json;
+};
+export { getImages }; 
+
+const getVideos = async (id: string | undefined) => {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`);
+    const json = await response.json();
+    return json;
+};
+export { getVideos }; 
