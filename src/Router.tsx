@@ -4,8 +4,11 @@ import App from './App';
 import Movie from './MovieF/Movie';
 import Search from './Search/Search';
 import Tv from './Tv/Tv';
-import Details from './Details/Details';
 import TotalImages from './Details/TotalImages';
+import TotalCasts from './Details/TotalCasts';
+import TotalVideos from './Details/TotalVideos';
+import MovieDetails from './Details/MovieDetails';
+import DetailOutlet from './Details/DetailOutlet';
 
 const RouterApp = createBrowserRouter([
     {
@@ -36,10 +39,28 @@ const RouterApp = createBrowserRouter([
                 ],
             },
             {
-                path: "details/:movieId",
-                element: <Details />,
+                path: ":movieId",
+                element: < DetailOutlet />,
+                children: [{
+                    path: "details",
+                    element: <MovieDetails />,
+                },
+                {
+                    path: "images",
+                    element: <TotalImages />,
+                },
+                {
+                    path: "casts",
+                    element: <TotalCasts />,
+                },
+                {
+                    path: "videos",
+                    element: <TotalVideos />,
+                },
+                ]
             }
         ],
+
         errorElement: <NotFound></NotFound>,
     }], { basename: "/b-grade" });
 export default RouterApp;
@@ -53,4 +74,24 @@ export default RouterApp;
    script that checks for a redirect in the query string
    before SPA is loaded
    https://www.youtube.com/watch?v=fuGu-Ponjf8
+*/
+/*
+children: [
+                    {
+                        path: "details",
+                    element: <MovieDetails />,
+            }
+                    {
+                        path: "images",
+                    element: <TotalImages />,
+            },
+                    {
+                        path: "casts",
+                    element: <TotalCasts />,
+            },
+                    {
+                        path: "Videos",
+                    element: <TotalVideos />,
+            },
+                    ],
 */

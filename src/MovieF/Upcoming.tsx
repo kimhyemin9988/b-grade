@@ -5,9 +5,10 @@ import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer } from "./Movie";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "./TopRatedMovies";
+import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 
 const Upcoming = () => {
 
@@ -90,25 +91,29 @@ const Upcoming = () => {
                         </SliderContainer>
                         <AnimatePresence>
                             {id ? (
-                                <Overlay
-                                    variants={overlay}
-                                    onClick={() => {
-                                        setId(null)
-                                        navigate("");
-                                    }}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                >
+                                <>
+                                    <Overlay
+                                        variants={overlay}
+                                        onClick={() => {
+                                            setId(null)
+                                            navigate("");
+                                        }}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                    ></Overlay>
                                     <BoxModal layoutId={id + `c`}>
                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                         <BigTitle>{content?.title}</BigTitle>
+                                        <Link to={`${content?.id}/details`}>
+                                            <SmallArrowBtn></SmallArrowBtn>
+                                        </Link>
                                         <BigOverview>
                                             {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
                                             {content && content?.overview.length > 350 ? "..." : "."}
                                         </BigOverview>
                                     </BoxModal>
-                                </Overlay>
+                                </>
                             ) : null}
                         </AnimatePresence>
                     </Section>

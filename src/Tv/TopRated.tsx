@@ -2,16 +2,17 @@ import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer } from "../MovieF/Movie";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { tvTopRated } from "../api";
 import { tvData } from "./AiringToday";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
+import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 const TopRated = () => {
 
     const { isLoading, data } = useQuery<tvData[]>(["tvTopRated"], tvTopRated);
 
-    const [index, setIndex] = useState(0); 
+    const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
 
     const [id, setId] = useState<null | string>(null);
@@ -92,25 +93,29 @@ const TopRated = () => {
                         </SliderContainer>
                         <AnimatePresence>
                             {id ? (
-                                <Overlay
-                                    variants={overlay}
-                                    onClick={() => {
-                                        setId(null)
-                                        navigate("");
-                                    }}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                >
+                                <>
+                                    <Overlay
+                                        variants={overlay}
+                                        onClick={() => {
+                                            setId(null)
+                                            navigate("");
+                                        }}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                    ></Overlay>
                                     <BoxModal layoutId={id + `c`}>
                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                         <BigTitle>{content?.name}</BigTitle>
+                                        <Link to={`${content?.id}/details`}>
+                                            <SmallArrowBtn></SmallArrowBtn>
+                                        </Link>
                                         <BigOverview>
                                             {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
                                             {content && content?.overview.length > 350 ? "..." : "."}
                                         </BigOverview>
                                     </BoxModal>
-                                </Overlay>
+                                </>
                             ) : null}
                         </AnimatePresence>
                     </Section>

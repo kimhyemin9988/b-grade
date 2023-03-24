@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { useLocation } from "react-router-dom";
 import { getImages } from "../api";
 import { Box } from "../MovieF/Movie";
 
@@ -9,6 +10,7 @@ export interface Images {
 
 }
 const TotalImages = () => {
+    const { state: movieId } = useLocation();
     const { isLoading: getImagesLoading, data: getImagesData } = useQuery<Images>(["getImages", `${movieId}`], () => getImages(movieId));
     return (
         <>

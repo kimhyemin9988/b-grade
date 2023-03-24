@@ -1,9 +1,9 @@
 import { tvPopular } from "../api";
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer,  } from "../MovieF/Movie";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, } from "../MovieF/Movie";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { tvData } from "./AiringToday";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
@@ -11,6 +11,7 @@ import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { PopularLanguage } from "../Atoms";
 import Select from 'react-select';
+import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 
 
 export const PopularBox = styled.div`
@@ -36,7 +37,7 @@ const SelectBox = styled.div`
 export const MiniP = styled.p`
     font-size:0.2rem;
     font-weight: 600;
-    color: ${(props)=>props.theme.bodyFtColor};
+    color: ${(props) => props.theme.bodyFtColor};
 `
 const Popular = () => {
     const { isLoading, data } = useQuery<tvData[]>(["tvPopular"], tvPopular);
@@ -47,11 +48,11 @@ const Popular = () => {
 
     const [handleValue, setHandleValue] = useState<tvData[]>();
     const handleChange = (e: any) => {
-        const { value } = e; 
+        const { value } = e;
         setHandleValue(data?.filter((i: tvData) => i.original_language === value) || []);
     }
     /* 데이터 받아오기 */
-    const [index, setIndex] = useState(0); 
+    const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
 
     const [id, setId] = useState<null | string>(null);
@@ -140,25 +141,29 @@ const Popular = () => {
                         </SliderContainer>
                         <AnimatePresence>
                             {id ? (
-                                <Overlay
-                                    variants={overlay}
-                                    onClick={() => {
-                                        setId(null)
-                                        navigate("");
-                                    }}
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="exit"
-                                >
+                                <>
+                                    <Overlay
+                                        variants={overlay}
+                                        onClick={() => {
+                                            setId(null)
+                                            navigate("");
+                                        }}
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="exit"
+                                    ></Overlay>
                                     <BoxModal layoutId={id + `b`}>
                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                         <BigTitle>{content?.name}</BigTitle>
+                                        <Link to={`${content?.id}/details`}>
+                                            <SmallArrowBtn></SmallArrowBtn>
+                                        </Link>
                                         <BigOverview>
                                             {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
                                             {content && content?.overview.length > 350 ? "..." : "."}
                                         </BigOverview>
                                     </BoxModal>
-                                </Overlay>
+                                </>
                             ) : null}
                         </AnimatePresence>
                     </Section>

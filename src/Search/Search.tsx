@@ -4,9 +4,10 @@ import { SearchData } from "../api";
 import { AnimatePresence } from "framer-motion";
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Main, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, Row, rowVariants, Slider, SliderContainer, Wrapper } from "../MovieF/Movie";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoadingC from "../miniModule/LoadingC";
 import { ErrorMain } from "../NotFound";
+import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 interface SearchI {
     success: string,
     status_message: string,
@@ -18,7 +19,7 @@ const Search = () => {
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["Search", `${keyword}`], () => SearchData(keyword));
 
-    const [index, setIndex] = useState(0); 
+    const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
     const [id, setId] = useState<null | string>(null);
     const [content, setContent] = useState<movieData>();
@@ -61,7 +62,7 @@ const Search = () => {
                                             <RatingContainer>
                                                 <RatingSpan>Search Results : {data?.length}</RatingSpan>
                                             </RatingContainer>
-                                            <MovingSlider style={{ width: "2rem", right:0, top:0 }}>Page : {index+1}</MovingSlider>
+                                            <MovingSlider style={{ width: "2rem", right: 0, top: 0 }}>Page : {index + 1}</MovingSlider>
                                             <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
                                             <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
                                             <Slider style={{ top: "0" }}>
@@ -102,22 +103,26 @@ const Search = () => {
                                         </SliderContainer>
                                         <AnimatePresence>
                                             {id ? (
-                                                <Overlay
-                                                    variants={overlay}
-                                                    onClick={() => {
-                                                        setId(null)
-                                                        navigate(`?keyword=${keyword}`);
-                                                    }}
-                                                    initial="hidden"
-                                                    animate="visible"
-                                                    exit="exit"
-                                                >
+                                                <>
+                                                    <Overlay
+                                                        variants={overlay}
+                                                        onClick={() => {
+                                                            setId(null)
+                                                            navigate(`?keyword=${keyword}`);
+                                                        }}
+                                                        initial="hidden"
+                                                        animate="visible"
+                                                        exit="exit"
+                                                    ></Overlay>
                                                     <BoxModal layoutId={id}>
                                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                                         <BigTitle>{content?.title}</BigTitle>
+                                                        <Link to={`${content?.id}/details`}>
+                                                            <SmallArrowBtn></SmallArrowBtn>
+                                                        </Link>
                                                         <BigOverview>{content?.overview}</BigOverview>
                                                     </BoxModal>
-                                                </Overlay>
+                                                </>
                                             ) : null}
                                         </AnimatePresence>
                                     </Wrapper>

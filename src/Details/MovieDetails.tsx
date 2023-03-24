@@ -4,7 +4,7 @@ import YouTube from "react-youtube";
 import { getCredits, getDetails, getImages, getVideos } from "../api";
 import LoadingC from "../miniModule/LoadingC";
 import { Container, opts } from "../MovieF/LatestMovies";
-import { Box, Main, movieData, Overview, Wrapper } from "../MovieF/Movie";
+import { Box, Main, movieData, Overview, Wrapper, DetailBtn } from "../MovieF/Movie";
 import TotalImages from "./TotalImages";
 
 /* interface detailI {
@@ -42,6 +42,7 @@ export interface details {
         original_country: string;
     }]
     release_date: string;
+    runtime: string;
     title: string;
     video: boolean;
     vote_average: number;
@@ -64,18 +65,20 @@ export interface Credits {
     }],
 }
 
+export interface Videos {
+    id: string;
+    result :[]
+}
 
-const Details = () => {
+
+const MovieDetails = () => {
     const params = useParams();
     const movieId = params.movieId;
     const { isLoading: detailsLoading, data: detailsData } = useQuery<details>(["details", `${movieId}`], () => getDetails(movieId));
     const { isLoading: CreditsLoading, data: CreditsData } = useQuery<Credits>(["Credits", `${movieId}`], () => getCredits(movieId));
+    const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(["Videos", `${movieId}`], () => getVideos(movieId));
 
-    //console.log(getImagesData);
     //<Title>Original title : {data?.[0].original_title}</Title> (오리지널 타이틀)
-    /*     const { isLoading: VideosLoading, data: VideosData } = useQuery(["Videos", `${movieId}`], () => getVideos(movieId));  */
-
-    //console.log(VideosData);
     //console.log( getImagesData);
     //console.log(data); ->출시일
     //console.log(CreditsData); -> 배우 1명
@@ -90,7 +93,14 @@ const Details = () => {
                     <Main>
                         <>
                             <Box style={{ margin: "0" }} posterbg={`https://image.tmdb.org/t/p/w200/${detailsData?.poster_path}`}></Box>
-                            <Container bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></Container>
+                            <Overview>{detailsData?.title}</Overview>
+                            {detailsData?.belongs_to_collection && <Container bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></Container>}
+                            {detailsData?.runtime &&
+                                <Overview>runtime : {detailsData?.runtime}</Overview>
+                            }
+                            <Link to={`/${movieId}/images`} state={movieId}>
+                                <DetailBtn>more images</DetailBtn>
+                            </Link>
                             genres :
                             {detailsData?.genres.map((i) => {
                                 return (
@@ -110,6 +120,9 @@ const Details = () => {
                                 <>
                                     <Main>
                                         <p>cast</p>
+                                        <Link to={`/${movieId}/casts`} state={movieId}>
+                                            <DetailBtn>more casts</DetailBtn>
+                                        </Link>
                                         {CreditsData?.cast.slice(0, 3).map((i) => {
                                             return (
                                                 <div key={i.id}>
@@ -128,6 +141,16 @@ const Details = () => {
                                             );
                                         })}
                                     </Main>
+                                    {
+                                        VideosLoading ? <LoadingC></LoadingC > :
+                                            VideosData?.result &&
+                                            <Main>
+                                                <p>video</p>
+                                                <Link to={`/${movieId}/videos`} state={movieId}>
+                                                    <DetailBtn>more videos</DetailBtn>
+                                                </Link>
+                                            </Main>
+                                    }
                                 </>
                             }
                         </>
@@ -139,4 +162,4 @@ const Details = () => {
         </>
     );
 };
-export default Details;
+export default MovieDetails;
