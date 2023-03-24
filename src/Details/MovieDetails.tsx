@@ -67,9 +67,20 @@ export interface Credits {
 
 export interface Videos {
     id: string;
-    result :[]
+    results: [
+        {
+            iso_639_1: string;
+            iso_3166_1: string;
+            name: string; // video 이름
+            key: string; // 비디오 api로 불러올 수 있음
+            size: number;
+            type: string;
+            official: true;
+            published_at: string;
+            id: string;
+        }
+    ]
 }
-
 
 const MovieDetails = () => {
     const params = useParams();
@@ -143,7 +154,7 @@ const MovieDetails = () => {
                                     </Main>
                                     {
                                         VideosLoading ? <LoadingC></LoadingC > :
-                                            VideosData?.result &&
+                                            VideosData?.results !== undefined &&
                                             <Main>
                                                 <p>video</p>
                                                 <Link to={`/${movieId}/videos`} state={movieId}>
