@@ -12,7 +12,7 @@ export const Container = styled.section<{ bgPhoto: string | undefined }>`
     background-size: cover;
     height: 80vh;
 `
-const Blur = styled.div`
+export const Blur = styled.div`
     background-color: rgba(255, 255, 255, 0.034);
     backdrop-filter: blur(50px);
     height: 80vh;
@@ -27,7 +27,7 @@ const SqureBox = styled.article<{ posterbg: string | undefined }>`
     height: 300px; 
     background-image: url(${(props) => props.posterbg});
 `
-const OverviewContainer = styled.div`
+export const OverviewContainer = styled.div`
     grid-area: overview;
     padding: 20px;
 `
@@ -35,6 +35,8 @@ export const opts = {
     height: '300',
     width: '600',
 };
+
+
 const LatestMovies = () => {
 
     /* 데이터 받아오기 */

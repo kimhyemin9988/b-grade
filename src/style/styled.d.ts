@@ -5,5 +5,6 @@ declare module 'styled-components' {
         bodyFtColor: string,
         hoverNavItem : string,
         hoverColor2 : string,
+        green : string,
     }
 }

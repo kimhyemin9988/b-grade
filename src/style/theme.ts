@@ -5,6 +5,7 @@ export const Lighttheme: DefaultTheme = {
     bodyFtColor: "#131417", //black
     hoverNavItem : "#959596", // gray
     hoverColor2 : "#C7C9D8",
+    green: "#abd416",
 };
 
 export const Darktheme: DefaultTheme = {
@@ -12,4 +13,5 @@ export const Darktheme: DefaultTheme = {
     bodyFtColor: "#FFF", //white
     hoverNavItem : "#959596", // gray
     hoverColor2 : "#C7C9D8",
+    green: "#abd416",
 };

@@ -239,10 +239,7 @@ export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
 `;
 
 export const BigTitle = styled.h3`
-  color: ${(props) => props.theme.bodyFtColor};
   font-size: 0.4rem;
-  position: relative;
-  padding: 5px;
 `;
 
 export const BigOverview = styled.p`
