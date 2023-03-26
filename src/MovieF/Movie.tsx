@@ -82,6 +82,7 @@ export const Title = styled.p`
 `;
 
 export const Overview = styled.p`
+    color: ${(props)=>props.theme.bodyFtColor};
   font-size: 0.3rem;
   width: 100%;
   @media screen and (max-width: 550px){

@@ -6,7 +6,7 @@ import { getCredits, getDetails, getImages, getVideos } from "../api";
 import LoadingC from "../miniModule/LoadingC";
 import { ArrowSvgSmall } from "../miniModule/SmallArrowBtn";
 import { Blur, Container, opts, OverviewContainer } from "../MovieF/LatestMovies";
-import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle } from "../MovieF/Movie";
+import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle, SliderContainer } from "../MovieF/Movie";
 import TotalImages from "./TotalImages";
 
 /* interface detailI {
@@ -25,6 +25,7 @@ export interface details {
         backdrop_path: string;
         id: number;
         name: string;
+        poster_path: string;
     }
     id: number;
     name: string;
@@ -83,7 +84,7 @@ export interface Videos {
             published_at: string;
             id: string;
         }
-    ]
+    ] | [];
 }
 
 const LargeBox = styled.div <{ posterbg: string | undefined }>`
@@ -105,21 +106,20 @@ export const BackdropPhoto = styled.section<{ bgPhoto: string | undefined }>`
 
 export const DetailData = styled.div`
     width: 100%;
-    height: 1rem;
     margin: 0.1rem;
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
 `
 
 export const CompanySvgSmall = styled.svg`
-    height: 200ps;
-    width: 300px;
+    height: 0.5rem;
+    width: 0.6rem;
     fill: ${(props) => props.theme.bodyFtColor};
 `
 const WrapperDetail = styled.div`
     display: flex;
+    margin: 0.5rem 0 0.5rem 0;
 `
 const Width10 = styled.div`
     width: 6rem;
@@ -132,14 +132,34 @@ export const DetailBlur = styled.div`
     flex-direction: column;
     background-color: rgba(255, 255, 255, 0.034);
     backdrop-filter: blur(50px);
+    padding: 20px;
 `
 export const TextBox = styled.div`
     background-color: ${(props) => props.theme.bodyBgColor};
     border-radius: 0.4rem;
     box-shadow: 5px 5px 5px rgb(0 0 0 / 40%);
-    margin-top: 1rem;
-    padding: 1rem;
+    padding: 0.3rem;
+    display: flex;
+    justify-content: space-between;
 `
+const OverviewTitle = styled.div`
+    color:rgb(131, 255, 249);
+  font-size: 0.3rem;
+  width: 100%;
+  @media screen and (max-width: 550px){
+    font-size: 10%;
+    }
+`
+
+export const OverviewSpan = styled.span`
+    margin-left: 0.1rem;
+    color: ${(props) => props.theme.bodyFtColor};
+  font-size: 0.3rem;
+  width: 100%;
+  @media screen and (max-width: 550px){
+    font-size: 10%;
+    }
+`;
 const MovieDetails = () => {
     const params = useParams();
     const movieId = params.movieId;
@@ -158,62 +178,91 @@ const MovieDetails = () => {
                 <LoadingC></LoadingC >
             ) : (
                 <>
-                    <Container
+                    <Container style={{ height: "110vh" }}
                         bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}>
                         <DetailBlur>
                             <TextBox>
                                 <BigTitle>{detailsData?.title}
-                                    <Overview>original title : {detailsData?.original_title}</Overview>
+                                    <OverviewTitle>original title
+                                        <OverviewSpan>{detailsData?.original_title}</OverviewSpan>
+                                    </OverviewTitle>
                                 </BigTitle>
+                                <Link to={`/${movieId}/images`} state={movieId}>
+                                    <DetailBtn>more Image +</DetailBtn>
+                                </Link>
                             </TextBox>
-                            <WrapperDetail style={{ paddingLeft: "20px" }}>
+                            <WrapperDetail>
                                 <LargeBox posterbg={`https://image.tmdb.org/t/p/w300/${detailsData?.poster_path}`}></LargeBox>
-                                <TextBox>
+                                <TextBox style={{ margin: "0 0.3rem", borderRadius: 0 }}>
                                     <Width10>
-                                        <Overview>release_date : {detailsData?.release_date}</Overview>
+                                        <OverviewTitle>release date
+                                            <OverviewSpan>{detailsData?.release_date}</OverviewSpan>
+                                        </OverviewTitle>
                                         {detailsData?.runtime !== 0 &&
-                                            <Overview>runtime : {detailsData?.runtime}min</Overview>
+                                            <>
+                                                <OverviewTitle>runtime
+                                                    <OverviewSpan>{detailsData?.runtime}min</OverviewSpan>
+                                                </OverviewTitle>
+                                            </>
                                         }
                                         <DetailData>
-                                            <Overview>genres :</Overview>
-                                            {detailsData?.genres.map((i) => {
-                                                return (
-                                                    <Overview key={i.id}>{i.name}</Overview>
-                                                );
-                                            })}
+                                            <OverviewTitle>genres
+                                                {detailsData?.genres.map((i) => {
+                                                    return (
+                                                        <OverviewSpan key={i.id}>{i.name}</OverviewSpan>
+                                                    );
+                                                })}
+                                            </OverviewTitle>
                                         </DetailData>
                                         <DetailData>
-                                            <Overview>crew :</Overview>
-                                            {CreditsData?.crew.slice(0, 3).map((i) => {
-                                                return (
-                                                    <Overview style={{ margin: "0" }} key={i.id}>{i.name},{i.job}
-                                                    </Overview>
-                                                );
-                                            })}
+                                            <OverviewTitle>crew
+                                                {CreditsData?.crew.slice(0, 3).map((i) => {
+                                                    return (
+                                                        <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}),`}
+                                                        </OverviewSpan>
+                                                    );
+                                                })}
+                                            </OverviewTitle>
                                         </DetailData>
                                         {detailsData?.production_companies &&
                                             <DetailData>
-                                                <CompanySvgSmall xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z" /></CompanySvgSmall>
-                                                <Overview>production companies</Overview>
-                                                {detailsData?.production_companies.map((i) => {
-                                                    return (
-                                                        <Overview>{i.name}</Overview>
-                                                    );
-                                                })}
+                                                <OverviewTitle>production companies
+                                                    <CompanySvgSmall xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z" /></CompanySvgSmall>
+                                                    {detailsData?.production_companies.map((i) => {
+                                                        return (
+                                                            <Overview key={i.id}>{i.name}</Overview>
+                                                        );
+                                                    })}
+                                                </OverviewTitle>
                                             </DetailData>
                                         }
                                     </Width10>
                                 </TextBox>
-                                {detailsData?.belongs_to_collection && <BackdropPhoto bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto>}
+                                {detailsData?.belongs_to_collection && detailsData?.belongs_to_collection.backdrop_path ? <BackdropPhoto bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto> :
+                                    (detailsData?.backdrop_path && <BackdropPhoto bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}></BackdropPhoto>)
+                                }
                             </WrapperDetail>
                             <TextBox>
-                                <Overview>overview : {detailsData?.overview}</Overview>
+                                <OverviewTitle>overview
+                                    <Overview>{detailsData?.overview}</Overview>
+                                </OverviewTitle>
                             </TextBox>
                         </DetailBlur>
                     </Container>
+                    {
+                        VideosLoading ? <LoadingC></LoadingC > :
+                            VideosData?.results.length !== 0 &&
+                            <Main style={{ top: "0", padding: "20px" }}>
+                                <DetailData>video
+                                    <Link to={`/${movieId}/videos`} state={movieId}>
+                                        <DetailBtn>more +</DetailBtn>
+                                    </Link>
+                                </DetailData>
+                            </Main>
+                    }
                     {CreditsLoading ? <LoadingC></LoadingC > :
                         <>
-                            <Main>
+                            <Main style={{ padding: "20px" }}>
                                 <p>cast</p>
                                 <Link to={`/${movieId}/casts`} state={movieId}>
                                     <DetailBtn>more casts</DetailBtn>
@@ -227,22 +276,6 @@ const MovieDetails = () => {
                                         </div>);
                                 })}
                             </Main>
-                            <Main>
-                                <p>Image</p>
-                                <Link to={`/${movieId}/images`} state={movieId}>
-                                    <DetailBtn>more +</DetailBtn>
-                                </Link>
-                            </Main>
-                            {
-                                VideosLoading ? <LoadingC></LoadingC > :
-                                    VideosData?.results !== undefined &&
-                                    <Main>
-                                        <p>video</p>
-                                        <Link to={`/${movieId}/videos`} state={movieId}>
-                                            <DetailBtn>more +</DetailBtn>
-                                        </Link>
-                                    </Main>
-                            }
                         </>
                     }
                 </>

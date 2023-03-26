@@ -11,6 +11,7 @@ export const Container = styled.section<{ bgPhoto: string | undefined }>`
     background-image: url(${(props) => props.bgPhoto});
     background-size: cover;
     height: 80vh;
+    background-size: 100% 100%;
 `
 export const Blur = styled.div`
     background-color: rgba(255, 255, 255, 0.034);
@@ -47,7 +48,7 @@ const LatestMovies = () => {
                 <LoadingC></LoadingC>
             ) : (
                 <Wrapper style={{ alignItems: "flex-start" }}>
-                    <RatingSpan style={{ fontSize: "0.5rem", paddingLeft: "20px", marginBottom:"20px" }}>Popular Movies In Theaters</RatingSpan>
+                    <RatingSpan style={{ fontSize: "0.5rem", paddingLeft: "20px", marginBottom: "20px" }}>Popular Movies In Theaters</RatingSpan>
                     <Container
                         bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
                         <Blur>
