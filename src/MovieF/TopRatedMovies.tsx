@@ -114,7 +114,7 @@ const TopRatedMovies = () => {
                                     <BoxModal layoutId={id + `b`}>
                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                         <BigTitle>{content?.title}</BigTitle>
-                                        <Link to={`${content?.id}/details`}>
+                                        <Link to={`movie/${content?.id}/details`}>
                                             <SmallArrowBtn></SmallArrowBtn>
                                         </Link>
                                         <BigOverview>

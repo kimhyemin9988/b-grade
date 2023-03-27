@@ -24,7 +24,7 @@ const tvPopular = async () => {
 
     let page = 1;
     let dataArray: [] = [];
-    while (page < 20) {
+    while (page < 30) {
         const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&page=${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
@@ -187,31 +187,31 @@ export { SearchData };
 
 /* Details */
 
-const getDetails = async (id: string | undefined) => {
+const getDetails = async (distStr: string | undefined , id: string | undefined) => {
 
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`);
+    const response = await fetch(`https://api.themoviedb.org/3/${distStr}/${id}?api_key=${API_KEY}`);
     const json = await response.json();
     return json;
 };
 export { getDetails };
 
 
-const getCredits = async (id: string | undefined) => {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`);
+const getCredits = async (distStr: string | undefined, id: string | undefined) => {
+    const response = await fetch(`https://api.themoviedb.org/3/${distStr}/${id}/credits?api_key=${API_KEY}`);
     const json = await response.json();
     return json;
 };
 export { getCredits };
 
-const getImages = async (id: string | undefined) => {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/images?api_key=${API_KEY}`);
+const getImages = async (distStr: string | undefined, id: string | undefined) => {
+    const response = await fetch(`https://api.themoviedb.org/3/${distStr}/${id}/images?api_key=${API_KEY}`);
     const json = await response.json();
     return json;
 };
 export { getImages }; 
 
-const getVideos = async (id: string | undefined) => {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`);
+const getVideos = async (distStr: string | undefined, id: string | undefined) => {
+    const response = await fetch(`https://api.themoviedb.org/3/${distStr}/${id}/videos?api_key=${API_KEY}`);
     const json = await response.json();
     return json;
 };

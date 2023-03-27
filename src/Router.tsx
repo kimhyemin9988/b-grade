@@ -4,11 +4,12 @@ import App from './App';
 import Movie from './MovieF/Movie';
 import Search from './Search/Search';
 import Tv from './Tv/Tv';
-import TotalImages from './Details/TotalImages';
-import TotalCasts from './Details/TotalCasts';
-import TotalVideos from './Details/TotalVideos';
-import MovieDetails from './Details/MovieDetails';
-import DetailOutlet from './Details/DetailOutlet';
+import TotalImages from './MovieDetails/TotalImages';
+import TotalCasts from './MovieDetails/TotalCasts';
+import TotalVideos from './MovieDetails/TotalVideos';
+import MovieDetails from './MovieDetails/MovieDetails';
+import DetailOutlet from './MovieDetails/DetailOutlet';
+import TvDetails from './MovieDetails/TvDetails';
 
 const RouterApp = createBrowserRouter([
     {
@@ -39,7 +40,7 @@ const RouterApp = createBrowserRouter([
                 ],
             },
             {
-                path: ":movieId",
+                path: "movie/:movieId",
                 element: < DetailOutlet />,
                 children: [{
                     path: "details",
@@ -58,7 +59,28 @@ const RouterApp = createBrowserRouter([
                     element: <TotalVideos />,
                 },
                 ]
-            }
+            },
+            {
+                path: "tv/:tvId",
+                element: < DetailOutlet />,
+                children: [{
+                    path: "details",
+                    element: <TvDetails />,
+                },
+                {
+                    path: "images",
+                    element: <TotalImages />,
+                },
+                {
+                    path: "casts",
+                    element: <TotalCasts />,
+                },
+                {
+                    path: "videos",
+                    element: <TotalVideos />,
+                },
+                ]
+            },
         ],
 
         errorElement: <NotFound></NotFound>,

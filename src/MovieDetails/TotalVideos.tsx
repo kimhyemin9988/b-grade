@@ -11,21 +11,22 @@ export const optsMin = {
     height: '207',
     width: '368',
 };
-const MainVideo = styled(Main)`
+export const MainVideo = styled(Main)`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 `
 const TotalVideos = () => {
-    const { state: movieId } = useLocation();
-    const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(["Videos", `${movieId}`], () => getVideos(movieId));
+    const { state, pathname } = useLocation();
+    const distStr = pathname.split('/')[1]; // movie of tv
+    const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(["Videos", `${state}`], () => getVideos(distStr, state));
     return (
         <Main style={{ paddingTop: "13vh" }}>
             <Title style={{ paddingLeft: "20px" }}>Video</Title>
             <MainVideo>
                 {VideosLoading ? <LoadingC></LoadingC> :
                     (
-                        VideosData?.results.map((i) => {
+                        VideosData?.results.slice(3).map((i) => {
                             return (
                                 <Wrapper key={i.id}>
                                     <YouTube style={{ paddingLeft: "20px" }} videoId={i.key} opts={optsMin} />
