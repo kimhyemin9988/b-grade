@@ -146,8 +146,8 @@ const TvDetails = () => {
                                         }
                                         <DetailData>
                                             <OverviewTitle>crew
-                                                {CreditsData?.crew.slice(0, 3).map((i) => {
-                                                    return CreditsData?.crew.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
+                                                {CreditsData?.crew?.slice(0, 3).map((i) => {
+                                                    return CreditsData?.crew?.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
                                                     </OverviewSpan> : <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}),`}
                                                     </OverviewSpan>;
                                                 })}

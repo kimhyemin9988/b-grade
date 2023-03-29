@@ -66,13 +66,12 @@ export interface Credits {
         profile_path: string;
         id: string;
     }] | [],
-    crew: [{
+    crew?: [{
         job: string;
         name: string;
         id: string;
-    }] | [],
-}
-
+    }],
+};
 export interface Videos {
     id: string;
     results: [
@@ -242,8 +241,8 @@ const MovieDetails = () => {
                                         {CreditsData?.cast.length !== 0 &&
                                             <DetailData>
                                                 <OverviewTitle>crew
-                                                    {CreditsData?.crew.slice(0, 3).map((i) => {
-                                                        return CreditsData?.crew.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
+                                                    {CreditsData?.crew?.slice(0, 3).map((i) => {
+                                                        return CreditsData?.crew?.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
                                                         </OverviewSpan> : <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}),`}
                                                         </OverviewSpan>
                                                     })}
