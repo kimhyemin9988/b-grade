@@ -52,6 +52,7 @@ export interface movieData {
     vote_average: number;
     vote_count: number;
     key: string;
+    media_type : string;
 };
 
 

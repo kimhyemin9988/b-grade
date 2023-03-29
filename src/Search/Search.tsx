@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { SearchData } from "../api";
 import { AnimatePresence } from "framer-motion";
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, Main, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, Row, rowVariants, Slider, SliderContainer, Wrapper } from "../MovieF/Movie";
@@ -13,6 +13,7 @@ interface SearchI {
     status_message: string,
 }
 const Search = () => {
+
     const location = useLocation();
     const keyword = new URLSearchParams(location.search).get("keyword");
 
@@ -24,7 +25,6 @@ const Search = () => {
     const [id, setId] = useState<null | string>(null);
     const [content, setContent] = useState<movieData>();
     const navigate = useNavigate();
-
     const [sliderDirection, setSliderDirection] = useState(0);
     const incraseIndex = (indexN: number) => {
         if (data) {
@@ -90,6 +90,7 @@ const Search = () => {
                                                                 onClick={async () => {
                                                                     setId(`${i.id}`);
                                                                     setContent(i);
+                                                                    
                                                                 }} layoutId={`${i.id}`}
                                                             >
                                                                 <Info variants={infoVariants} key={i.id}>
@@ -117,9 +118,10 @@ const Search = () => {
                                                     <BoxModal layoutId={id}>
                                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                                         <BigTitle>{content?.title}</BigTitle>
-                                                        <Link to={`${content?.id}/details`}>
+                                                        <Link to={`../${content?.media_type}/${content?.id}/details`}>
                                                             <SmallArrowBtn></SmallArrowBtn>
-                                                        </Link>
+                                                        </Link>{/*http://localhost:3000/b-grade/tv/100088/details */}
+                                                        {/*http://localhost:3000/b-grade/search/91768/details */}
                                                         <BigOverview>{content?.overview}</BigOverview>
                                                     </BoxModal>
                                                 </>

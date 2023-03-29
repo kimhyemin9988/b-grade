@@ -202,7 +202,7 @@ const MovieDetails = () => {
                 <LoadingC></LoadingC >
             ) : (
                 <>
-                    <Container style={{ height: "110vh" }}
+                    <Container style={{ height: "fit-content" }}
                         bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}>
                         <DetailBlur>
                             <TextBox>
