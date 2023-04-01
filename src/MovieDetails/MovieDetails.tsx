@@ -4,7 +4,7 @@ import YouTube from "react-youtube";
 import styled from "styled-components";
 import { getCredits, getDetails, getImages, getVideos } from "../api";
 import LoadingC from "../miniModule/LoadingC";
-import { ArrowSvgSmall } from "../miniModule/SmallArrowBtn";
+import SmallArrowBtn, { ArrowSvgSmall } from "../miniModule/SmallArrowBtn";
 import { Blur, Container, opts, OverviewContainer } from "../MovieF/LatestMovies";
 import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle, SliderContainer } from "../MovieF/Movie";
 import TotalImages from "./TotalImages";
@@ -95,6 +95,7 @@ export const LargeBox = styled.div <{ posterbg: string | undefined }>`
   font-size: 100%;
   background-image: url(${(props) => props.posterbg});
   background-size: 100% 100%;
+    box-shadow: 5px 5px 5px rgb(0 0 0 / 40%);
 `;
 
 export const SmallCircle = styled.div <{ posterbg?: string | undefined }>`
@@ -114,6 +115,7 @@ export const BackdropPhoto = styled.section<{ bgPhoto?: string | undefined }>`
     height: 6rem;
     background-image: url(${(props) => props.bgPhoto});
     background-size: 100% 100%;
+        box-shadow: 5px 5px 5px rgb(0 0 0 / 40%);
 `
 
 
@@ -156,7 +158,7 @@ export const TextBox = styled.div`
     justify-content: space-between;
 `
 export const OverviewTitle = styled.div`
-    color:rgb(131, 255, 249);
+    color:rgb(24, 199, 191);
   font-size: 0.3rem;
   width: 100%;
   @media screen and (max-width: 550px){
@@ -180,6 +182,8 @@ export const CastBox = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 2.5rem;
+    height: 5.5rem;
 `
 
 const MovieDetails = () => {
@@ -254,8 +258,8 @@ const MovieDetails = () => {
                                                 <OverviewTitle>
                                                     <CompanySvgSmall xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z" /></CompanySvgSmall>
                                                     production companies
-                                                    {detailsData?.production_companies.map((i) => {
-                                                        return detailsData?.production_companies.indexOf(i) === detailsData?.production_companies.length - 1 ? <OverviewSpan key={i.id}>{i.name}.</OverviewSpan> : <OverviewSpan key={i.id}>{i.name},</OverviewSpan>;
+                                                    {detailsData?.production_companies?.map((i) => {
+                                                        return detailsData?.production_companies?.indexOf(i) === detailsData?.production_companies?.length - 1 ? <OverviewSpan key={i.id}>{i.name}.</OverviewSpan> : <OverviewSpan key={i.id}>{i.name},</OverviewSpan>;
                                                     })}
                                                 </OverviewTitle>
                                             </DetailData>
@@ -314,12 +318,12 @@ const MovieDetails = () => {
                                                     <FontAwesomeIcon icon={faUser} />
                                                 </SmallCircle>
                                             ) : (
-                                                <SmallCircle posterbg={`https://image.tmdb.org/t/p/w200/${i.profile_path}`}></SmallCircle>
+                                                <SmallCircle posterbg={`https://image.tmdb.org/t/p/w300/${i.profile_path}`}></SmallCircle>
                                             )
 
                                             }
-                                            <Overview style={{ textAlign: "center" }}>{i.character}</Overview>
-                                            <Overview style={{ textAlign: "center" }}>{i.name}</Overview>
+                                            <Overview style={{ textAlign: "center", fontWeight: "700" }}>{i.character}</Overview>
+                                            <Overview style={{ textAlign: "center", fontWeight: "700", color: "gray" }}>{i.name}</Overview>
                                         </CastBox>);
                                 })}
                             </MainVideo>

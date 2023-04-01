@@ -134,6 +134,7 @@ export const Box = styled(motion.article) <{ posterbg?: string | undefined }>`
   font-size: 100%;
   background-color: ${(props) => props.theme.bodyFtColor};
   background-image: url(${(props) => props.posterbg});
+    background-size: 100% 100%;
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
     position: relative;
@@ -237,7 +238,7 @@ export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   background-size: cover;
   background-position: center center;
   background-image: url(${(props) => props.bgPhoto});
-  height: 70%;
+  height: 60%;
   border-radius: 10px 10px 0 0;
 `;
 
@@ -276,6 +277,7 @@ export const ArrowSvg = styled.svg`
 export const RatingSpan = styled.p`
     font-size:0.5rem;
     font-weight: 600;
+    display:flex;
 `
 export const RatingContainer = styled.div`
     display: flex;
@@ -286,8 +288,8 @@ export const RatingContainer = styled.div`
 `
 
 export const DetailBtn = styled.button`
-    width: 3rem;
-    height: 0.7rem;
+    width: 2.3rem;
+    height: 0.6rem;
     margin: 0.1rem;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
     border-radius: 0.1rem;
@@ -298,6 +300,7 @@ export const DetailBtn = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size:0.25rem;
     &:hover{
         background-color: #ffffff96;
         color: black;
@@ -397,7 +400,7 @@ const Home = () => {
                                             {/*Row가 index가 0이 될때까지  반복, random한 수로 하면 오류*/}
                                             {data?.slice(1).slice(5 * index, (5 * (index + 1))).map((i) => (//유령컴포넌트로 Box위를 묶었더니 key값 필요하다고 오류남 
                                                 <Box key={i.id}
-                                                    posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
+                                                    posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
                                                     whileHover="hover"
                                                     initial="normal"
                                                     variants={boxVariants}

@@ -43,9 +43,9 @@ export interface tvDetails {
     original_name: string;
     production_companies: [
         {
-            id?: number;
+            id: number;
             name: string;
-            original_country?: string;
+            original_country: string;
         }
     ];
     overview: string;
@@ -102,7 +102,7 @@ const TvDetails = () => {
                         <DetailBlur>
                             <TextBox>
                                 <BigTitle>{`${detailsData?.name} season ${detailsData?.number_of_seasons}`}
-                                    <OverviewSpan style={{ color: "yellow" }}>{detailsData?.status}</OverviewSpan>
+                                    <OverviewSpan style={{ color: "#e3c503" }}>{detailsData?.status}</OverviewSpan>
                                     <OverviewTitle>original title
                                         <OverviewSpan>{detailsData?.original_name}</OverviewSpan>
                                     </OverviewTitle>
@@ -144,22 +144,24 @@ const TvDetails = () => {
                                                 </OverviewTitle>
                                             </DetailData>
                                         }
-                                        <DetailData>
-                                            <OverviewTitle>crew
-                                                {CreditsData?.crew?.slice(0, 3).map((i) => {
-                                                    return CreditsData?.crew?.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
-                                                    </OverviewSpan> : <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}),`}
-                                                    </OverviewSpan>;
-                                                })}
-                                            </OverviewTitle>
-                                        </DetailData>
-                                        {detailsData?.production_companies &&
+                                        {CreditsData?.cast.length !== 0 &&
+                                            < DetailData >
+                                                <OverviewTitle>crew
+                                                    {CreditsData?.crew?.slice(0, 3).map((i) => {
+                                                        return CreditsData?.crew?.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
+                                                        </OverviewSpan> : <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}),`}
+                                                        </OverviewSpan>;
+                                                    })}
+                                                </OverviewTitle>
+                                            </DetailData>
+                                        }
+                                        {detailsData?.production_companies[0] &&
                                             <DetailData>
                                                 <OverviewTitle>
                                                     <CompanySvgSmall xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z" /></CompanySvgSmall>
                                                     production companies
                                                     {detailsData?.production_companies.map((i) => {
-                                                        return detailsData?.production_companies.indexOf(i) === detailsData?.production_companies.length - 1 ? <OverviewSpan key={i.id}>{i.name}.</OverviewSpan> : <OverviewSpan key={i.id}>{i.name},</OverviewSpan>;
+                                                        return detailsData.production_companies?.indexOf(i) === detailsData?.production_companies.length - 1 ? <OverviewSpan key={i.id}>{i.name}.</OverviewSpan> : <OverviewSpan key={i.id}>{i.name},</OverviewSpan>;
                                                     })}
                                                 </OverviewTitle>
                                             </DetailData>
@@ -222,8 +224,8 @@ const TvDetails = () => {
                                             )
 
                                             }
-                                            <Overview style={{ textAlign: "center" }}>{i.character}</Overview>
-                                            <Overview style={{ textAlign: "center" }}>{i.name}</Overview>
+                                            <Overview style={{ textAlign: "center", fontWeight: "700" }}>{i.character}</Overview>
+                                            <Overview style={{ textAlign: "center", fontWeight: "700", color: "gray" }}>{i.name}</Overview>
                                         </CastBox>);
                                 })}
                             </MainVideo>

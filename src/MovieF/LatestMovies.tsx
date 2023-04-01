@@ -4,6 +4,8 @@ import { Box, movieData, Overview, RatingContainer, RatingSpan, Title, Wrapper }
 import styled from "styled-components";
 import YouTube from 'react-youtube';
 import LoadingC from "../miniModule/LoadingC";
+import { Link } from "react-router-dom";
+import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 
 
 export const Container = styled.section<{ bgPhoto: string | undefined }>`
@@ -52,7 +54,11 @@ const LatestMovies = () => {
                     <Container
                         bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
                         <Blur>
-                            <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}</RatingSpan>
+                            <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}
+                                <Link to={`movie/${data?.[0].id}/details`}>
+                                    <SmallArrowBtn></SmallArrowBtn>
+                                </Link>
+                            </RatingSpan>
                             <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w200/${data?.[0].poster_path}`}></SqureBox>
                             <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={opts} />{/* latestMovies 배열의 [1]이 video data */}
                             <OverviewContainer>

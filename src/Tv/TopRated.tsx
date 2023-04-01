@@ -71,7 +71,7 @@ const TopRated = () => {
                                     >
                                         {data?.slice(5 * index, (5 * (index + 1))).map((i) => (
                                             <Box key={i.id}
-                                                posterbg={`https://image.tmdb.org/t/p/w200/${i.poster_path}`}
+                                                posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
                                                 whileHover="hover"
                                                 initial="normal"
                                                 variants={boxVariants}
