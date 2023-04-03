@@ -46,20 +46,20 @@ body {
 
 @media screen and (max-width: 425px) {
 	html, body {
-		font-size: 20px;
+		font-size: 14px;
 	}
 }
 
 /* large */
 @media screen and (max-width: 768px){
 	html, body {
-		font-size: 40px;
+		font-size: 30px;
 	}
 
 }
 @media screen and (min-width: 769px){
 	html, body {
-		font-size: 60px;
+		font-size: 50px;
 	}
 
 }

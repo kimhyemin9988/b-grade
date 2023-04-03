@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { movieList } from "../api";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
-import { AnimatePresence, delay, motion } from "framer-motion";
+import { AnimatePresence, delay, motion, motionValue, transform } from "framer-motion";
 import LatestMovies from "./LatestMovies";
 import TopRatedMovies from "./TopRatedMovies";
 import Upcoming from "./Upcoming";
@@ -52,7 +52,7 @@ export interface movieData {
     vote_average: number;
     vote_count: number;
     key: string;
-    media_type : string;
+    media_type: string;
 };
 
 
@@ -70,9 +70,14 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   justify-content: center;
   padding: 10%;
   background-image: linear-gradient(rgba(0,0,0,0) 20%, ${(props) => props.theme.bodyBgColor}), url(${(props) => props.bgPhoto});
-  background-size: cover;
+    background-size: 100% 100%;
   height: 100vh;
+  margin-top:13vh;
   font-weight: 600;
+        @media screen and (max-width: 550px){
+            margin-top:11vh;
+        height: 40vh;
+    }
 `;
 
 
@@ -83,7 +88,7 @@ export const Title = styled.p`
 `;
 
 export const Overview = styled.p`
-    color: ${(props)=>props.theme.bodyFtColor};
+    color: ${(props) => props.theme.bodyFtColor};
   font-size: 0.3rem;
   width: 100%;
   @media screen and (max-width: 550px){
@@ -94,9 +99,6 @@ export const Overview = styled.p`
 export const Slider = styled.div`
     position: relative;
     height: 40vh;
-  @media screen and (max-width: 550px){
-        height: 125vh;
-    }
 
 `;
 export const MovingSlider = styled.button`
@@ -118,7 +120,8 @@ export const Row = styled(motion.div)`
   display: grid;
   gap: 10px;
     @media screen and (max-width: 550px){
-        grid-template-columns: repeat(2,1fr);
+        display:flex;
+        position: static;
     }
     grid-template-columns: repeat(6, 1fr);
     width: 100%;
@@ -139,6 +142,10 @@ export const Box = styled(motion.article) <{ posterbg?: string | undefined }>`
   border-radius: 10px;
     position: relative;
   margin:10px;
+      @media screen and (max-width: 550px){
+        width: 80px;
+        height: 120px
+    }
   &:first-child {
     transform-origin: center left;
   }
@@ -242,7 +249,7 @@ export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   border-radius: 10px 10px 0 0;
 `;
 
-export const BigTitle = styled.h3`
+export const BigTitle = styled.p`
   font-size: 0.4rem;
 `;
 
@@ -273,6 +280,10 @@ export const RatingStar = styled.svg`
 export const ArrowSvg = styled.svg`
     height:0.5rem;
     width: 0.5rem;
+    @media screen and (max-width: 550px){
+        height:0.3rem;
+        width: 0.3rem;
+    }
 `
 export const RatingSpan = styled.p`
     font-size:0.5rem;
@@ -290,7 +301,7 @@ export const RatingContainer = styled.div`
 export const DetailBtn = styled.button`
     width: 2.3rem;
     height: 0.6rem;
-    margin: 0.1rem;
+    margin-top: 0.1rem;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
     border-radius: 0.1rem;
     font-weight: 900;
@@ -307,6 +318,19 @@ export const DetailBtn = styled.button`
     }
 `
 
+export const MobileSlider = styled(motion.div)`
+    width: 100%;
+    height: 300px;
+    display: flex;
+    overflow-x: hidden;
+    touch-action: pan-y;
+    align-items: center;
+    position:relative;
+`;
+const InnerContainer = styled(motion.div)`
+    width:fit-content;
+    display:flex;
+`
 
 const Home = () => {
     /* 데이터 받아오기 */
@@ -350,6 +374,24 @@ const Home = () => {
 
     const [id, setId] = useState<null | string>(null);
     const navigate = useNavigate();
+    /* mobile slider */
+
+    const x = motionValue(0);
+    console.log(x.get());
+    useEffect(() => {
+        function updatex() {
+            const maxXY = Math.max(x.get());
+            const newOpacity = transform(maxXY, [-8000, 0], [-8000, 0]);
+
+            // transform<number>(inputValue: number, inputRange: number[], outputRange: number[]):
+        }
+        const unsubscribeX = x.on("change", updatex)
+        return () => {
+            unsubscribeX()
+        }
+    }, [])
+
+
     return (
         <>
             <Helmet>
@@ -373,82 +415,101 @@ const Home = () => {
                                     </DetailBtn>
                                 </Link>
                             </Banner>
-                            <SliderContainer>
-                                <RatingContainer>
-                                    <RatingStar xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="#ffb804" /></ RatingStar>
-                                    {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
-                                    <RatingSpan>Rating 4.5 ~ 5.5</RatingSpan>
-                                    <RatingSpan style={{ color: "gray" }}>/10</RatingSpan>
-                                </RatingContainer>
-                                <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
-                                <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
-                                <Slider>
-                                    <AnimatePresence
-                                        custom={sliderDirection}
-                                        initial={false} onExitComplete={() => {
-                                            setLeaving((prev) => !prev);
-                                        }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
-                                        <Row
-                                            variants={rowVariants}
-                                            custom={sliderDirection}
-                                            initial="hidden"
-                                            animate="visible"
-                                            exit="exit"
-                                            transition={{ type: "tween", duration: 0.5 }}
-                                            key={index}
-                                        >
-                                            {/*Row가 index가 0이 될때까지  반복, random한 수로 하면 오류*/}
-                                            {data?.slice(1).slice(5 * index, (5 * (index + 1))).map((i) => (//유령컴포넌트로 Box위를 묶었더니 key값 필요하다고 오류남 
-                                                <Box key={i.id}
-                                                    posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
-                                                    whileHover="hover"
-                                                    initial="normal"
-                                                    variants={boxVariants}
-                                                    transition={{ type: "tween" }}
-                                                    onClick={() => {
-                                                        setId(`${i.id}`);
-                                                        setContent(i);
-                                                        navigate(`movie/${i.id}`);
-                                                    }} layoutId={`${i.id}a`}
+                            {window.outerWidth <= 550 ? (
+                                <MobileSlider>
+                                    <InnerContainer drag="x" style={{ x }}>
+                                        {data?.slice(1).map((i) => (
+                                            <Box key={data?.indexOf(i)}
+                                                posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
+                                                whileHover="hover"
+                                                initial="normal"
+                                                variants={boxVariants}
+                                                transition={{ type: "tween" }}
+                                                layoutId={`${i.id}a`}
+                                            ></Box>
+                                        ))}
+                                    </InnerContainer>
+                                </MobileSlider>
+                            ) : (
+                                <>
+                                    <SliderContainer>
+                                        <RatingContainer>
+                                            <RatingStar xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="#ffb804" /></ RatingStar>
+                                            {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
+                                            <RatingSpan>Rating 4.5 ~ 5.5</RatingSpan>
+                                            <RatingSpan style={{ color: "gray" }}>/10</RatingSpan>
+                                        </RatingContainer>
+                                        <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
+                                        <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
+                                        <Slider>
+                                            <AnimatePresence
+                                                custom={sliderDirection}
+                                                initial={false} onExitComplete={() => {
+                                                    setLeaving((prev) => !prev);
+                                                }}>{/* AnimatePresence나 Slider에 key값 주면 오류남*/}
+                                                <Row
+                                                    variants={rowVariants}
+                                                    custom={sliderDirection}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    exit="exit"
+                                                    transition={{ type: "tween", duration: 0.5 }}
+                                                    key={index}
                                                 >
-                                                    {/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 -> 문자추가*/}
-                                                    <Info variants={infoVariants} key={i.id}>
-                                                        <p>{i.title}</p>
-                                                    </Info>
-                                                </Box>
-                                            ))}
-                                        </Row>
+                                                    {/*Row가 index가 0이 될때까지  반복, random한 수로 하면 오류*/}
+                                                    {data?.slice(1).slice(5 * index, (5 * (index + 1))).map((i) => (//유령컴포넌트로 Box위를 묶었더니 key값 필요하다고 오류남 
+                                                        <Box key={i.id}
+                                                            posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
+                                                            whileHover="hover"
+                                                            initial="normal"
+                                                            variants={boxVariants}
+                                                            transition={{ type: "tween" }}
+                                                            onClick={() => {
+                                                                setId(`${i.id}`);
+                                                                setContent(i);
+                                                                navigate(`movie/${i.id}`);
+                                                            }} layoutId={`${i.id}a`}
+                                                        >
+                                                            {/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 -> 문자추가*/}
+                                                            <Info variants={infoVariants} key={i.id}>
+                                                                <p>{i.title}</p>
+                                                            </Info>
+                                                        </Box>
+                                                    ))}
+                                                </Row>
+                                            </AnimatePresence>
+                                        </Slider>
+                                    </SliderContainer>
+                                    <AnimatePresence>
+                                        {id ? (
+                                            <>
+                                                <Overlay
+                                                    variants={overlay}
+                                                    onClick={(event) => {
+                                                        setId(null)
+                                                        navigate("");
+                                                    }}
+                                                    initial="hidden"
+                                                    animate="visible"
+                                                    exit="exit"
+                                                ></Overlay>
+                                                <BoxModal layoutId={id + `a`}>
+                                                    <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+                                                    <BigTitle>{content?.title}</BigTitle>
+                                                    <Link to={`movie/${content?.id}/details`}>
+                                                        <SmallArrowBtn></SmallArrowBtn>
+                                                    </Link>
+                                                    <BigOverview>
+                                                        {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
+                                                        {content && content?.overview.length > 350 ? "..." : "."}
+                                                        {/* overview 긴것 자름 */}
+                                                    </BigOverview>
+                                                </BoxModal>
+                                            </>
+                                        ) : null}
                                     </AnimatePresence>
-                                </Slider>
-                            </SliderContainer>
-                            <AnimatePresence>
-                                {id ? (
-                                    <>
-                                        <Overlay
-                                            variants={overlay}
-                                            onClick={(event) => {
-                                                setId(null)
-                                                navigate("");
-                                            }}
-                                            initial="hidden"
-                                            animate="visible"
-                                            exit="exit"
-                                        ></Overlay>
-                                        <BoxModal layoutId={id + `a`}>
-                                            <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                                            <BigTitle>{content?.title}</BigTitle>
-                                            <Link to={`movie/${content?.id}/details`}>
-                                                <SmallArrowBtn></SmallArrowBtn>
-                                            </Link>
-                                            <BigOverview>
-                                                {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
-                                                {content && content?.overview.length > 350 ? "..." : "."}
-                                                {/* overview 긴것 자름 */}
-                                            </BigOverview>
-                                        </BoxModal>
-                                    </>
-                                ) : null}
-                            </AnimatePresence>
+                                </>
+                            )}
                         </>
                     )}
                 </Wrapper>

@@ -43,7 +43,7 @@ const Upcoming = () => {
             {isLoading ? (
                 <LoadingC></LoadingC>
             ) : (
-                <>
+                window.outerWidth <= 550 ? (null) :
                     <Section>
                         <SliderContainer style={{ top: "0" }}>
                             <RatingContainer>
@@ -117,7 +117,6 @@ const Upcoming = () => {
                             ) : null}
                         </AnimatePresence>
                     </Section>
-                </>
             )}
         </>
     );

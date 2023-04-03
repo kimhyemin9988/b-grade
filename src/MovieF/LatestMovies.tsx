@@ -49,24 +49,26 @@ const LatestMovies = () => {
             {isLoading ? (
                 <LoadingC></LoadingC>
             ) : (
-                <Wrapper style={{ alignItems: "flex-start" }}>
-                    <RatingSpan style={{ fontSize: "0.5rem", paddingLeft: "20px", marginBottom: "20px" }}>Popular Movies In Theaters</RatingSpan>
-                    <Container
-                        bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
-                        <Blur>
-                            <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}
-                                <Link to={`movie/${data?.[0].id}/details`}>
-                                    <SmallArrowBtn></SmallArrowBtn>
-                                </Link>
-                            </RatingSpan>
-                            <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w200/${data?.[0].poster_path}`}></SqureBox>
-                            <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={opts} />{/* latestMovies 배열의 [1]이 video data */}
-                            <OverviewContainer>
-                                <Overview>{data?.[0].overview}</Overview>
-                            </OverviewContainer>
-                        </Blur>
-                    </Container>
-                </Wrapper>
+                window.outerWidth <= 550 ? (null) :
+                    <Wrapper style={{ alignItems: "flex-start" }}>
+                        <RatingSpan style={{ fontSize: "0.5rem", paddingLeft: "20px", marginBottom: "20px" }}>Popular Movies In Theaters</RatingSpan>
+                        <Container
+                            bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
+                            <Blur>
+                                <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}
+                                    <Link to={`movie/${data?.[0].id}/details`}>
+                                        <SmallArrowBtn></SmallArrowBtn>
+                                    </Link>
+                                </RatingSpan>
+                                <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w200/${data?.[0].poster_path}`}></SqureBox>
+                                <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={opts} />{/* latestMovies 배열의 [1]이 video data */}
+                                <OverviewContainer>
+                                    <Overview>{data?.[0].overview}</Overview>
+                                </OverviewContainer>
+                            </Blur>
+                        </Container>
+                    </Wrapper>
+
             )
             }
         </>
