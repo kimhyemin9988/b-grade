@@ -9,6 +9,7 @@ import styled from "styled-components";
 import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 import WebSliderC from "../miniModule/WebSliderC";
 import MobileSliderC from "../miniModule/MobileSliderC";
+import { useRecoilValue } from "recoil";
 
 export const Section = styled.section`
     flex-direction: column;
@@ -18,9 +19,9 @@ export const Section = styled.section`
 `
 
 const TopRatedMovies = () => {
-
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["topRatedMovies"], topRatedMovies);
+    const dataType = "movie";
 
     return (
         <>
@@ -28,9 +29,9 @@ const TopRatedMovies = () => {
                 <LoadingC></LoadingC>
             ) : (
                 window.outerWidth <= 550 ?
-                <MobileSliderC data={data} titleObj={titleObj.title[1]}></MobileSliderC> :
+                <MobileSliderC data={data} titleObj={titleObj.title[1]} dataType={dataType}></MobileSliderC> :
                     <Section>
-                        <WebSliderC data={data} titleObj={titleObj.title[1]}></WebSliderC>
+                        <WebSliderC data={data} titleObj={titleObj.title[1]} dataType={dataType}></WebSliderC>
                     </Section>
             )}
         </>

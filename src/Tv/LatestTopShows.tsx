@@ -46,8 +46,10 @@ const LatestTopShows = () => {
                     <Banner
                         bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
                         <Title>{data?.[0].name}</Title>
-                        <Overview>{data?.[0].first_air_date}</Overview>
-                        <Overview>{data?.[0].overview}</Overview>
+                        <Overview>
+                            {data?.[0].overview.slice(0, data?.[0].overview.indexOf(' ', 250))}
+                            {data?.[0] && data?.[0].overview.length > 350 ? "..." : "."}
+                        </Overview>
                         <Link to={`${data?.[0].id}/details`}>
                             <DetailBtn>
                                 <BigTitle style={{ color: "black" }}>Details</BigTitle>

@@ -55,6 +55,8 @@ export interface movieData {
     vote_count: number;
     key: string;
     media_type: string;
+    first_air_date?: string;
+    origin_country?: string;
 };
 
 
@@ -347,10 +349,12 @@ export const InnerContainer = styled(motion.div)`
     width:fit-content;
     display:flex;
 `
+
 export const titleObj =
 {
     title: ["Rating 4.5 ~ 5.5/10", "Top Rating", "Upcoming releases"]
 }
+
 
 
 const Home = () => {
@@ -364,7 +368,7 @@ const Home = () => {
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
 
-
+    const dataType = "movie";
     return (
         <>
             <Helmet>
@@ -389,9 +393,9 @@ const Home = () => {
                                 </Link>
                             </Banner>
                             {window.outerWidth <= 550 ? (
-                                <MobileSliderC data={data} titleObj={titleObj.title[0]}></MobileSliderC>
+                                <MobileSliderC data={data} titleObj={titleObj.title[0]} dataType={dataType}></MobileSliderC>
                             ) : (
-                                <WebSliderC data={data} titleObj={titleObj.title[0]}></WebSliderC>
+                                <WebSliderC data={data} titleObj={titleObj.title[0]} dataType={dataType}></WebSliderC>
                             )}
                         </>
                     )}

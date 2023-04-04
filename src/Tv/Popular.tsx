@@ -1,10 +1,9 @@
 import { tvPopular } from "../api";
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
-import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, } from "../MovieF/Movie";
-import { useState, useEffect } from "react";
+import { BigCover, BigOverview, BigTitle, Box, BoxModal, boxVariants, Info, infoVariants, InnerContainer, MobileSlider, movieData, MovingSlider, overlay, Overlay, RatingContainer, RatingSpan, RatingStar, Row, rowVariants, Slider, SliderContainer, } from "../MovieF/Movie";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { tvData } from "./AiringToday";
 import LoadingC from "../miniModule/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
@@ -12,6 +11,7 @@ import { useRecoilValue } from "recoil";
 import { PopularLanguage } from "../Atoms";
 import Select from 'react-select';
 import SmallArrowBtn from "../miniModule/SmallArrowBtn";
+import { tvTitleObj } from "./Tv";
 
 
 export const PopularBox = styled.div`
@@ -40,24 +40,27 @@ export const MiniP = styled.p`
     color: ${(props) => props.theme.bodyFtColor};
 `
 const Popular = () => {
-    const { isLoading, data } = useQuery<tvData[]>(["tvPopular"], tvPopular);
+    const titleObj = tvTitleObj.title[2];
+
+    const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
     /* 언어별 차트 */
     useEffect(() => {
-        setHandleValue(data?.filter((i: tvData) => i.original_language === 'en'))
+        setHandleValue(data?.filter((i: movieData) => i.original_language === 'en'))
     }, [data]);
-
-    const [handleValue, setHandleValue] = useState<tvData[]>();
+    const [handleValue, setHandleValue] = useState<movieData[]>(); // data 대신 이걸 보내기
     const handleChange = (e: any) => {
         const { value } = e;
-        setHandleValue(data?.filter((i: tvData) => i.original_language === value) || []);
+        setHandleValue(data?.filter((i: movieData) => i.original_language === value) || []);
     }
+
+
     /* 데이터 받아오기 */
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
 
     const [id, setId] = useState<null | string>(null);
 
-    const [content, setContent] = useState<tvData>();
+    const [content, setContent] = useState<movieData>();
     const navigate = useNavigate();
     const [sliderDirection, setSliderDirection] = useState(0);
 
@@ -76,18 +79,19 @@ const Popular = () => {
 
         }
     }
+    const constraintsRef = useRef(null);
     return (
         <>
             {isLoading ? (
                 <LoadingC></LoadingC>
             ) : (
-                <>
-                    <Section>
-                        <SliderContainer style={{ top: "0" }}>
+                window.outerWidth <= 550 ?
+                    <>
+                        <MobileSlider ref={constraintsRef}>
                             <RatingContainer>
                                 <RatingStar xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="#ffb804" /></ RatingStar>
                                 {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
-                                <RatingSpan>Tv Popular</RatingSpan>
+                                <RatingSpan>{titleObj}</RatingSpan>
                                 <SelectBox>
                                     <Select
                                         defaultValue={popularLanguage[0]}
@@ -97,48 +101,21 @@ const Popular = () => {
                                     <MiniP>Choose a drama by language</MiniP>
                                 </SelectBox>
                             </RatingContainer>
-                            <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
-                            <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
-                            <Slider style={{ top: "0" }}>
-                                <AnimatePresence
-                                    custom={sliderDirection}
-                                    initial={false} onExitComplete={() => {
-                                        setLeaving((prev) => !prev);
-                                    }}>
-                                    <Row
-                                        variants={rowVariants}
-                                        custom={sliderDirection}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
-                                        transition={{ type: "tween", duration: 0.5 }}
-                                        key={index}
-                                    >
-                                        {handleValue?.slice(5 * index, (5 * (index + 1))).map((i) => (
-                                            <Box key={i.id}
-                                                posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
-                                                whileHover="hover"
-                                                initial="normal"
-                                                variants={boxVariants}
-                                                transition={{ type: "tween" }}
-                                                onClick={() => {
-                                                    setId(`${i.id}`);
-                                                    setContent(i);
-                                                    navigate(`${i.id}`);
-                                                }} layoutId={`${i.id}b`}
-                                            >
-                                                <PopularBox>
-                                                    <p>{handleValue?.indexOf(i) + 1}</p>
-                                                </PopularBox>
-                                                <Info variants={infoVariants} key={i.id}>
-                                                    <p>{i.name}</p>
-                                                </Info>
-                                            </Box>
-                                        ))}
-                                    </Row>
-                                </AnimatePresence>
-                            </Slider>
-                        </SliderContainer>
+                            <InnerContainer
+                                drag="x" dragConstraints={constraintsRef}>
+                                {handleValue?.slice(1).map((i) => (
+                                    <Box key={handleValue?.indexOf(i)}
+                                        posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
+                                        onClick={() => {
+                                            setId(`${i.id}`);
+                                            setContent(i);
+                                            navigate(`movie/${i.id}`);
+                                        }}
+                                        layoutId={`${i.id}${titleObj}`}
+                                    ></Box>
+                                ))}
+                            </InnerContainer>
+                        </MobileSlider>
                         <AnimatePresence>
                             {id ? (
                                 <>
@@ -152,23 +129,112 @@ const Popular = () => {
                                         animate="visible"
                                         exit="exit"
                                     ></Overlay>
-                                    <BoxModal layoutId={id + `b`}>
+                                    <BoxModal layoutId={id + titleObj}>
                                         <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                                        <BigTitle>{content?.name}</BigTitle>
-                                        <Link to={`${content?.id}/details`}>
+                                        <BigTitle>{content?.title}</BigTitle>
+                                        <Link to={`movie/${content?.id}/details`}>
                                             <SmallArrowBtn></SmallArrowBtn>
                                         </Link>
                                         <BigOverview>
                                             {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
                                             {content && content?.overview.length > 350 ? "..." : "."}
+                                            {/* overview 긴것 자름 */}
                                         </BigOverview>
                                     </BoxModal>
                                 </>
                             ) : null}
                         </AnimatePresence>
-                    </Section>
-                </>
-            )}
+                    </> :
+                    (
+                        <Section>
+                            <SliderContainer style={{ top: "0" }}>
+                                <RatingContainer>
+                                    <RatingStar xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="#ffb804" /></ RatingStar>
+                                    {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
+                                    <RatingSpan>{tvTitleObj.title[2]}</RatingSpan>
+                                    <SelectBox>
+                                        <Select
+                                            defaultValue={popularLanguage[0]}
+                                            options={popularLanguage}
+                                            onChange={handleChange} // 선택한 obj return
+                                        />
+                                        <MiniP>Choose a drama by language</MiniP>
+                                    </SelectBox>
+                                </RatingContainer>
+                                <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
+                                <MovingSlider style={{ right: "0" }} onClick={() => incraseIndex(1)}>{`>`}</MovingSlider>
+                                <Slider style={{ top: "0" }}>
+                                    <AnimatePresence
+                                        custom={sliderDirection}
+                                        initial={false} onExitComplete={() => {
+                                            setLeaving((prev) => !prev);
+                                        }}>
+                                        <Row
+                                            variants={rowVariants}
+                                            custom={sliderDirection}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="exit"
+                                            transition={{ type: "tween", duration: 0.5 }}
+                                            key={index}
+                                        >
+                                            {handleValue?.slice(5 * index, (5 * (index + 1))).map((i) => (
+                                                <Box key={i.id}
+                                                    posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
+                                                    whileHover="hover"
+                                                    initial="normal"
+                                                    variants={boxVariants}
+                                                    transition={{ type: "tween" }}
+                                                    onClick={() => {
+                                                        setId(`${i.id}`);
+                                                        setContent(i);
+                                                        navigate(`${i.id}`);
+                                                    }} layoutId={`${i.id}${titleObj}`}
+                                                >
+                                                    <PopularBox>
+                                                        <p>{handleValue?.indexOf(i) + 1}</p>
+                                                    </PopularBox>
+                                                    <Info variants={infoVariants} key={i.id}>
+                                                        <p>{i.name}</p>
+                                                    </Info>
+                                                </Box>
+                                            ))}
+                                        </Row>
+                                    </AnimatePresence>
+                                </Slider>
+                            </SliderContainer>
+                            <AnimatePresence>
+                                {id ? (
+                                    <>
+                                        <Overlay
+                                            variants={overlay}
+                                            onClick={() => {
+                                                setId(null)
+                                                navigate("");
+                                            }}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="exit"
+                                        ></Overlay>
+                                        <BoxModal layoutId={id + titleObj}>
+                                            <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+                                            <BigTitle>{content?.name}</BigTitle>
+                                            <Link to={`${content?.id}/details`}>
+                                                <SmallArrowBtn></SmallArrowBtn>
+                                            </Link>
+                                            <BigOverview>
+                                                {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
+                                                {content && content?.overview.length > 350 ? "..." : "."}
+                                            </BigOverview>
+                                        </BoxModal>
+                                    </>
+                                ) : null}
+                            </AnimatePresence>
+                        </Section>
+                    )
+            )
+
+            }
         </>
     );
 

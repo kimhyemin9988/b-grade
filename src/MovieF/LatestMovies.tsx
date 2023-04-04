@@ -41,7 +41,6 @@ export const opts = {
 
 
 const LatestMovies = () => {
-
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["latestMovies"], latestMovies);
     return (

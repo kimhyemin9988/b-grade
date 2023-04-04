@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { tvData } from "./Tv/AiringToday";
+import { movieData } from "./MovieF/Movie";
 export interface IPopularLanguage {
     value: string;
     label: string;
@@ -10,7 +10,8 @@ export const PopularLanguage = atom<IPopularLanguage[]>({
     default: [{ value: 'en', label: 'English' }, { value: 'zh', label: 'Chinese' }, { value: 'ja', label: 'Japan' },{ value: 'ko', label: 'Korean' }],
 });
 
-export const DefalutEn = atom<tvData[]>({
+export const DefalutEn = atom<movieData[]>({
     key: "DefalutEn",
     default: [],
 });
+

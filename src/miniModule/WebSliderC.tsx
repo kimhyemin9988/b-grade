@@ -3,12 +3,13 @@ import styled from "styled-components";
 import { useRef, useState } from 'react';
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, Info, InnerContainer, MobileSlider, MovingSlider, Overlay, RatingContainer, RatingSpan, RatingStar, Row, Slider, SliderContainer, movieData, overlay } from "../MovieF/Movie";
 import { AnimatePresence } from "framer-motion";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import SmallArrowBtn from "./SmallArrowBtn";
 
 export interface MoviesProps {
     data: movieData[] | undefined;
-    titleObj : string;
+    titleObj? : string;
+    dataType? : string;
 }
 
 
@@ -53,8 +54,9 @@ export const infoVariants = {
     },
 };
 
-const WebSliderC = ({ data, titleObj }: MoviesProps) => {
+const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
 
+    // navigate(`${i.id}`) => tv navigate
     const navigate = useNavigate();
     const [id, setId] = useState<null | string>(null);
     const [content, setContent] = useState<movieData>();
@@ -122,8 +124,8 @@ const WebSliderC = ({ data, titleObj }: MoviesProps) => {
                                     onClick={() => {
                                         setId(`${i.id}`);
                                         setContent(i);
-                                        navigate(`movie/${i.id}`);
-                                    }} layoutId={`${i.id}a`}
+                                        dataType === "movie" ? navigate(`movie/${i.id}`) : navigate(`${i.id}`);
+                                    }} layoutId={`${i.id}${titleObj}`}
                                 >
                                     {/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 -> 문자추가*/}
                                     <Info variants={infoVariants} key={i.id}>
@@ -148,7 +150,7 @@ const WebSliderC = ({ data, titleObj }: MoviesProps) => {
                             animate="visible"
                             exit="exit"
                         ></Overlay>
-                        <BoxModal layoutId={id + `a`}>
+                        <BoxModal layoutId={id + titleObj}>
                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                             <BigTitle>{content?.title}</BigTitle>
                             <Link to={`movie/${content?.id}/details`}>

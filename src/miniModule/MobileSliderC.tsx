@@ -2,13 +2,14 @@ import styled from "styled-components";
 import { useRef, useState } from 'react';
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, InnerContainer, MobileSlider, Overlay, RatingContainer, RatingSpan, RatingStar, movieData, overlay } from "../MovieF/Movie";
 import { AnimatePresence } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SmallArrowBtn from "./SmallArrowBtn";
 import { MoviesProps } from "./WebSliderC";
 
 
 
-const MobileSliderC = ({ data, titleObj }: MoviesProps) => {
+const MobileSliderC = ({ data, titleObj, dataType}: MoviesProps) => {
+
     const navigate = useNavigate();
     const [id, setId] = useState<null | string>(null);
     const [content, setContent] = useState<movieData>();
@@ -30,9 +31,9 @@ const MobileSliderC = ({ data, titleObj }: MoviesProps) => {
                             onClick={() => {
                                 setId(`${i.id}`);
                                 setContent(i);
-                                navigate(`movie/${i.id}`);
+                                dataType === "movie" ? navigate(`movie/${i.id}`) : navigate(`${i.id}`);
                             }}
-                            layoutId={`${i.id}a`}
+                            layoutId={`${i.id}${titleObj}`}
                         ></Box>
                     ))}
                 </InnerContainer>
@@ -50,7 +51,7 @@ const MobileSliderC = ({ data, titleObj }: MoviesProps) => {
                             animate="visible"
                             exit="exit"
                         ></Overlay>
-                        <BoxModal layoutId={id + `a`}>
+                        <BoxModal layoutId={id + titleObj}>
                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                             <BigTitle>{content?.title}</BigTitle>
                             <Link to={`movie/${content?.id}/details`}>
