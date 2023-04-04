@@ -6,13 +6,13 @@ export const API_KEY = "0bc81ab4612512071ffe14dfe9bdca6b";
 const movieList = async () => {
     let page = 1;
     let dataArray: [] = [];
-    while (page < 10) {
+    while (page < 3) {
         const response = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=release_date.desc&include_adult=false&include_video=false&page=${page}&vote_average.gte=4.5&vote_average.lte=5.5&with_watch_monetization_types=flatrat&include_video=false`);
         const json = await response.json();
         //&sort_by=popularity.asc
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
-        dataArray = [...dataArray, ...data];
+        dataArray = [ ...dataArray, ...data];
     }
     return dataArray;
 }
@@ -81,7 +81,7 @@ export { tvTopRated };
 const tvLatest = async () => {
     let page = 1;
     const dataArray: LatestShowsData[] = [];
-    while (page < 3) {
+    while (page < 6) {
         const response = await fetch(`https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&page=${page}`);
         const json = await response.json();
         const data: LatestShowsData[] = await json.results.filter((i: LatestShowsData) => i.poster_path !== null);
@@ -138,7 +138,7 @@ const topRatedMovies = async () => {
 
     let page = 1;
     let dataArray: [] = [];
-    while (page < 6) {
+    while (page < 3) {
         const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
@@ -154,7 +154,7 @@ const upcomingMovies = async () => {
 
     let page = 1;
     let dataArray: [] = [];
-    while (page < 6) {
+    while (page < 3) {
         const response = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
@@ -170,7 +170,7 @@ export { upcomingMovies };
 const SearchData = async (keyword: string | null) => {
     let page = 1;
     let dataArray: [] = [];
-    while (page < 6) {
+    while (page < 3) {
         const response = await fetch(`
         https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${page}&include_adult=false`);
         const json = await response.json();

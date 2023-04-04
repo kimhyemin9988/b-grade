@@ -50,7 +50,7 @@ const LatestMovies = () => {
                 <LoadingC></LoadingC>
             ) : (
                 window.outerWidth <= 550 ? (null) :
-                    <Wrapper style={{ alignItems: "flex-start" }}>
+                    <Wrapper style={{ alignItems: "flex-start", marginBottom:"180px" }}>
                         <RatingSpan style={{ fontSize: "0.5rem", paddingLeft: "20px", marginBottom: "20px" }}>Popular Movies In Theaters</RatingSpan>
                         <Container
                             bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
