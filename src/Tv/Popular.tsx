@@ -39,7 +39,8 @@ export const MiniP = styled.p`
     font-weight: 600;
     color: ${(props) => props.theme.bodyFtColor};
 `
-const Popular = () => {
+
+const Popular = ({ dataType }: { dataType: string }) => {
     const titleObj = tvTitleObj.title[2];
 
     const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
@@ -103,16 +104,23 @@ const Popular = () => {
                             </RatingContainer>
                             <InnerContainer
                                 drag="x" dragConstraints={constraintsRef}>
-                                {handleValue?.slice(1).map((i) => (
+                                {handleValue?.slice(0, 10).map((i) => (
                                     <Box key={handleValue?.indexOf(i)}
                                         posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
                                         onClick={() => {
                                             setId(`${i.id}`);
                                             setContent(i);
-                                            navigate(`movie/${i.id}`);
+                                            dataType === "movie" ? navigate(`movie/${i.id}`) : navigate(`${i.id}`);
                                         }}
                                         layoutId={`${i.id}${titleObj}`}
-                                    ></Box>
+                                    >
+                                        <PopularBox>
+                                            <p>{handleValue?.indexOf(i) + 1}</p>
+                                        </PopularBox>
+                                        <Info variants={infoVariants} key={i.id}>
+                                            <p>{i.name}</p>
+                                        </Info>
+                                    </Box>
                                 ))}
                             </InnerContainer>
                         </MobileSlider>
@@ -188,7 +196,7 @@ const Popular = () => {
                                                     onClick={() => {
                                                         setId(`${i.id}`);
                                                         setContent(i);
-                                                        navigate(`${i.id}`);
+                                                        dataType === "movie" ? navigate(`movie/${i.id}`) : navigate(`${i.id}`);
                                                     }} layoutId={`${i.id}${titleObj}`}
                                                 >
                                                     <PopularBox>

@@ -10,14 +10,14 @@ export const tvTitleObj =
     title: ["Tv On The Air", "Top Rated", "Tv Popular"]
 }
 const Tv = () => {
-
+    const dataType = "tv"
     return (
         <Main>
             <Wrapper>
                 <LatestTopShows></LatestTopShows>
                 <AiringToday></AiringToday>
             </Wrapper>
-            <Popular></Popular>
+            <Popular dataType={dataType}></Popular>
             <TopRated></TopRated>
         </Main>
     );
