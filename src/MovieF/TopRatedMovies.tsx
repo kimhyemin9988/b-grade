@@ -22,7 +22,7 @@ const TopRatedMovies = () => {
     /* 데이터 받아오기 */
     const { isLoading, data } = useQuery<movieData[]>(["topRatedMovies"], topRatedMovies);
     const dataType = "movie";
-
+    
     return (
         <>
             {isLoading ? (
@@ -33,13 +33,10 @@ const TopRatedMovies = () => {
                     <Section>
                         <WebSliderC data={data} titleObj={titleObj.title[1]} dataType={dataType}></WebSliderC>
                     </Section>
+
             )}
         </>
     );
 
 }
 export default TopRatedMovies;
-/*
-
-
-*/

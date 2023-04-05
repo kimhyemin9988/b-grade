@@ -63,7 +63,6 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
 
     const [index, setIndex] = useState(0);
     const [leaving, setLeaving] = useState(false);
-
     /* slideIndex Count */
     const [sliderDirection, setSliderDirection] = useState(0);
     const incraseIndex = (indexN: number) => {

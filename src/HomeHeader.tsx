@@ -179,7 +179,9 @@ const HomeHeader = () => {
                         <SearchContainer
                             initial={{ y: "-100%" }} // initial 지정 안할시 새로고침 할때 창이 보임
                             animate={{ y: isOpen ? 0 : "-100%" }}
-                            transition={{ type: "linear" }}>
+                            transition={{
+                                type: "linear",
+                            }}>
                             <SearchDiv
                                 onSubmit={handleSubmit(onValid)}>
                                 <Input

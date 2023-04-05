@@ -21,8 +21,8 @@ const Upcoming = () => {
             {isLoading ? (
                 <LoadingC></LoadingC>
             ) : (
-                window.outerWidth <= 550 ? 
-                <MobileSliderC data={data} titleObj={titleObj.title[2]} dataType={dataType}></MobileSliderC> :
+                window.outerWidth <= 550 ?
+                    <MobileSliderC data={data} titleObj={titleObj.title[2]} dataType={dataType}></MobileSliderC> :
                     <Section>
                         <WebSliderC data={data} titleObj={titleObj.title[2]} dataType={dataType}></WebSliderC>
                     </Section>

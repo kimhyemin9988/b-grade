@@ -367,7 +367,6 @@ const Home = () => {
         setIsDark((element) => (!element));
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
-
     const dataType = "movie";
     return (
         <>

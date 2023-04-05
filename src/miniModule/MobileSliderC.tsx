@@ -1,20 +1,18 @@
 import styled from "styled-components";
 import { useRef, useState } from 'react';
 import { BigCover, BigOverview, BigTitle, Box, BoxModal, InnerContainer, MobileSlider, Overlay, RatingContainer, RatingSpan, RatingStar, movieData, overlay } from "../MovieF/Movie";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, delay, spring } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SmallArrowBtn from "./SmallArrowBtn";
 import { MoviesProps } from "./WebSliderC";
 
-
-
-const MobileSliderC = ({ data, titleObj, dataType}: MoviesProps) => {
+const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
 
     const navigate = useNavigate();
     const [id, setId] = useState<null | string>(null);
     const [content, setContent] = useState<movieData>();
     const constraintsRef = useRef(null);
-
+    const containerWidth = data?.length && data?.length * 90;
     return (
         <>
             <MobileSlider ref={constraintsRef}>
@@ -24,6 +22,7 @@ const MobileSliderC = ({ data, titleObj, dataType}: MoviesProps) => {
                     <RatingSpan>{titleObj}</RatingSpan>
                 </RatingContainer>
                 <InnerContainer
+                    style={{ width: `${containerWidth}px` }}
                     drag="x" dragConstraints={constraintsRef}>
                     {data?.slice(1).map((i) => (
                         <Box key={data?.indexOf(i)}
@@ -32,41 +31,47 @@ const MobileSliderC = ({ data, titleObj, dataType}: MoviesProps) => {
                                 setId(`${i.id}`);
                                 setContent(i);
                                 dataType === "movie" ? navigate(`movie/${i.id}`) : navigate(`${i.id}`);
-                            }}
-                            layoutId={`${i.id}${titleObj}`}
-                        ></Box>
+                            }}></Box>
                     ))}
                 </InnerContainer>
+                <AnimatePresence>
+                    {id ? (
+                        <>
+                            <Overlay
+                                variants={overlay}
+                                onClick={() => {
+                                    setId(null)
+                                    navigate("");
+                                }}
+                                initial="hidden"
+                                animate="visible"
+                                exit="exit"
+                            ></Overlay>
+                            <BoxModal
+                                initial={{ y: "150%" }}
+                                animate={{ y: id && 0 }}
+                                transition={{
+                                    type: "linear",
+                                     duration: 0.3,
+                                }}
+                                exit={{ y: "150%" }}
+                            >
+                                <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+                                <BigTitle>{content?.title}</BigTitle>
+                                <Link to={`movie/${content?.id}/details`}>
+                                    <SmallArrowBtn></SmallArrowBtn>
+                                </Link>
+                                <BigOverview>
+                                    {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
+                                    {content && content?.overview.length > 350 ? "..." : "."}
+                                </BigOverview>
+                            </BoxModal>
+                        </>
+                    ) : (null)}
+                </AnimatePresence>
             </MobileSlider>
-            <AnimatePresence>
-                {id ? (
-                    <>
-                        <Overlay
-                            variants={overlay}
-                            onClick={() => {
-                                setId(null)
-                                navigate("");
-                            }}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                        ></Overlay>
-                        <BoxModal layoutId={id + titleObj}>
-                            <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                            <BigTitle>{content?.title}</BigTitle>
-                            <Link to={`movie/${content?.id}/details`}>
-                                <SmallArrowBtn></SmallArrowBtn>
-                            </Link>
-                            <BigOverview>
-                                {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
-                                {content && content?.overview.length > 350 ? "..." : "."}
-                                {/* overview 긴것 자름 */}
-                            </BigOverview>
-                        </BoxModal>
-                    </>
-                ) : null}
-            </AnimatePresence>
         </>
     );
 };
 export default MobileSliderC;
+//layout사용한 motion하면 슬라이드 오류남...

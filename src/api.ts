@@ -133,12 +133,13 @@ const latestMovies = async () => {
 }
 export { latestMovies };
 
+/* upcoming, topRated는 data의 양이 많지 않아 여러 page의 정보를 받으면 반복해서 똑같은 정보가 쌓임 */
 
 const topRatedMovies = async () => {
 
     let page = 1;
     let dataArray: [] = [];
-    while (page < 3) {
+    while (page < 2) {
         const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
@@ -154,7 +155,7 @@ const upcomingMovies = async () => {
 
     let page = 1;
     let dataArray: [] = [];
-    while (page < 3) {
+    while (page < 2) {
         const response = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&${page}`);
         const json = await response.json();
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
@@ -170,7 +171,7 @@ export { upcomingMovies };
 const SearchData = async (keyword: string | null) => {
     let page = 1;
     let dataArray: [] = [];
-    while (page < 3) {
+    while (page < 6) {
         const response = await fetch(`
         https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${page}&include_adult=false`);
         const json = await response.json();
