@@ -17,7 +17,7 @@ const itemVariants = {
         opacity: 1,
         transition: {
             repeat: Infinity,
-            duration: 2,
+            duration: 1,
         }
     }
 };

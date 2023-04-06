@@ -8,9 +8,10 @@ import SmallArrowBtn, { ArrowSvgSmall } from "../miniModule/SmallArrowBtn";
 import { Blur, Container, opts, OverviewContainer } from "../MovieF/LatestMovies";
 import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle, SliderContainer } from "../MovieF/Movie";
 import TotalImages from "./TotalImages";
-import { MainVideo, optsMin } from "./TotalVideos";
+import { MainVideo, largeVideo, smallVideo } from "./TotalVideos";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { DetailContainer } from "./TvDetails";
 
 /* interface detailI {
 
@@ -65,8 +66,8 @@ export interface Credits {
         name: string;
         profile_path: string;
         id: string;
-    }] | [],
-    crew?: [{
+    }],
+    crew: [{
         job: string;
         name: string;
         id: string;
@@ -90,8 +91,8 @@ export interface Videos {
 }
 
 export const LargeBox = styled.div <{ posterbg: string | undefined }>`
-  width: 4rem;
-  height: 6rem;
+  width: 5rem;
+  height: 6.6rem;
   font-size: 100%;
   background-image: url(${(props) => props.posterbg});
   background-size: 100% 100%;
@@ -120,8 +121,9 @@ export const BackdropPhoto = styled.section<{ bgPhoto?: string | undefined }>`
 
 
 export const DetailData = styled.div`
-    width: 100%;
-    margin: 0.1rem;
+    width: fit-content;
+    //width: 100%;
+    margin: 10px;
     display: flex;
     align-items: center;
 `
@@ -134,12 +136,19 @@ export const CompanySvgSmall = styled.svg`
 export const WrapperDetail = styled.div`
     display: flex;
     margin: 0.5rem 0 0.5rem 0;
+    @media screen and (max-width: 550px){
+        flex-wrap: wrap;
+    }
 `
 export const Width10 = styled.div`
-    width: 6rem;
+    width: -webkit-fill-available;
     flex-direction: column;
     align-items: center;
     display: flex;
+    background-color: ${(props) => props.theme.bodyBgColor};
+    box-shadow: 5px 5px 5px rgb(0 0 0 / 40%);
+    padding: 0.3rem;
+
 `
 export const DetailBlur = styled.div`
     display: flex;
@@ -148,6 +157,9 @@ export const DetailBlur = styled.div`
     backdrop-filter: blur(50px);
     padding: 20px;
     height: 100%;
+    @media screen and (max-width: 550px){
+        padding: 10px;
+    }
 `
 export const TextBox = styled.div`
     background-color: ${(props) => props.theme.bodyBgColor};
@@ -184,8 +196,17 @@ export const CastBox = styled.div`
     align-items: center;
     width: 2.5rem;
     height: 5.5rem;
+    @media screen and (max-width: 550px){
+        padding: 0.2rem;
+        margin: 0.2rem;
+        height: 5rem;
+    }
 `
-
+export const TitleDiv = styled.div`
+    font-size: 0.4rem;
+    padding: 5px;
+    font-weight:700;
+`;
 const MovieDetails = () => {
     const params = useParams();
     const movieId = params.movieId;
@@ -200,40 +221,41 @@ const MovieDetails = () => {
     //console.log(CreditsData); -> 배우 1명
     // 배우, 출시일, 트레일러, 사진
     //                    <Overview>{detailsData?.genres.name}</Overview>
+
     return (
-        <Main style={{ paddingTop: "13vh" }}>
-            {detailsLoading ? (
-                <LoadingC></LoadingC >
-            ) : (
-                <>
-                    <Container style={{ height: "fit-content" }}
-                        bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}>
-                        <DetailBlur>
-                            <TextBox>
-                                <BigTitle>{detailsData?.title}
-                                    <OverviewTitle>original title
-                                        <OverviewSpan>{detailsData?.original_title}</OverviewSpan>
-                                    </OverviewTitle>
-                                </BigTitle>
-                                <Link to={`../images`} state={movieId}>
-                                    <DetailBtn>more Image +</DetailBtn>
-                                </Link>
-                            </TextBox>
-                            <WrapperDetail>
-                                <LargeBox posterbg={`https://image.tmdb.org/t/p/w300/${detailsData?.poster_path}`}></LargeBox>
-                                <TextBox style={{ margin: "0 0.3rem", borderRadius: 0 }}>
-                                    <Width10>
-                                        <OverviewTitle>release date
-                                            <OverviewSpan>{detailsData?.release_date}</OverviewSpan>
+        <>
+            {
+                detailsLoading ? (
+                    <LoadingC></LoadingC >
+                ) : (
+                    <Main style={{ paddingTop: "13vh" }}>
+                        <Container style={{ height: "fit-content" }}
+                            bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}>
+                            <DetailBlur>
+                                <TextBox>
+                                    <TitleDiv>{detailsData?.title}
+                                        <OverviewTitle>original title
+                                            <OverviewSpan>{detailsData?.original_title}</OverviewSpan>
                                         </OverviewTitle>
-                                        {detailsData?.runtime !== 0 &&
-                                            <>
+                                    </TitleDiv>
+                                    <Link to={`../images`} state={movieId}>
+                                        <DetailBtn>
+                                            <p>more Image +</p>
+                                        </DetailBtn>
+                                    </Link>
+                                </TextBox>
+                                <WrapperDetail>
+                                    <DetailContainer style={{ width:"fit-content" }}>
+                                        <LargeBox posterbg={`https://image.tmdb.org/t/p/w300/${detailsData?.poster_path}`}></LargeBox>
+                                        <Width10 style={{ height : "6rem"}}>
+                                            <OverviewTitle>release date
+                                                <OverviewSpan>{detailsData?.release_date}</OverviewSpan>
+                                            </OverviewTitle>
+                                            {detailsData?.runtime !== 0 &&
                                                 <OverviewTitle>runtime
                                                     <OverviewSpan>{detailsData?.runtime}min</OverviewSpan>
                                                 </OverviewTitle>
-                                            </>
-                                        }
-                                        <DetailData>
+                                            }
                                             <OverviewTitle>genres
                                                 {detailsData?.genres.map((i) => {
                                                     return (
@@ -241,98 +263,97 @@ const MovieDetails = () => {
                                                     );
                                                 })}
                                             </OverviewTitle>
-                                        </DetailData>
-                                        {CreditsData?.cast.length !== 0 &&
-                                            <DetailData>
+                                            {CreditsData?.crew.length !== undefined &&
                                                 <OverviewTitle>crew
                                                     {CreditsData?.crew?.slice(0, 3).map((i) => {
-                                                        return CreditsData?.crew?.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
-                                                        </OverviewSpan> : <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}),`}
+                                                        return <OverviewSpan key={i.name + i.job}>{i.name}{
+                                                            CreditsData?.crew?.indexOf(i) === 2 ? `(${i.job}).` : `(${i.job}),`}
                                                         </OverviewSpan>
                                                     })}
                                                 </OverviewTitle>
-                                            </DetailData>
-                                        }
-                                        {detailsData?.production_companies &&
-                                            <DetailData>
+                                            }
+                                            {detailsData?.production_companies &&
                                                 <OverviewTitle>
                                                     <CompanySvgSmall xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z" /></CompanySvgSmall>
                                                     production companies
                                                     {detailsData?.production_companies?.map((i) => {
-                                                        return detailsData?.production_companies?.indexOf(i) === detailsData?.production_companies?.length - 1 ? <OverviewSpan key={i.id}>{i.name}.</OverviewSpan> : <OverviewSpan key={i.id}>{i.name},</OverviewSpan>;
+                                                        return <OverviewSpan key={i.id}>{i.name}{
+                                                            detailsData?.production_companies?.indexOf(i) === detailsData?.production_companies?.length - 1 ? `.` : `,`}</OverviewSpan>
+
                                                     })}
                                                 </OverviewTitle>
-                                            </DetailData>
-                                        }
-                                    </Width10>
+                                            }
+                                        </Width10>
+                                    </DetailContainer>
+                                    {detailsData?.belongs_to_collection && detailsData?.belongs_to_collection.backdrop_path ? <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem", width:"20rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto> :
+                                        (detailsData?.backdrop_path && <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem",width:"20rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}></BackdropPhoto>)
+                                    }
+                                </WrapperDetail>
+                                <TextBox>
+                                    <OverviewTitle>overview
+                                        <Overview>{detailsData?.overview}</Overview>
+                                    </OverviewTitle>
                                 </TextBox>
-                                {detailsData?.belongs_to_collection && detailsData?.belongs_to_collection.backdrop_path ? <BackdropPhoto bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto> :
-                                    (detailsData?.backdrop_path && <BackdropPhoto bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}></BackdropPhoto>)
-                                }
-                            </WrapperDetail>
-                            <TextBox>
-                                <OverviewTitle>overview
-                                    <Overview>{detailsData?.overview}</Overview>
-                                </OverviewTitle>
-                            </TextBox>
-                        </DetailBlur>
-                    </Container>
-                    {
-                        VideosLoading ? <LoadingC></LoadingC > :
+                            </DetailBlur>
+                        </Container>
+                        {VideosLoading ? <LoadingC></LoadingC > :
                             VideosData?.results.length !== 0 &&
-                            (<Main style={{ padding: "20px", margin: "0" }}>
+                            (<Main>
                                 <DetailData>video
                                     {VideosData?.results.length !== undefined && VideosData?.results.length > 3 &&
                                         <Link to={`../videos`} state={movieId}>
-                                            <DetailBtn>more +</DetailBtn>
+                                            <DetailBtn>
+                                                <p>more +</p>
+                                            </DetailBtn>
                                         </Link>
                                     }
                                 </DetailData>
-                                <MainVideo style={{ margin: "0" }}>
+                                <MainVideo style={{ marginLeft : "10px" }}>
                                     {VideosData?.results.slice(0, 3).map((i) => {
                                         return (
                                             <Wrapper key={i.id}>
-                                                <YouTube style={{ paddingLeft: "20px" }} videoId={i.key} opts={optsMin} />
+                                                <YouTube style={{ paddingLeft: window.outerWidth <= 550 ? "0" : "20px" }} videoId={i.key} opts={window.outerWidth <= 550 ? smallVideo : largeVideo} />
                                             </Wrapper>
                                         );
                                     })}
                                 </MainVideo>
                             </Main>)
-                    }
-                    {CreditsLoading ? <LoadingC></LoadingC > :
-                        CreditsData?.cast.length !== 0 &&
-                        (<Main style={{ padding: "20px" }}>
-                            <DetailData>cast
-                                {CreditsData?.cast.length !== undefined && CreditsData?.cast.length > 5 &&
-                                    <Link to={`../casts`} state={movieId}>
-                                        <DetailBtn>total casts</DetailBtn>
-                                    </Link>
-                                }
-                            </DetailData>
-                            <MainVideo>
-                                {CreditsData?.cast.slice(0, 5).map((i) => {
-                                    return (
-                                        <CastBox key={i.id}>
-                                            {i.profile_path === null ? (
-                                                <SmallCircle>
-                                                    <FontAwesomeIcon icon={faUser} />
-                                                </SmallCircle>
-                                            ) : (
-                                                <SmallCircle posterbg={`https://image.tmdb.org/t/p/w300/${i.profile_path}`}></SmallCircle>
-                                            )
+                        }
+                        {CreditsLoading ? <LoadingC></LoadingC > :
+                            CreditsData?.cast.length !== undefined &&
+                            (<Main>
+                                <DetailData>cast
+                                    {CreditsData?.cast.length !== undefined && CreditsData?.cast.length > 5 &&
+                                        <Link to={`../casts`} state={movieId}>
+                                            <DetailBtn>
+                                                <p>total casts</p>
+                                            </DetailBtn>
+                                        </Link>
+                                    }
+                                </DetailData>
+                                <MainVideo style={{ marginLeft : "10px" }}>
+                                    {CreditsData?.cast?.slice(0, 5).map((i) => {
+                                        return (
+                                            <CastBox key={i.id}>
+                                                {i.profile_path === null ? (
+                                                    <SmallCircle>
+                                                        <FontAwesomeIcon icon={faUser} />
+                                                    </SmallCircle>
+                                                ) : (
+                                                    <SmallCircle posterbg={`https://image.tmdb.org/t/p/w300/${i.profile_path}`}></SmallCircle>
+                                                )
 
-                                            }
-                                            <Overview style={{ textAlign: "center", fontWeight: "700" }}>{i.character}</Overview>
-                                            <Overview style={{ textAlign: "center", fontWeight: "700", color: "gray" }}>{i.name}</Overview>
-                                        </CastBox>);
-                                })}
-                            </MainVideo>
-                        </Main>)
-                    }
-                </>
-            )
-            }
-        </Main >
+                                                }
+                                                <Overview style={{ textAlign: "center", fontWeight: "700" }}>{i.character}</Overview>
+                                                <Overview style={{ textAlign: "center", fontWeight: "700", color: "gray" }}>{i.name}</Overview>
+                                            </CastBox>);
+                                    })}
+                                </MainVideo>
+                            </Main>)
+                        }
+                    </Main >
+                )}
+        </>
     );
 };
 export default MovieDetails;

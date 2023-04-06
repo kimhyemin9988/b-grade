@@ -330,6 +330,13 @@ export const DetailBtn = styled.button`
         background-color: #ffffff96;
         color: black;
     }
+    @media screen and (max-width: 550px){
+        width: 2.6rem;
+        p{
+        font-size:8px;
+        font-weight: 500;
+        }
+    }
 `
 
 export const MobileSlider = styled(motion.div)`

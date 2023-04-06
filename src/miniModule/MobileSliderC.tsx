@@ -13,8 +13,7 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
     const [content, setContent] = useState<movieData>();
     const constraintsRef = useRef(null);
     const containerWidth = data?.length && data?.length * 90;
-    console.log(content?.title);
-    console.log(content?.name);
+
     return (
         <>
             <MobileSlider ref={constraintsRef}>
@@ -61,7 +60,7 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                                 exit={{ y: "150%" }}
                             >
                                 <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                                {content?.title ? <BigTitle>{content?.title}</BigTitle> : <BigTitle>{content?.name}</BigTitle>}
+                                <BigTitle>{content?.title ? content?.title : content?.name}</BigTitle> 
                                 <Link to={dataType === "movie" ? `movie/${content?.id}/details` :  `${content?.id}/details`}>
                                     <SmallArrowBtn></SmallArrowBtn>
                                 </Link>

@@ -151,7 +151,7 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                         ></Overlay>
                         <BoxModal layoutId={id + titleObj}>
                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                            <BigTitle>{content?.title}</BigTitle>
+                            <BigTitle>{content?.title ? content?.title : content?.name}</BigTitle> 
                             <Link to={dataType === "movie" ? `movie/${content?.id}/details` :  `${content?.id}/details`}>
                                 <SmallArrowBtn></SmallArrowBtn>
                             </Link>

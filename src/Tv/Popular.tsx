@@ -167,7 +167,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                             exit={{ y: "150%" }}>
                                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                             {content?.title ? <BigTitle>{content?.title}</BigTitle> : <BigTitle>{content?.name}</BigTitle>}
-                                            <Link to={`../${content?.id}/details`}>
+                                            <Link to={`${content?.id}/details`}>
                                                 <SmallArrowBtn></SmallArrowBtn>
                                             </Link>
                                             <BigOverview>

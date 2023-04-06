@@ -12,7 +12,7 @@ const movieList = async () => {
         //&sort_by=popularity.asc
         const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
         page++;
-        dataArray = [ ...dataArray, ...data];
+        dataArray = [...dataArray, ...data];
     }
     return dataArray;
 }
@@ -168,17 +168,15 @@ export { upcomingMovies };
 
 
 
-const SearchData = async (keyword: string | null) => {
-    let page = 1;
+const SearchData = async (keyword: string | null, page: number) => {
+    let newPage = page;
     let dataArray: [] = [];
-    while (page < 6) {
-        const response = await fetch(`
-        https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${page}&include_adult=false`);
-        const json = await response.json();
-        const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "").filter((i: movieData) => Object.keys(i).includes("backdrop_path") === true);
-        page++;
-        dataArray = [...dataArray, ...data];
-    }
+    const response = await fetch(`
+        https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&query=${keyword}&page=${newPage}&include_adult=false`);
+    const json = await response.json();
+    const data: [] = await json.results.filter((i: movieData) => i.poster_path !== null).filter((i: movieData) => i.backdrop_path !== null && i.overview !== "").filter((i: movieData) => Object.keys(i).includes("backdrop_path") === true);
+    dataArray = [...dataArray, ...data];
+
     return dataArray;
 }
 export { SearchData };
@@ -188,7 +186,7 @@ export { SearchData };
 
 /* Details */
 
-const getDetails = async (distStr: string | undefined , id: string | undefined) => {
+const getDetails = async (distStr: string | undefined, id: string | undefined) => {
 
     const response = await fetch(`https://api.themoviedb.org/3/${distStr}/${id}?api_key=${API_KEY}`);
     const json = await response.json();
@@ -209,7 +207,7 @@ const getImages = async (distStr: string | undefined, id: string | undefined) =>
     const json = await response.json();
     return json;
 };
-export { getImages }; 
+export { getImages };
 
 const getVideos = async (distStr: string | undefined, id: string | undefined) => {
     const response = await fetch(`https://api.themoviedb.org/3/${distStr}/${id}/videos?api_key=${API_KEY}`);
