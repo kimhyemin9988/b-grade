@@ -250,11 +250,11 @@ export const Overlay = styled(motion.div)`
 
 export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   width: 100%;
-  background-size: cover;
   background-position: center center;
   background-image: url(${(props) => props.bgPhoto});
   height: 60%;
   border-radius: 10px 10px 0 0;
+  background-size: 100% 100%;
 `;
 
 export const BigTitle = styled.p`

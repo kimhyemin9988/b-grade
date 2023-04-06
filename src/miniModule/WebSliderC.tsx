@@ -123,7 +123,7 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                                     onClick={() => {
                                         setId(`${i.id}`);
                                         setContent(i);
-                                        dataType === "movie" ? navigate(`movie/${i.id}`) : navigate(`${i.id}`);
+                                        navigate(dataType === "movie" ?`movie/${i.id}` : `${i.id}`);
                                     }} layoutId={`${i.id}${titleObj}`}
                                 >
                                     {/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 -> 문자추가*/}
@@ -152,7 +152,7 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                         <BoxModal layoutId={id + titleObj}>
                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                             <BigTitle>{content?.title}</BigTitle>
-                            <Link to={`movie/${content?.id}/details`}>
+                            <Link to={dataType === "movie" ? `movie/${content?.id}/details` :  `${content?.id}/details`}>
                                 <SmallArrowBtn></SmallArrowBtn>
                             </Link>
                             <BigOverview>

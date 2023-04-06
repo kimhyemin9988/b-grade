@@ -9,10 +9,10 @@ import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { PopularLanguage } from "../Atoms";
-import Select from 'react-select';
+import Select, { ControlProps } from 'react-select';
 import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 import { tvTitleObj } from "./Tv";
-
+import { colors } from "react-select/dist/declarations/src/theme";
 
 export const PopularBox = styled.div`
     background-color: ${(props) => props.theme.bodyFtColor};
@@ -26,7 +26,7 @@ export const PopularBox = styled.div`
     box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
 `
 const SelectBox = styled.div`
-    width: 3rem;
+    width: 4rem;
     font-size: 0.2rem;
     font-weight: 600;
     z-index: 4;
@@ -39,6 +39,26 @@ export const MiniP = styled.p`
     font-weight: 600;
     color: ${(props) => props.theme.bodyFtColor};
 `
+const customStyles = {
+    control: (base: any) => ({
+      ...base,
+      height: 25,
+      minHeight: 25,
+      alignContent: "center",
+    }),
+    valueContainer:(base: any) =>(
+        {
+            ...base,
+            alignItems: "center",
+        }
+    ),
+    menuList:(base: any) =>(
+        {
+            ...base,
+            color:"black",
+        }
+    ),
+  };
 
 const Popular = ({ dataType }: { dataType: string }) => {
     const titleObj = tvTitleObj.title[2];
@@ -98,8 +118,8 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                         defaultValue={popularLanguage[0]}
                                         options={popularLanguage}
                                         onChange={handleChange} // 선택한 obj return
+                                        styles={customStyles}
                                     />
-                                    <MiniP>Choose a drama by language</MiniP>
                                 </SelectBox>
                             </RatingContainer>
                             <InnerContainer
@@ -124,38 +144,46 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                 ))}
                             </InnerContainer>
                         </MobileSlider>
-                        <AnimatePresence>
-                            {id ? (
-                                <>
-                                    <Overlay
-                                        variants={overlay}
-                                        onClick={() => {
-                                            setId(null)
-                                            navigate("");
-                                        }}
-                                        initial="hidden"
-                                        animate="visible"
-                                        exit="exit"
-                                    ></Overlay>
-                                    <BoxModal layoutId={id + titleObj}>
-                                        <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-                                        <BigTitle>{content?.title}</BigTitle>
-                                        <Link to={`movie/${content?.id}/details`}>
-                                            <SmallArrowBtn></SmallArrowBtn>
-                                        </Link>
-                                        <BigOverview>
-                                            {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
-                                            {content && content?.overview.length > 350 ? "..." : "."}
-                                            {/* overview 긴것 자름 */}
-                                        </BigOverview>
-                                    </BoxModal>
-                                </>
-                            ) : null}
-                        </AnimatePresence>
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <AnimatePresence>
+                                {id ? (
+                                    <>
+                                        <Overlay
+                                            variants={overlay}
+                                            onClick={() => {
+                                                setId(null)
+                                                navigate("");
+                                            }}
+                                            initial="hidden"
+                                            animate="visible"
+                                            exit="exit"
+                                        ></Overlay>
+                                        <BoxModal initial={{ y: "150%" }}
+                                            animate={{ y: id && 0 }}
+                                            transition={{
+                                                type: "linear",
+                                                duration: 0.3,
+                                            }}
+                                            exit={{ y: "150%" }}>
+                                            <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+                                            {content?.title ? <BigTitle>{content?.title}</BigTitle> : <BigTitle>{content?.name}</BigTitle>}
+                                            <Link to={`../${content?.id}/details`}>
+                                                <SmallArrowBtn></SmallArrowBtn>
+                                            </Link>
+                                            <BigOverview>
+                                                {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
+                                                {content && content?.overview.length > 350 ? "..." : "."}
+                                                {/* overview 긴것 자름 */}
+                                            </BigOverview>
+                                        </BoxModal>
+                                    </>
+                                ) : null}
+                            </AnimatePresence>
+                        </div>
                     </> :
                     (
                         <Section>
-                            <SliderContainer style={{ top: "0" }}>
+                            <SliderContainer>
                                 <RatingContainer>
                                     <RatingStar xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" fill="#ffb804" /></ RatingStar>
                                     {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
@@ -166,7 +194,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                             options={popularLanguage}
                                             onChange={handleChange} // 선택한 obj return
                                         />
-                                        <MiniP>Choose a drama by language</MiniP>
                                     </SelectBox>
                                 </RatingContainer>
                                 <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
@@ -196,7 +223,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                                     onClick={() => {
                                                         setId(`${i.id}`);
                                                         setContent(i);
-                                                        dataType === "movie" ? navigate(`movie/${i.id}`) : navigate(`${i.id}`);
+                                                        navigate(dataType === "movie" ?`movie/${i.id}` : `${i.id}`);
                                                     }} layoutId={`${i.id}${titleObj}`}
                                                 >
                                                     <PopularBox>
@@ -227,7 +254,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                         <BoxModal layoutId={id + titleObj}>
                                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                             <BigTitle>{content?.name}</BigTitle>
-                                            <Link to={`${content?.id}/details`}>
+                                            <Link to={dataType === "movie" ? `movie/${content?.id}/details` :  `${content?.id}/details`}>
                                                 <SmallArrowBtn></SmallArrowBtn>
                                             </Link>
                                             <BigOverview>
