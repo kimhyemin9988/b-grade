@@ -71,10 +71,10 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 10%;
+  padding: 8%;
   background-image: linear-gradient(rgba(0,0,0,0) 20%, ${(props) => props.theme.bodyBgColor}), url(${(props) => props.bgPhoto});
-    background-size: 100% 100%;
-  height: 100vh;
+  background-size: 100% 100%;
+  height: 75vh;
   margin-top:13vh;
   font-weight: 600;
         @media screen and (max-width: 550px){
@@ -227,7 +227,7 @@ export const BoxModal = styled(motion.div)`
   top:1rem;
    @media screen and (max-width: 550px){
         width: 8rem;
-        height: 13rem;
+        height: 11rem;
     }
 `;
 
@@ -257,6 +257,9 @@ export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   height: 60%;
   border-radius: 10px 10px 0 0;
   background-size: 100% 100%;
+     @media screen and (max-width: 550px){
+        height: 50%;
+    }
 `;
 
 export const BigTitle = styled.p`
@@ -320,6 +323,7 @@ export const DetailBtn = styled.button`
     margin-top: 0.1rem;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
     border-radius: 0.1rem;
+    border: 0;
     font-weight: 900;
     text-align: center;
     cursor: pointer;
@@ -333,12 +337,12 @@ export const DetailBtn = styled.button`
         color: black;
     }
     @media screen and (max-width: 550px){
-        width: 2.6rem;
+        width: 3rem;
         p{
-        font-size:8px;
-        font-weight: 500;
+            font-weight: 600;
         }
     }
+    
 `
 
 export const MobileSlider = styled(motion.div)`

@@ -19,7 +19,7 @@ const TotalVideos = () => {
     const distStr = pathname.split('/')[1]; // movie of tv
     const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(["Videos", `${state}`], () => getVideos(distStr, state));
     return (
-        <Main style={{ paddingTop: "13vh" }}>
+        <Main style={{ paddingTop: "13vh", width: "100%" }}>
             <Title style={{ paddingLeft: "20px" }}>Video</Title>
             <MainImage>
                 {VideosLoading ? <LoadingC></LoadingC> :

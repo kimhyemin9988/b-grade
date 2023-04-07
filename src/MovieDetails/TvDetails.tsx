@@ -113,7 +113,7 @@ const TvDetails = () => {
                                 </TitleDiv>
                                 <Link to={`../images`} state={tvId}>
                                     <DetailBtn>
-                                        <p>more Image +</p>
+                                        <p>more Image</p>
                                     </DetailBtn>
                                 </Link>
                             </TextBox>
@@ -122,61 +122,63 @@ const TvDetails = () => {
                                     <LargeBox posterbg={`https://image.tmdb.org/t/p/w300/${detailsData?.poster_path}`}></LargeBox>
                                     <Width10>
                                         <OverviewTitle>
-                                            <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>number of episodes</OverviewSpan>
+                                            <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>number of episodes</OverviewSpan>
                                             <OverviewSpan>{detailsData?.number_of_episodes}</OverviewSpan>
                                         </OverviewTitle>
                                         <OverviewTitle>
-                                            <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>first air date</OverviewSpan>
+                                            <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>first air date</OverviewSpan>
                                             <OverviewSpan>{detailsData?.first_air_date}</OverviewSpan>
                                         </OverviewTitle>
                                         {detailsData?.runtime !== 0 &&
                                             <OverviewTitle>
-                                                <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>episode run time</OverviewSpan>
+                                                <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>episode run time</OverviewSpan>
                                                 <OverviewSpan>{`${detailsData?.episode_run_time[0]}min`}</OverviewSpan>
                                             </OverviewTitle>
                                         }
                                         <OverviewTitle>
-                                            <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>genres</OverviewSpan>
-                                            {detailsData?.genres.map((i) => {
-                                                return (
-                                                    <OverviewSpan key={i.id}>{i.name}</OverviewSpan>
-                                                );
-                                            })}
+                                            <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>genres</OverviewSpan>
+                                            <OverviewSpan>
+                                                {`${detailsData?.genres.map((i) =>
+                                                    i.name + `${detailsData?.genres.indexOf(i) === detailsData?.genres?.length - 1 ? `.` : ``}`
+                                                )}`}
+                                            </OverviewSpan>
                                         </OverviewTitle>
                                         {detailsData?.created_by.length !== 0 &&
                                             <OverviewTitle>
-                                                <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>created by</OverviewSpan>
+                                                <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>created by</OverviewSpan>
                                                 <OverviewSpan>{detailsData?.created_by[0].name}</OverviewSpan>
                                             </OverviewTitle>
                                         }
                                         {CreditsData?.crew?.length !== undefined &&
                                             <OverviewTitle>
-                                                <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>crew</OverviewSpan>
+                                                <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>crew</OverviewSpan>
                                                 {CreditsData?.crew?.slice(0, 3).map((i) => {
-                                                    return CreditsData?.crew?.indexOf(i) === 2 ? <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}).`}
-                                                    </OverviewSpan> : <OverviewSpan key={i.name + i.job}>{i.name} {`(${i.job}),`}
-                                                    </OverviewSpan>;
+                                                    return <OverviewSpan key={i.name + i.job}>{i.name}{
+                                                        CreditsData?.crew?.indexOf(i) === 2 ? `(${i.job}).` : `(${i.job}),`}
+                                                    </OverviewSpan>
                                                 })}
                                             </OverviewTitle>
                                         }
                                         {detailsData?.production_companies[0] &&
                                             <OverviewTitle>
                                                 <CompanySvgSmall xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z" /></CompanySvgSmall>
-                                                <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>production companies</OverviewSpan>                                                
-                                                {detailsData?.production_companies.map((i) => {
-                                                    return detailsData.production_companies?.indexOf(i) === detailsData?.production_companies.length - 1 ? <OverviewSpan key={i.id}>{i.name}.</OverviewSpan> : <OverviewSpan key={i.id}>{i.name},</OverviewSpan>;
+                                                <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>production companies</OverviewSpan>
+                                                {detailsData?.production_companies?.slice(0, 4).map((i) => {
+                                                    return <OverviewSpan key={i.id}>{i.name}{
+                                                        detailsData?.production_companies?.indexOf(i) === 3 ? `.` : `,`}</OverviewSpan>
+
                                                 })}
                                             </OverviewTitle>
                                         }
                                     </Width10>
                                 </DetailContainer>
-                                {detailsData?.belongs_to_collection && detailsData?.belongs_to_collection.backdrop_path ? <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem", width:"15rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto> :
-                                    (detailsData?.backdrop_path && <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem", width:"15rem" }}bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}></BackdropPhoto>)
+                                {detailsData?.belongs_to_collection && detailsData?.belongs_to_collection.backdrop_path ? <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height: "6.6rem", width: "15rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto> :
+                                    (detailsData?.backdrop_path && <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height: "6.6rem", width: "15rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}></BackdropPhoto>)
                                 }
                             </WrapperDetail>
                             <TextBox>
                                 <OverviewTitle>
-                                    <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>overview</OverviewSpan>
+                                    <OverviewSpan style={{ color: "rgb(24, 199, 191)", marginLeft: "0" }}>overview</OverviewSpan>
                                     <Overview>{detailsData?.overview}</Overview>
                                 </OverviewTitle>
                             </TextBox>
@@ -189,8 +191,8 @@ const TvDetails = () => {
                                 <DetailData>video
                                     {VideosData?.results.length !== undefined && VideosData?.results.length > 3 &&
                                         <Link to={`../videos`} state={tvId}>
-                                            <DetailBtn>
-                                                <p>more +</p>
+                                            <DetailBtn style={{ marginLeft: "10px" }}>
+                                                <p>more Video</p>
                                             </DetailBtn>
                                         </Link>
                                     }
@@ -212,13 +214,13 @@ const TvDetails = () => {
                             <DetailData>cast
                                 {CreditsData?.cast?.length !== undefined && CreditsData?.cast.length > 5 &&
                                     <Link to={`../casts`} state={tvId}>
-                                        <DetailBtn>
-                                            <p>total casts</p>
+                                        <DetailBtn style={{ marginLeft: "10px" }}>
+                                            <p>total cast</p>
                                         </DetailBtn>
                                     </Link>
                                 }
                             </DetailData>
-                            <MainVideo style={{ marginLeft : "10px" }}>
+                            <MainVideo style={{ marginLeft: "10px" }}>
                                 {CreditsData?.cast?.slice(0, 5).map((i) => {
                                     return (
                                         <CastBox key={i.id}>
