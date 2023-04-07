@@ -15,7 +15,7 @@ export const Container = styled.section<{ bgPhoto: string | undefined }>`
     height: 80vh;
     background-size: 100% 100%;
     @media screen and (max-width: 550px){
-        height: 45vh;
+        height: 50vh;
     };
 `
 export const Blur = styled.div`
@@ -28,7 +28,7 @@ export const Blur = styled.div`
     "video posterbg posterbg"
     "overview overview overview";
     @media screen and (max-width: 550px){
-        height: 45vh;
+        height: 50vh;
         grid-template-areas:
         "title title"
         "posterbg overview"

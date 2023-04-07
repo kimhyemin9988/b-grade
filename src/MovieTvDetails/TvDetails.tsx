@@ -188,7 +188,8 @@ const TvDetails = () => {
                         VideosLoading ? <LoadingC></LoadingC > :
                             VideosData?.results.length !== 0 &&
                             (<Main>
-                                <DetailData>video
+                                <DetailData>
+                                    <TitleDiv>Videos</TitleDiv>
                                     {VideosData?.results.length !== undefined && VideosData?.results.length > 3 &&
                                         <Link to={`../videos`} state={tvId}>
                                             <DetailBtn style={{ marginLeft: "10px" }}>
@@ -211,7 +212,8 @@ const TvDetails = () => {
                     {CreditsLoading ? <LoadingC></LoadingC > :
                         CreditsData?.cast?.length !== undefined &&
                         (<Main>
-                            <DetailData>cast
+                            <DetailData>
+                                <TitleDiv>Casts</TitleDiv>
                                 {CreditsData?.cast?.length !== undefined && CreditsData?.cast.length > 5 &&
                                     <Link to={`../casts`} state={tvId}>
                                         <DetailBtn style={{ marginLeft: "10px" }}>

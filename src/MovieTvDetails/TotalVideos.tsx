@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { getVideos } from "../api";
 import LoadingC from "../miniModule/LoadingC";
 import { Main, Title, Wrapper, largeVideo, smallVideo } from "../MovieF/Movie";
-import { Videos } from "./MovieDetails";
+import { TitleDiv, Videos } from "./MovieDetails";
 import { MainImage } from "./TotalImages";
 
 export const MainVideo = styled(Main)`
@@ -20,7 +20,7 @@ const TotalVideos = () => {
     const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(["Videos", `${state}`], () => getVideos(distStr, state));
     return (
         <Main style={{ paddingTop: "13vh", width: "100%" }}>
-            <Title style={{ paddingLeft: "20px" }}>Video</Title>
+            <TitleDiv>Videos</TitleDiv>
             <MainImage>
                 {VideosLoading ? <LoadingC></LoadingC> :
                     (
