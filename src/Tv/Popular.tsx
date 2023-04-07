@@ -58,6 +58,12 @@ const customStyles = {
             color:"black",
         }
     ),
+    container:(base: any) =>(
+        {
+            ...base,
+            touchAction:"none",
+        }
+    ),
   };
 
 const Popular = ({ dataType }: { dataType: string }) => {
@@ -162,7 +168,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                             animate={{ y: id && 0 }}
                                             transition={{
                                                 type: "linear",
-                                                duration: 0.3,
+                                                duration: 0.1,
                                             }}
                                             exit={{ y: "150%" }}>
                                             <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />

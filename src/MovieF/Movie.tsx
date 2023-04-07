@@ -266,7 +266,7 @@ export const BigTitle = styled.p`
 `;
 
 export const BigOverview = styled.p`
-  font-size: 0.2rem;
+  font-size: 0.3rem;
   position: relative;
   color: ${(props) => props.theme.bodyFtColor};
   padding: 5px;

@@ -51,13 +51,13 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                                 exit="exit"
                             ></Overlay>
                             <BoxModal
-                                initial={{ y: "150%" }}
+                                initial={{ y: "200%" }}
                                 animate={{ y: id && 0 }}
                                 transition={{
                                     type: "linear",
-                                    duration: 0.3,
+                                    duration: 0.1,
                                 }}
-                                exit={{ y: "150%" }}
+                                exit={{ y: "200%" }}
                             >
                                 <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
                                 <BigTitle>{content?.title ? content?.title : content?.name}</BigTitle> 
@@ -65,8 +65,8 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                                     <SmallArrowBtn></SmallArrowBtn>
                                 </Link>
                                 <BigOverview>
-                                    {content?.overview.slice(0, content?.overview.indexOf(' ', 250))}
-                                    {content && content?.overview.length > 250 ? "..." : "."}
+                                    {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
+                                    {content && content?.overview.length > 350 ? "..." : "."}
                                 </BigOverview>
                             </BoxModal>
                         </>

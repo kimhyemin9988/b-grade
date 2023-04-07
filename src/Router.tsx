@@ -4,12 +4,12 @@ import App from './App';
 import Movie from './MovieF/Movie';
 import Search from './Search/Search';
 import Tv from './Tv/Tv';
-import TotalImages from './MovieDetails/TotalImages';
-import TotalCasts from './MovieDetails/TotalCasts';
-import TotalVideos from './MovieDetails/TotalVideos';
-import MovieDetails from './MovieDetails/MovieDetails';
-import DetailOutlet from './MovieDetails/DetailOutlet';
-import TvDetails from './MovieDetails/TvDetails';
+import TotalImages from './MovieTvDetails/TotalImages';
+import TotalCasts from './MovieTvDetails/TotalCasts';
+import TotalVideos from './MovieTvDetails/TotalVideos';
+import MovieDetails from './MovieTvDetails/MovieDetails';
+import DetailOutlet from './MovieTvDetails/DetailOutlet';
+import TvDetails from './MovieTvDetails/TvDetails';
 
 const RouterApp = createBrowserRouter([
     {

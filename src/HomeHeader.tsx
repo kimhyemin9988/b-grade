@@ -92,6 +92,7 @@ const SearchDiv = styled.form`
 	}
 `
 const Input = styled.input`
+    touch-action: none;
   transform-origin: right center;
   background-color: ${(props) => props.theme.bodyFtColor};
   border-radius: 10px;
