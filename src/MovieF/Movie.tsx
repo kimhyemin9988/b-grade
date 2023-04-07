@@ -9,7 +9,6 @@ import LatestMovies from "./LatestMovies";
 import TopRatedMovies from "./TopRatedMovies";
 import Upcoming from "./Upcoming";
 import LoadingC from "../miniModule/LoadingC";
-import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 import MobileSliderC from "../miniModule/MobileSliderC";
 import WebSliderC from "../miniModule/WebSliderC";
 
@@ -88,7 +87,10 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
 
 export const Title = styled.p`
   margin-bottom: 5%;
-  font-size: 80%;
+  font-size: 1rem;
+  @media screen and (max-width: 550px){
+    font-size: 0.5rem;
+    }
 `;
 
 export const Overview = styled.p`
@@ -362,7 +364,14 @@ export const titleObj =
     title: ["Rating 4.5 ~ 5.5/10", "Top Rating", "Upcoming releases"]
 }
 
-
+export const largeVideo = {
+    height: '207',
+    width: '368',
+};
+export const smallVideo = {
+    height: '153',
+    width: '272',
+};
 
 const Home = () => {
     /* 데이터 받아오기 */
@@ -390,7 +399,14 @@ const Home = () => {
                             <Banner
                                 bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
                                 <Title>{data?.[0].title}</Title>
-                                <Overview>{data?.[0].overview}</Overview>
+                                {window.outerWidth <= 550 ?
+                                    <Overview>
+                                        {data?.[0].overview.slice(0, data?.[0].overview.indexOf(' ', 250))}
+                                        {data?.[0] && data?.[0].overview.length > 250 ? "..." : "."}
+                                    </Overview> :
+                                    <Overview>
+                                        {data?.[0].overview}
+                                    </Overview>}
                                 <Link to={`movie/${data?.[0].id}/details`}>
                                     <DetailBtn>
                                         <BigTitle style={{ color: "black" }}>Details</BigTitle>

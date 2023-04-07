@@ -65,8 +65,8 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                                     <SmallArrowBtn></SmallArrowBtn>
                                 </Link>
                                 <BigOverview>
-                                    {content?.overview.slice(0, content?.overview.indexOf(' ', 300))}
-                                    {content && content?.overview.length > 300 ? "..." : "."}
+                                    {content?.overview.slice(0, content?.overview.indexOf(' ', 250))}
+                                    {content && content?.overview.length > 250 ? "..." : "."}
                                 </BigOverview>
                             </BoxModal>
                         </>

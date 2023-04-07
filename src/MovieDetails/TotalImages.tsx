@@ -5,6 +5,7 @@ import LoadingC from "../miniModule/LoadingC";
 import { Box, Main, Title } from "../MovieF/Movie";
 import { BackdropPhoto } from "./MovieDetails";
 import { MainVideo } from "./TotalVideos";
+import styled from "styled-components";
 
 export interface Images {
     backdrops: [{
@@ -18,6 +19,12 @@ export interface Images {
     }],
 
 }
+export const MainImage = styled(MainVideo)`
+    @media screen and (max-width: 550px){
+        justify-content: center;
+    }
+`
+
 const TotalImages = () => {
     const { state, pathname } = useLocation();
     const distStr = pathname.split('/')[1]; // movie of tv
@@ -26,14 +33,14 @@ const TotalImages = () => {
         <Main style={{ paddingTop: "13vh" }}>
             <Title style={{ paddingLeft: "20px" }}>images</Title>
             {getImagesLoading ? <LoadingC></LoadingC> :
-                <MainVideo>
+                <MainImage>
                     {getImagesData?.backdrops.map((i) => {
                         return (
                             <BackdropPhoto style={{ width: "7rem", height: "4rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${i.file_path}`} key={getImagesData?.backdrops.indexOf(i)}></BackdropPhoto>
                         );
                     })
                     }
-                </MainVideo>
+                </MainImage>
             }
         </Main>
     );

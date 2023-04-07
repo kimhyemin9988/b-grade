@@ -4,17 +4,10 @@ import YouTube from "react-youtube";
 import styled from "styled-components";
 import { getVideos } from "../api";
 import LoadingC from "../miniModule/LoadingC";
-import { opts } from "../MovieF/LatestMovies";
-import { Main, Title, Wrapper } from "../MovieF/Movie";
+import { Main, Title, Wrapper, largeVideo, smallVideo } from "../MovieF/Movie";
 import { Videos } from "./MovieDetails";
-export const largeVideo = {
-    height: '207',
-    width: '368',
-};
-export const smallVideo = {
-    height: '153',
-    width: '272',
-};
+import { MainImage } from "./TotalImages";
+
 export const MainVideo = styled(Main)`
     display: flex;
     flex-direction: row;
@@ -28,7 +21,7 @@ const TotalVideos = () => {
     return (
         <Main style={{ paddingTop: "13vh" }}>
             <Title style={{ paddingLeft: "20px" }}>Video</Title>
-            <MainVideo>
+            <MainImage>
                 {VideosLoading ? <LoadingC></LoadingC> :
                     (
                         VideosData?.results.slice(3).map((i) => {
@@ -39,7 +32,7 @@ const TotalVideos = () => {
                             );
                         })
                     )}
-            </MainVideo>
+            </MainImage>
         </Main>
 
     );

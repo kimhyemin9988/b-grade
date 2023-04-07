@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { getCredits, getDetails, getImages, getVideos } from "../api";
 import LoadingC from "../miniModule/LoadingC";
 import SmallArrowBtn, { ArrowSvgSmall } from "../miniModule/SmallArrowBtn";
-import { Blur, Container, opts, OverviewContainer } from "../MovieF/LatestMovies";
-import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle, SliderContainer } from "../MovieF/Movie";
+import { Blur, Container, OverviewContainer } from "../MovieF/LatestMovies";
+import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle, SliderContainer, smallVideo, largeVideo } from "../MovieF/Movie";
 import TotalImages from "./TotalImages";
-import { MainVideo, largeVideo, smallVideo } from "./TotalVideos";
+import { MainVideo } from "./TotalVideos";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { DetailContainer } from "./TvDetails";
@@ -91,12 +91,16 @@ export interface Videos {
 }
 
 export const LargeBox = styled.div <{ posterbg: string | undefined }>`
-  width: 5rem;
+  width: 7rem;
   height: 6.6rem;
   font-size: 100%;
   background-image: url(${(props) => props.posterbg});
   background-size: 100% 100%;
     box-shadow: 5px 5px 5px rgb(0 0 0 / 40%);
+    @media screen and (max-width: 550px){
+        width: 4rem;
+        height: 5.55rem;
+    }
 `;
 
 export const SmallCircle = styled.div <{ posterbg?: string | undefined }>`
@@ -148,7 +152,11 @@ export const Width10 = styled.div`
     background-color: ${(props) => props.theme.bodyBgColor};
     box-shadow: 5px 5px 5px rgb(0 0 0 / 40%);
     padding: 0.3rem;
-
+    height : 6rem;
+    @media screen and (max-width: 550px){
+        padding: 0.2rem;
+        height : 5.15rem;
+    }
 `
 export const DetailBlur = styled.div`
     display: flex;
@@ -170,7 +178,6 @@ export const TextBox = styled.div`
     justify-content: space-between;
 `
 export const OverviewTitle = styled.div`
-    color:rgb(24, 199, 191);
   font-size: 0.3rem;
   width: 100%;
   @media screen and (max-width: 550px){
@@ -195,11 +202,12 @@ export const CastBox = styled.div`
     flex-direction: column;
     align-items: center;
     width: 2.5rem;
-    height: 5.5rem;
+    min-height: 5.5rem;
+    height: fit-content;
     @media screen and (max-width: 550px){
         padding: 0.2rem;
         margin: 0.2rem;
-        height: 5rem;
+        min-height: 5rem;
     }
 `
 export const TitleDiv = styled.div`
@@ -228,7 +236,7 @@ const MovieDetails = () => {
                 detailsLoading ? (
                     <LoadingC></LoadingC >
                 ) : (
-                    <Main style={{ paddingTop: "13vh" }}>
+                    <Main style={{ paddingTop: "11vh" }}>
                         <Container style={{ height: "fit-content" }}
                             bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}>
                             <DetailBlur>
@@ -247,16 +255,19 @@ const MovieDetails = () => {
                                 <WrapperDetail>
                                     <DetailContainer style={{ width:"fit-content" }}>
                                         <LargeBox posterbg={`https://image.tmdb.org/t/p/w300/${detailsData?.poster_path}`}></LargeBox>
-                                        <Width10 style={{ height : "6rem"}}>
-                                            <OverviewTitle>release date
+                                        <Width10>
+                                            <OverviewTitle>
+                                                <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>release date</OverviewSpan>
                                                 <OverviewSpan>{detailsData?.release_date}</OverviewSpan>
                                             </OverviewTitle>
                                             {detailsData?.runtime !== 0 &&
-                                                <OverviewTitle>runtime
+                                                <OverviewTitle>
+                                                    <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>runtime</OverviewSpan>
                                                     <OverviewSpan>{detailsData?.runtime}min</OverviewSpan>
                                                 </OverviewTitle>
                                             }
-                                            <OverviewTitle>genres
+                                            <OverviewTitle>
+                                                <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>genres</OverviewSpan>
                                                 {detailsData?.genres.map((i) => {
                                                     return (
                                                         <OverviewSpan key={i.id}>{i.name}</OverviewSpan>
@@ -264,7 +275,8 @@ const MovieDetails = () => {
                                                 })}
                                             </OverviewTitle>
                                             {CreditsData?.crew.length !== undefined &&
-                                                <OverviewTitle>crew
+                                                <OverviewTitle>
+                                                    <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>crew</OverviewSpan>
                                                     {CreditsData?.crew?.slice(0, 3).map((i) => {
                                                         return <OverviewSpan key={i.name + i.job}>{i.name}{
                                                             CreditsData?.crew?.indexOf(i) === 2 ? `(${i.job}).` : `(${i.job}),`}
@@ -275,7 +287,7 @@ const MovieDetails = () => {
                                             {detailsData?.production_companies &&
                                                 <OverviewTitle>
                                                     <CompanySvgSmall xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M48 0C21.5 0 0 21.5 0 48V464c0 26.5 21.5 48 48 48h96V432c0-26.5 21.5-48 48-48s48 21.5 48 48v80h96c26.5 0 48-21.5 48-48V48c0-26.5-21.5-48-48-48H48zM64 240c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V240zm112-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V240c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V240zM80 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16zm80 16c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H176c-8.8 0-16-7.2-16-16V112zM272 96h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H272c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16z" /></CompanySvgSmall>
-                                                    production companies
+                                                    <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>production companies</OverviewSpan>
                                                     {detailsData?.production_companies?.map((i) => {
                                                         return <OverviewSpan key={i.id}>{i.name}{
                                                             detailsData?.production_companies?.indexOf(i) === detailsData?.production_companies?.length - 1 ? `.` : `,`}</OverviewSpan>
@@ -285,12 +297,13 @@ const MovieDetails = () => {
                                             }
                                         </Width10>
                                     </DetailContainer>
-                                    {detailsData?.belongs_to_collection && detailsData?.belongs_to_collection.backdrop_path ? <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem", width:"20rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto> :
-                                        (detailsData?.backdrop_path && <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem",width:"20rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}></BackdropPhoto>)
+                                    {detailsData?.belongs_to_collection && detailsData?.belongs_to_collection.backdrop_path ? <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem", width:"15rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}></BackdropPhoto> :
+                                        (detailsData?.backdrop_path && <BackdropPhoto style={{ marginTop: window.outerWidth <= 550 ? "0.5rem" : "0", height:"6.6rem",width:"15rem" }} bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}></BackdropPhoto>)
                                     }
                                 </WrapperDetail>
                                 <TextBox>
-                                    <OverviewTitle>overview
+                                    <OverviewTitle>
+                                        <OverviewSpan style={{ color:"rgb(24, 199, 191)", marginLeft:"0" }}>overview</OverviewSpan>
                                         <Overview>{detailsData?.overview}</Overview>
                                     </OverviewTitle>
                                 </TextBox>

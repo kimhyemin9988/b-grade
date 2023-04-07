@@ -171,8 +171,8 @@ const Popular = ({ dataType }: { dataType: string }) => {
                                                 <SmallArrowBtn></SmallArrowBtn>
                                             </Link>
                                             <BigOverview>
-                                                {content?.overview.slice(0, content?.overview.indexOf(' ', 350))}
-                                                {content && content?.overview.length > 350 ? "..." : "."}
+                                                {content?.overview.slice(0, content?.overview.indexOf(' ', 250))}
+                                                {content && content?.overview.length > 250 ? "..." : "."}
                                                 {/* overview 긴것 자름 */}
                                             </BigOverview>
                                         </BoxModal>
