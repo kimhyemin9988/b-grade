@@ -14,6 +14,9 @@ export const Container = styled.section<{ bgPhoto: string | undefined }>`
     background-size: cover;
     height: 80vh;
     background-size: 100% 100%;
+    @media screen and (max-width: 550px){
+        height: 45vh;
+    };
 `
 export const Blur = styled.div`
     background-color: rgba(255, 255, 255, 0.034);
@@ -25,6 +28,7 @@ export const Blur = styled.div`
     "video posterbg posterbg"
     "overview overview overview";
     @media screen and (max-width: 550px){
+        height: 45vh;
         grid-template-areas:
         "title title"
         "posterbg overview"
@@ -32,15 +36,10 @@ export const Blur = styled.div`
     };
 `
 const SqureBox = styled.article<{ posterbg: string | undefined }>`
-    width: 200px;
-    height: 300px; 
+    width: 4rem;
+    height: 6rem; 
     background-image: url(${(props) => props.posterbg});
     background-size: 100% 100%;
-    @media screen and (max-width: 550px){
-        width: 100px;
-        height: 150px;
-        
-    }
 `
 export const OverviewContainer = styled.div`
     grid-area: overview;
@@ -93,7 +92,7 @@ const LatestMovies = () => {
                                     </Link>
                                 </RatingSpan>
                                 <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}></SqureBox>
-                                 <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={xLarge} />
+                                <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={xLarge} />
                                 <OverviewContainer>
                                     <Overview>{data?.[0].overview}</Overview>
                                 </OverviewContainer>

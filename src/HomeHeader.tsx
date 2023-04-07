@@ -20,7 +20,7 @@ const Header = styled(motion.header)`
     z-index: 10;
     font-weight: 700;
     @media screen and (max-width: 550px){
-        height: 11vh;
+        height: 8vh;
     }
 `
 
@@ -116,7 +116,7 @@ const SearchIcon = styled(motion.svg)`
 `
 const SearchContainer = styled(motion.div)`
     width:100%;
-    height:11vh;
+    height:8vh;
     position:absolute;
     background-color: ${(props) => props.theme.bodyBgColor};
 `

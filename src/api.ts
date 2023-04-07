@@ -22,6 +22,11 @@ export { movieList };
 
 const tvPopular = async () => {
 
+    const languageFilter = (dataArray : movieData[]) => {
+        let boolean = ['en', 'zh', 'ja', 'ko'].map((k) => dataArray.filter((i: movieData) => i.original_language === k).length > 10 );
+        return boolean;
+    };
+
     let page = 1;
     let dataArray: [] = [];
     while (page < 30) {
@@ -33,7 +38,7 @@ const tvPopular = async () => {
         /* 각 나라별 40개가 되면 종료
         배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료
         */
-        let boolean = ['en', 'zh', 'ja', 'ko'].map((k) => dataArray.filter((i: movieData) => i.original_language === k).length > 10);
+        let boolean = languageFilter(dataArray);
         if (!boolean.includes(false)) {
             break;
         }
@@ -41,6 +46,7 @@ const tvPopular = async () => {
     dataArray.sort((a: movieData, b: movieData) => {
         return b.popularity - a.popularity
     });
+
     return dataArray;
 }
 export { tvPopular };
@@ -127,7 +133,7 @@ const latestMovies = async () => {
 
     const videoResponse = await fetch(`https://api.themoviedb.org/3/movie/${data?.[0].id}/videos?api_key=${API_KEY}`);
     const videoJson = await videoResponse.json();
-    const videoObj = await videoJson.results.filter((i: videoData) => i.name == 'Official Trailer')[0];
+    const videoObj = await videoJson.results.filter((i: videoData) => i.name === 'Official Trailer')[0];
     await data.push(videoObj);
     return data;
 }

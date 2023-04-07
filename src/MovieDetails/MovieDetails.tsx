@@ -180,10 +180,7 @@ export const TextBox = styled.div`
 export const OverviewTitle = styled.div`
   font-size: 0.3rem;
   width: 100%;
-  @media screen and (max-width: 550px){
-    font-size: 10%;
-    -webkit-text-stroke-width: medium;
-    }
+  font-weight: 600;
 `
 
 export const OverviewSpan = styled.span`
@@ -191,9 +188,6 @@ export const OverviewSpan = styled.span`
     color: ${(props) => props.theme.bodyFtColor};
   font-size: 0.3rem;
   width: 100%;
-  @media screen and (max-width: 550px){
-    font-size: 10%;
-    }
 `;
 
 export const CastBox = styled.div`
@@ -212,10 +206,19 @@ export const CastBox = styled.div`
     }
 `
 export const TitleDiv = styled.div`
-    font-size: 0.4rem;
+    font-size: 0.6rem;
     padding: 5px;
     font-weight:700;
+    @media screen and (max-width: 550px){
+    font-size: 0.4rem;
+    }
 `;
+export const MainDetail = styled(Main)`
+    padding-top: 11vh;
+    @media screen and (max-width: 550px){
+        padding-top: 7.5vh;
+    }
+`
 const MovieDetails = () => {
     const params = useParams();
     const movieId = params.movieId;
@@ -237,10 +240,11 @@ const MovieDetails = () => {
                 detailsLoading ? (
                     <LoadingC></LoadingC >
                 ) : (
-                    <Main style={{ paddingTop: "11vh" }}>
+                    <MainDetail>
                         <Container style={{ height: "fit-content" }}
                             bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}>
-                            <DetailBlur>
+                        </Container>
+                        <DetailBlur>
                                 <TextBox>
                                     <TitleDiv>{detailsData?.title}
                                         <OverviewTitle style={{ color: "rgb(24, 199, 191)" }}>original title
@@ -309,11 +313,11 @@ const MovieDetails = () => {
                                     </OverviewTitle>
                                 </TextBox>
                             </DetailBlur>
-                        </Container>
                         {VideosLoading ? <LoadingC></LoadingC > :
                             VideosData?.results.length !== 0 &&
                             (<Main>
-                                <DetailData>video
+                                <DetailData>
+                                    <TitleDiv>Videos</TitleDiv>
                                     {VideosData?.results.length !== undefined && VideosData?.results.length > 3 &&
                                         <Link to={`../videos`} state={movieId}>
                                             <DetailBtn style={{ marginLeft: "10px" }}>
@@ -336,7 +340,8 @@ const MovieDetails = () => {
                         {CreditsLoading ? <LoadingC></LoadingC > :
                             CreditsData?.cast.length !== undefined &&
                             (<Main>
-                                <DetailData>cast
+                                <DetailData>
+                                    <TitleDiv>Casts</TitleDiv>
                                     {CreditsData?.cast.length !== undefined && CreditsData?.cast.length > 5 &&
                                         <Link to={`../casts`} state={movieId}>
                                             <DetailBtn style={{ marginLeft: "10px" }}>
@@ -365,7 +370,7 @@ const MovieDetails = () => {
                                 </MainVideo>
                             </Main>)
                         }
-                    </Main >
+                    </MainDetail >
                 )}
         </>
     );

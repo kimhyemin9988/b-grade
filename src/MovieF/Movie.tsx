@@ -78,8 +78,8 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   margin-top:13vh;
   font-weight: 600;
         @media screen and (max-width: 550px){
-            margin-top:11vh;
-        height: 40vh;
+            margin-top:8vh;
+        height: 33vh;
     }
 `;
 
@@ -97,9 +97,6 @@ export const Overview = styled.p`
     color: ${(props) => props.theme.bodyFtColor};
   font-size: 0.3rem;
   width: 100%;
-  @media screen and (max-width: 550px){
-    font-size: 10%;
-    }
 `;
 
 export const Slider = styled.div`
@@ -318,7 +315,7 @@ export const RatingContainer = styled.div`
 `
 
 export const DetailBtn = styled.button`
-    width: 2.3rem;
+    width: 2.2rem;
     height: 0.6rem;
     margin-top: 0.1rem;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
@@ -336,12 +333,10 @@ export const DetailBtn = styled.button`
         background-color: #ffffff96;
         color: black;
     }
-    @media screen and (max-width: 550px){
-        width: 3rem;
-        p{
+    p{
             font-weight: 600;
         }
-    }
+
     
 `
 
@@ -405,8 +400,8 @@ const Home = () => {
                                 <Title>{data?.[0].title}</Title>
                                 {window.outerWidth <= 550 ?
                                     <Overview>
-                                        {data?.[0].overview.slice(0, data?.[0].overview.indexOf(' ', 250))}
-                                        {data?.[0] && data?.[0].overview.length > 250 ? "..." : "."}
+                                        {data?.[0].overview.slice(0, data?.[0].overview.indexOf(' ', 350))}
+                                        {data?.[0] && data?.[0].overview.length > 350 ? "..." : "."}
                                     </Overview> :
                                     <Overview>
                                         {data?.[0].overview}

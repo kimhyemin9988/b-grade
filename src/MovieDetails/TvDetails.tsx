@@ -11,7 +11,7 @@ import TotalImages from "./TotalImages";
 import { MainVideo } from "./TotalVideos";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { BackdropPhoto, CastBox, CompanySvgSmall, Credits, DetailBlur, DetailData, LargeBox, OverviewSpan, OverviewTitle, SmallCircle, TextBox, TitleDiv, Videos, Width10, WrapperDetail } from "./MovieDetails";
+import { BackdropPhoto, CastBox, CompanySvgSmall, Credits, DetailBlur, DetailData, LargeBox, MainDetail, OverviewSpan, OverviewTitle, SmallCircle, TextBox, TitleDiv, Videos, Width10, WrapperDetail } from "./MovieDetails";
 
 export interface tvDetails {
     adult: boolean;
@@ -100,10 +100,11 @@ const TvDetails = () => {
             {detailsLoading ? (
                 <LoadingC></LoadingC >
             ) : (
-                <Main style={{ paddingTop: "11vh" }}>
+                <MainDetail>
                     <Container style={{ height: "fit-content" }}
                         bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}>
-                        <DetailBlur>
+                    </Container>
+                    <DetailBlur>
                             <TextBox>
                                 <TitleDiv>{`${detailsData?.name} season ${detailsData?.number_of_seasons}`}
                                     <OverviewSpan style={{ color: "#e3c503" }}>{detailsData?.status}</OverviewSpan>
@@ -183,7 +184,6 @@ const TvDetails = () => {
                                 </OverviewTitle>
                             </TextBox>
                         </DetailBlur>
-                    </Container>
                     {
                         VideosLoading ? <LoadingC></LoadingC > :
                             VideosData?.results.length !== 0 &&
@@ -240,7 +240,7 @@ const TvDetails = () => {
                             </MainVideo>
                         </Main>)
                     }
-                </Main >
+                </MainDetail >
             )
             }
         </>
