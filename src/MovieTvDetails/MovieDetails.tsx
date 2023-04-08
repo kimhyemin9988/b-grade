@@ -8,19 +8,9 @@ import SmallArrowBtn, { ArrowSvgSmall } from "../miniModule/SmallArrowBtn";
 import { Blur, Container, OverviewContainer } from "../MovieF/LatestMovies";
 import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle, SliderContainer, smallVideo, largeVideo, BigOverview } from "../MovieF/Movie";
 import TotalImages from "./TotalImages";
-import { MainVideo } from "./TotalVideos";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { DetailContainer } from "./TvDetails";
-
-/* interface detailI {
-
-}
-<detailI[]>
-
-interface detailId{
-    id : string;
-}*/
+import { DetailContainer, MainVideo } from "./TvDetails";
 
 export interface details {
     adult: boolean;

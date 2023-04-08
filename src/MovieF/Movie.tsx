@@ -13,8 +13,6 @@ import MobileSliderC from "../miniModule/MobileSliderC";
 import WebSliderC from "../miniModule/WebSliderC";
 
 
-
-
 export const Main = styled.div`
     width: 100%;
     //    height: 100vh;
@@ -134,7 +132,8 @@ export const Row = styled(motion.div)`
     align-items: center;
 `;
 
-export const Box = styled(motion.article) <{ posterbg?: string | undefined }>`
+
+export const Box = styled(motion.article)<{ posterbg?: string | undefined}>` // 
   width: 200px;
   height: 300px;
   font-size: 100%;
@@ -156,6 +155,7 @@ export const Box = styled(motion.article) <{ posterbg?: string | undefined }>`
     transform-origin: center right;
   }
 `;
+
 
 export const boxVariants = {
     normal: {
@@ -214,8 +214,8 @@ export const infoVariants = {
 
 /* 모달창 */
 export const BoxModal = styled(motion.div)`
-  width: 10rem;
-  height:  8rem;
+  width: 12rem;
+  height:  10rem;
   border-radius: 10px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
   background-color: ${(props) => props.theme.bodyBgColor};
@@ -251,7 +251,7 @@ export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   width: 100%;
   background-position: center center;
   background-image: url(${(props) => props.bgPhoto});
-  height: 60%;
+  height: 55%;
   border-radius: 10px 10px 0 0;
   background-size: 100% 100%;
      @media screen and (max-width: 550px){

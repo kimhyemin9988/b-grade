@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# my-recoil
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React,typescript로 작성한 영화,Tv 정보 web입니다.
+현재 상영하고 있는 인기 영화, 높은 평점의 영화, 곧 개봉할 영화, 최신순의 평점 4.5~5.5의 영화들을 정보를 제공합니다. Tv 부분에서는 현재 방영중이거나 높은 평점의 Tv 시리즈 그리고 영어, 중국어, 일본어, 한국어 각 언어별 인기 Tv 시리즈의 정보를 제공합니다. 트레일러, 이미지, 관련 인물에 대한 정보를 얻을 수 있습니다. 추가로 키워드 검색을 통해 연관된 작품들을 검색할 수 있습니다.
 
-## Available Scripts
+# [ PC Layout]
 
-In the project directory, you can run:
 
-### `npm start`
+# [ Mobile Layout]
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Pages
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+https://kimhyemin9988.github.io/b-grade/
 
-### `npm test`
+# 적용기술
+-React
+-react-router-dom
+-react-select
+-react-hook-form
+-typescript
+-styled-components
+-recoil(react 상태관리)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Details
+입력한 할일의 카테고리 default값은 "Todo"입니다.
+Todo 카테고리로 이동하면 입력한 값을 볼 수 있습니다.
 
-### `npm run build`
+카테고리의 default값은 "Todo", "Done", "Doing"입니다.
+react-select를 사용하여 카테고리를 선택하여 이동 & 삭제 할 수 있습니다. 
+목록이 있는 카테고리를 삭제하려하면 alert경고문이 뜬 후 삭제되지 않고 main page로 이동합니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+react-hook-form을 사용하여 form data를 관리합니다.

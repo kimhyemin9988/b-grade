@@ -1,5 +1,4 @@
-import LoadingC from "../miniModule/LoadingC";
-import { Main, Wrapper, movieData } from "../MovieF/Movie";
+import { Main, Wrapper } from "../MovieF/Movie";
 import AiringToday from "./AiringToday";
 import LatestTopShows from "./LatestTopShows";
 import Popular from "./Popular";

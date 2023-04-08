@@ -8,7 +8,6 @@ import { ArrowSvgSmall } from "../miniModule/SmallArrowBtn";
 import { Blur, Container, OverviewContainer } from "../MovieF/LatestMovies";
 import { Box, Main, movieData, Overview, Wrapper, DetailBtn, Title, BigTitle, SliderContainer, smallVideo, largeVideo } from "../MovieF/Movie";
 import TotalImages from "./TotalImages";
-import { MainVideo } from "./TotalVideos";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { BackdropPhoto, CastBox, CompanySvgSmall, Credits, DetailBlur, DetailData, LargeBox, MainDetail, OverviewSpan, OverviewTitle, SmallCircle, TextBox, TitleDiv, Videos, Width10, WrapperDetail } from "./MovieDetails";
@@ -81,7 +80,12 @@ export const DetailContainer = styled.div`
     width: 100%;
     display: flex;
 `
-
+export const MainVideo = styled(Main)`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: fit-content;
+`
 const TvDetails = () => {
     const params = useParams();
     const tvId = params.tvId;

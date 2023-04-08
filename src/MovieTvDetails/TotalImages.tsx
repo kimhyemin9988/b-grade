@@ -4,8 +4,8 @@ import { getImages } from "../api";
 import LoadingC from "../miniModule/LoadingC";
 import { Box, Main, Title } from "../MovieF/Movie";
 import { BackdropPhoto, TitleDiv } from "./MovieDetails";
-import { MainVideo } from "./TotalVideos";
 import styled from "styled-components";
+import { MainVideo } from "./TvDetails";
 
 export interface Images {
     backdrops: [{

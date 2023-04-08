@@ -8,12 +8,6 @@ import { Main, Title, Wrapper, largeVideo, smallVideo } from "../MovieF/Movie";
 import { TitleDiv, Videos } from "./MovieDetails";
 import { MainImage } from "./TotalImages";
 
-export const MainVideo = styled(Main)`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: fit-content;
-`
 const TotalVideos = () => {
     const { state, pathname } = useLocation();
     const distStr = pathname.split('/')[1]; // movie of tv
