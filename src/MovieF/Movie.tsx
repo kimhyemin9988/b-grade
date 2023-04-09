@@ -378,10 +378,12 @@ const Home = () => {
     /* 테마 버튼 */
     const [themeText, setThemeText] = useState("라이트 모드로 보기");
     const [setIsDark] = useOutletContext<React.Dispatch<React.SetStateAction<boolean>>[]>();
+
     const toggleTheme = () => {
         setIsDark((element) => (!element));
         themeText === "다크 모드로 보기" ? setThemeText("라이트 모드로 보기") : setThemeText("다크 모드로 보기")
     };
+
     const dataType = "movie";
     return (
         <>

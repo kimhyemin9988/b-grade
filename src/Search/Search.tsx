@@ -81,9 +81,6 @@ const Search = () => {
           ) : (
             <MainDetail>
               <Wrapper style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                <RatingContainer>
-                  <RatingSpan>Search Results : {keepData?.length}</RatingSpan>
-                </RatingContainer>
                 {keepData?.map((i) => (
                   <Box
                     key={i.id}

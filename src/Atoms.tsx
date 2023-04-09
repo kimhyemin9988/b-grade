@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import { movieData } from "./MovieF/Movie";
 export interface IPopularLanguage {
   value: string;
   label: string;
@@ -15,7 +14,3 @@ export const PopularLanguage = atom<IPopularLanguage[]>({
   ],
 });
 
-export const DefalutEn = atom<movieData[]>({
-  key: "DefalutEn",
-  default: [],
-});

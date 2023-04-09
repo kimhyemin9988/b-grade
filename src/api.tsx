@@ -45,7 +45,7 @@ const tvPopular = async () => {
       .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
     page++;
     dataArray = [...dataArray, ...data];
-    /* 각 나라별 40개가 되면 종료
+    /* 각 나라별 10개가 되면 종료
         배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료
         */
     let boolean = languageFilter(dataArray);
