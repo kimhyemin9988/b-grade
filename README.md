@@ -24,33 +24,33 @@ https://kimhyemin9988.github.io/b-grade/
 
 ## Section
 
-#1. header : Home(Movie) / Tv / search
-  -search : 모바일에서는 아이콘 터치 시 검색창이 나타납니다.
+#1. header : Home(Movie) / Tv / search<br>
+  -search : 모바일에서는 아이콘 터치 시 검색창이 나타납니다.<br>
 
-#2. styled-components를 이용해 다크 모드 / 라이트 모드 구현
+#2. styled-components를 이용해 다크 모드 / 라이트 모드 구현<br>
 
-#3. Movie & Tv
+#3. Movie & Tv<br>
 react-query와 영화 DB API 이용하여 Data를 응답받았습니다.
-현재 상영하고 있는 인기 영화, 높은 평점의 영화들, 곧 개봉할 영화들, 최신순으로 평점 4.5~5.5의 영화들과
-현재 방영중이거나 높은 평점의 Tv 시리즈 그리고 영어, 중국어, 일본어, 한국어 각 언어별 인기 Tv 시리즈의 정보를 제공합니다.
--슬라이더 구현
-  -web : 좌,우 버튼 클릭으로 이동
-  -mobile : Swiper Slider
+현재 상영하고 있는 인기 영화, 높은 평점의 영화들, 곧 개봉할 영화들, 최신순으로 평점 4.5~5.5의 영화들과 
+현재 방영중이거나 높은 평점의 Tv 시리즈 그리고 영어, 중국어, 일본어, 한국어 각 언어별 인기 Tv 시리즈의 정보를 제공합니다.<br>
+-슬라이더 구현<br>
+  -web : 좌,우 버튼 클릭으로 이동<br>
+  -mobile : Swiper Slider<br>
 
--포스터 클릭(터치)시 영화의 배경사진, 타이틀, 줄거리 모달창 open
+-포스터 클릭(터치)시 영화의 배경사진, 타이틀, 줄거리 모달창 open<br>
 
--detail 클릭(터치) detail화면으로 이동
+-detail 클릭(터치) detail화면으로 이동<br>
 
--react-select이용하여 언어별로 랜더링
+-react-select이용하여 언어별로 랜더링<br>
 
-#4. search
-keyword로 DB에서 영화와 TV 검색할 수 있습니다.
+#4. search<br>
+keyword로 DB에서 영화와 TV 검색할 수 있습니다.<br>
 스크롤이 바닥에 닿게 되면 다음페이지의 Data를 요청하고 응답받습니다.
 
-#5. detail
+#5. detail<br>
 영화의 id를 이용해 영화의 상세정보, 비디오, 영화 스태프와 출연자의 정보를 react-query와 api를 사용해 응답받습니다.
 
-<하위 page>
--상세이미지
--비디오 : 4개 이상의 비디오가 존재하면 버튼을 눌러 더 많은 관련 비디오를 볼 수 있습니다.
+<하위 page><br>
+-상세이미지<br>
+-비디오 : 4개 이상의 비디오가 존재하면 버튼을 눌러 더 많은 관련 비디오를 볼 수 있습니다.<br>
 -영화 스태프와 출연자의 정보 : 여섯 이상의 출연자가 정보가 있다면 버튼을 눌러 더 많은 인물을 볼 수 있습니다.
