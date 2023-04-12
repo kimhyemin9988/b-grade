@@ -136,6 +136,7 @@ const HomeHeader = () => {
   const { register, handleSubmit } = useForm<IForm>();
   const navigate = useNavigate();
 
+  /* 검색시 URL에 키워드  */
   const onValid = (data: IForm) => {
     navigate(`/search?keyword=${data.keyword}`);
   };
@@ -145,6 +146,7 @@ const HomeHeader = () => {
     <Header>
       <Col>
         <HomeLogo variants={logoVariants} whileHover="active" initial="normal">
+          {/* framer-motion을 사용해 Hover시 animation이 동작함 */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="svg-stars"
@@ -188,7 +190,7 @@ const HomeHeader = () => {
       {window.outerWidth <= 550 ? (
         <>
           <SearchContainer
-            initial={{ y: "-100%" }} // initial 지정 안할시 새로고침 할때 창이 보임
+            initial={{ y: "-100%" }}
             animate={{ y: isOpen ? 0 : "-100%" }}
             transition={{
               type: "linear",

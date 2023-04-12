@@ -149,13 +149,13 @@ const latestMovies = async () => {
     .filter((i: movieData) => i.poster_path !== null)
     .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "")
     .slice(2, 3);
-
+  
   const videoResponse = await fetch(
     `https://api.themoviedb.org/3/movie/${data?.[0].id}/videos?api_key=${dbApiKey}`
   );
   const videoJson = await videoResponse.json();
   const videoObj = await videoJson.results.filter(
-    (i: videoData) => i.name === "Official Trailer"
+    (i: videoData) => i.name === "Official Trailer" || i.name === "Official Trailer 1"
   )[0];
   await data.push(videoObj);
   return data;

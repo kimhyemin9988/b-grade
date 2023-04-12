@@ -1,108 +1,152 @@
 import { latestMovies } from "../api";
 import { useQuery } from "react-query";
-import { Box, largeVideo, movieData, Overview, RatingContainer, RatingSpan, smallVideo, Title, Wrapper } from "./Movie";
+import {
+  movieData,
+  Overview,
+  RatingSpan,
+  smallVideo,
+  Wrapper,
+} from "./Movie";
 import styled from "styled-components";
-import YouTube from 'react-youtube';
+import YouTube from "react-youtube";
 import LoadingC from "../miniModule/LoadingC";
 import { Link } from "react-router-dom";
 import SmallArrowBtn from "../miniModule/SmallArrowBtn";
 
-
 export const Container = styled.section<{ bgPhoto: string | undefined }>`
-    width: 100%;
-    background-image: url(${(props) => props.bgPhoto});
-    background-size: cover;
-    height: 80vh;
-    background-size: 100% 100%;
-    @media screen and (max-width: 550px){
-        height: 50vh;
-    };
-`
+  width: 100%;
+  background-image: url(${(props) => props.bgPhoto});
+  background-size: cover;
+  height: 80vh;
+  background-size: 100% 100%;
+  @media screen and (max-width: 550px) {
+    height: 50vh;
+  }
+`;
 export const Blur = styled.div`
-    background-color: rgba(255, 255, 255, 0.034);
-    backdrop-filter: blur(50px);
-    height: 80vh;
-    display: grid;
-    grid-template-areas:
+  background-color: rgba(255, 255, 255, 0.034);
+  backdrop-filter: blur(50px);
+  height: 80vh;
+  display: grid;
+  grid-template-areas:
     "title title title"
     "video posterbg posterbg"
     "overview overview overview";
-    @media screen and (max-width: 550px){
-        height: 50vh;
-        grid-template-areas:
-        "title title"
-        "posterbg overview"
-        "video video"
-    };
-`
+  @media screen and (max-width: 550px) {
+    height: 50vh;
+    grid-template-areas:
+      "title title"
+      "posterbg overview"
+      "video video";
+  }
+`;
 const SqureBox = styled.article<{ posterbg: string | undefined }>`
-    width: 4rem;
-    height: 6rem; 
-    background-image: url(${(props) => props.posterbg});
-    background-size: 100% 100%;
-`
+  width: 4rem;
+  height: 6rem;
+  background-image: url(${(props) => props.posterbg});
+  background-size: 100% 100%;
+`;
 export const OverviewContainer = styled.div`
-    grid-area: overview;
-    padding: 20px;
-    @media screen and (max-width: 550px){
-        padding: 10px;
-    }
-`
+  grid-area: overview;
+  padding: 20px;
+  @media screen and (max-width: 550px) {
+    padding: 10px;
+  }
+`;
 export const xLarge = {
-    height: '297',
-    width: '528',
+  height: "297",
+  width: "528",
 };
 
-
 const LatestMovies = () => {
-    /* 데이터 받아오기 */
-    const { isLoading, data } = useQuery<movieData[]>(["latestMovies"], latestMovies);
-    return (
-        <>
-            {isLoading ? (
-                <LoadingC></LoadingC>
-            ) : (
-                window.outerWidth <= 550 ?
-                    <Wrapper style={{ alignItems: "flex-start", marginBottom: "20px" }}>
-                        <RatingSpan style={{ paddingLeft: "10px", marginBottom: "10px" }}>Popular Movies In Theaters</RatingSpan>
-                        <Container
-                            bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
-                            <Blur>
-                                <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "10px" }}>{data?.[0].original_title}
-                                    <Link to={`movie/${data?.[0].id}/details`}>
-                                        <SmallArrowBtn></SmallArrowBtn>
-                                    </Link>
-                                </RatingSpan>
-                                <SqureBox style={{ gridArea: "posterbg", marginLeft: "10px" }} posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}></SqureBox>
-                                <YouTube style={{ gridArea: "video", paddingLeft: "10px" }} videoId={data?.[1].key} opts={smallVideo} />
-                                <OverviewContainer>
-                                    <Overview>{data?.[0].overview}</Overview>
-                                </OverviewContainer>
-                            </Blur>
-                        </Container>
-                    </Wrapper> :
-                    <Wrapper style={{ alignItems: "flex-start", marginBottom: "180px" }}>
-                        <RatingSpan style={{ paddingLeft: "20px", marginBottom: "20px" }}>Popular Movies In Theaters</RatingSpan>
-                        <Container
-                            bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
-                            <Blur>
-                                <RatingSpan style={{ gridArea: "title", alignSelf: "center", paddingLeft: "20px" }}>{data?.[0].original_title}
-                                    <Link to={`movie/${data?.[0].id}/details`}>
-                                        <SmallArrowBtn></SmallArrowBtn>
-                                    </Link>
-                                </RatingSpan>
-                                <SqureBox style={{ gridArea: "posterbg" }} posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}></SqureBox>
-                                <YouTube style={{ gridArea: "video", height: "300px", paddingLeft: "20px" }} videoId={data?.[1].key} opts={xLarge} />
-                                <OverviewContainer>
-                                    <Overview>{data?.[0].overview}</Overview>
-                                </OverviewContainer>
-                            </Blur>
-                        </Container>
-                    </Wrapper>
-            )}
-        </>
-    );
-
+  /* 데이터 받아오기 */
+  const { isLoading, data } = useQuery<movieData[]>(
+    ["latestMovies"],
+    latestMovies
+  );
+  return (
+    <>
+      {isLoading ? (
+        <LoadingC></LoadingC>
+      ) : window.outerWidth <= 550 ? (
+        <Wrapper style={{ alignItems: "flex-start", marginBottom: "20px" }}>
+          <RatingSpan style={{ paddingLeft: "10px", marginBottom: "10px" }}>
+            Popular Movies In Theaters
+          </RatingSpan>
+          <Container
+            bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}
+          >
+            <Blur>
+              <RatingSpan
+                style={{
+                  gridArea: "title",
+                  alignSelf: "center",
+                  paddingLeft: "10px",
+                }}
+              >
+                {data?.[0].original_title}
+                <Link to={`movie/${data?.[0].id}/details`}>
+                  <SmallArrowBtn></SmallArrowBtn>
+                </Link>
+              </RatingSpan>
+              <SqureBox
+                style={{ gridArea: "posterbg", marginLeft: "10px" }}
+                posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
+              ></SqureBox>
+              <YouTube
+                style={{ gridArea: "video", paddingLeft: "10px" }}
+                videoId={data?.[1].key}
+                opts={smallVideo}
+              />
+              <OverviewContainer>
+                <Overview>{data?.[0].overview}</Overview>
+              </OverviewContainer>
+            </Blur>
+          </Container>
+        </Wrapper>
+      ) : (
+        <Wrapper style={{ alignItems: "flex-start", marginBottom: "180px" }}>
+          <RatingSpan style={{ paddingLeft: "20px", marginBottom: "20px" }}>
+            Popular Movies In Theaters
+          </RatingSpan>
+          <Container
+            bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}
+          >
+            <Blur>
+              <RatingSpan
+                style={{
+                  gridArea: "title",
+                  alignSelf: "center",
+                  paddingLeft: "20px",
+                }}
+              >
+                {data?.[0].original_title}
+                <Link to={`movie/${data?.[0].id}/details`}>
+                  <SmallArrowBtn></SmallArrowBtn>
+                </Link>
+              </RatingSpan>
+              <SqureBox
+                style={{ gridArea: "posterbg" }}
+                posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
+              ></SqureBox>
+              <YouTube
+                style={{
+                  gridArea: "video",
+                  height: "300px",
+                  paddingLeft: "20px",
+                }}
+                videoId={data?.[1].key}
+                opts={xLarge}
+              />
+              <OverviewContainer>
+                <Overview>{data?.[0].overview}</Overview>
+              </OverviewContainer>
+            </Blur>
+          </Container>
+        </Wrapper>
+      )}
+    </>
+  );
 };
 
 export default LatestMovies;
