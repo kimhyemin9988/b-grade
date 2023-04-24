@@ -145,15 +145,17 @@ const latestMovies = async () => {
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${dbApiKey}&sort_by=popularity.asc&include_adult=false&page=1&release_date.lte=${date}&with_watch_monetization_types=flatrate`
   );
   const json = await response.json();
+
   const data = await json.results
     .filter((i: movieData) => i.poster_path !== null)
     .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "")
-    .slice(2, 3);
-  
+    .slice(0, 1);
+
   const videoResponse = await fetch(
     `https://api.themoviedb.org/3/movie/${data?.[0].id}/videos?api_key=${dbApiKey}`
   );
   const videoJson = await videoResponse.json();
+  console.log(videoJson);
   const videoObj = await videoJson.results.filter(
     (i: videoData) => i.name === "Official Trailer" || i.name === "Official Trailer 1"
   )[0];

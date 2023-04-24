@@ -1,6 +1,7 @@
 import { latestMovies } from "../api";
 import { useQuery } from "react-query";
 import {
+  BigCover,
   movieData,
   Overview,
   RatingSpan,
@@ -96,8 +97,7 @@ const LatestMovies = () => {
               <YouTube
                 style={{ gridArea: "video", paddingLeft: "10px" }}
                 videoId={data?.[1].key}
-                opts={smallVideo}
-              />
+                opts={smallVideo}/>
               <OverviewContainer>
                 <Overview>{data?.[0].overview}</Overview>
               </OverviewContainer>
@@ -129,15 +129,15 @@ const LatestMovies = () => {
                 style={{ gridArea: "posterbg" }}
                 posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
               ></SqureBox>
-              <YouTube
-                style={{
-                  gridArea: "video",
-                  height: "300px",
-                  paddingLeft: "20px",
-                }}
-                videoId={data?.[1].key}
-                opts={xLarge}
-              />
+                <YouTube
+                  style={{
+                    gridArea: "video",
+                    height: "300px",
+                    paddingLeft: "20px",
+                  }}
+                  videoId={data?.[1].key}
+                  opts={xLarge}
+                />
               <OverviewContainer>
                 <Overview>{data?.[0].overview}</Overview>
               </OverviewContainer>
