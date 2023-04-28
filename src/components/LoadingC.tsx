@@ -22,11 +22,9 @@ const itemVariants = {
   },
 };
 const Loader = styled.div`
-  justify-content: center;
-  align-items: end;
   display: flex;
-  width: 100%;
-  height: 50vh;
+  width: 1.5rem;
+  height: 1.5rem;
   margin: 20px;
 `;
 
@@ -34,6 +32,7 @@ const LoadingMotion = styled(motion.svg)`
   width: 200px;
   height: 200px;
 `;
+
 const LoadingC = () => {
   return (
     <Loader>

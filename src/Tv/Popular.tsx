@@ -26,13 +26,13 @@ import {
 } from "../MovieF/Movie";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { IPopularLanguage, PopularLanguage } from "../Atoms";
 import Select, { SingleValue } from "react-select";
-import SmallArrowBtn from "../miniModule/SmallArrowBtn";
+import SmallArrowBtn from "../components/SmallArrowBtn";
 import { tvTitleObj } from "./Tv";
 
 export const PopularBox = styled.div`

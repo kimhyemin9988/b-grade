@@ -1,10 +1,10 @@
 import { tvAiring } from "../api";
 import { useQuery } from "react-query";
 import { movieData } from "../MovieF/Movie";
-import LoadingC from "../miniModule/LoadingC";
-import MobileSliderC from "../miniModule/MobileSliderC";
+import LoadingC from "../components/LoadingC";
+import MobileSliderC from "../components/MobileSliderC";
 import { Section } from "../MovieF/TopRatedMovies";
-import WebSliderC from "../miniModule/WebSliderC";
+import WebSliderC from "../components/WebSliderC";
 import { tvTitleObj } from "./Tv";
 
 const AiringToday = () => {

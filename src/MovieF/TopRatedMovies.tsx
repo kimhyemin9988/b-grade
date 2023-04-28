@@ -4,10 +4,10 @@ import {
   titleObj,
 } from "./Movie";
 import { topRatedMovies } from "../api";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import styled from "styled-components";
-import WebSliderC from "../miniModule/WebSliderC";
-import MobileSliderC from "../miniModule/MobileSliderC";
+import WebSliderC from "../components/WebSliderC";
+import MobileSliderC from "../components/MobileSliderC";
 
 export const Section = styled.section`
   flex-direction: column;

@@ -41,7 +41,6 @@ body {
 	background-color: ${(props) => props.theme.bodyBgColor};
 	color:${(props) => props.theme.bodyFtColor};
 	font-family: "LINESeedKR-Bd", "Open Sans", "Helvetica Neue", sans-serif;
-	overflow-x: hidden;
 }
 
 @media screen and (max-width: 425px) {

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import styled from "styled-components";
 import { getCredits, getDetails, getVideos } from "../api";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Container } from "../MovieF/LatestMovies";
 import {
   Main,
