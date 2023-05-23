@@ -25,11 +25,6 @@ const RouterApp = createBrowserRouter(
         {
           path: "",
           element: <Movie />,
-          children: [
-            {
-              path: "movie/:movieId",
-            },
-          ],
         },
         {
           path: "search",
@@ -38,11 +33,6 @@ const RouterApp = createBrowserRouter(
         {
           path: "tv",
           element: <Tv></Tv>,
-          children: [
-            {
-              path: ":tvId",
-            },
-          ],
         },
         {
           path: "movie/:movieId",
