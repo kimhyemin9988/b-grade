@@ -34,6 +34,8 @@ import { IPopularLanguage, PopularLanguage } from "../Atoms";
 import Select, { SingleValue } from "react-select";
 import SmallArrowBtn from "../components/SmallArrowBtn";
 import { tvTitleObj } from "./Tv";
+import SliderTitle from "../components/SliderTitle";
+import OverviewComponent from "../components/OverviewComponent";
 
 export const PopularBox = styled.div`
   background-color: ${(props) => props.theme.bodyFtColor};
@@ -54,6 +56,13 @@ const SelectBox = styled.div`
   right: 0;
   margin-left: 1rem;
   color: ${(props) => props.theme.bodyBgColor};
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 20px;
+  @media screen and (max-width: 550px) {
+    margin: 5px;
+  }
 `;
 export const MiniP = styled.p`
   font-size: 0.2rem;
@@ -135,25 +144,15 @@ const Popular = ({ dataType }: { dataType: string }) => {
       ) : window.outerWidth <= 550 ? (
         <>
           <MobileSlider ref={constraintsRef}>
-            <RatingContainer>
-              <RatingStar
-                viewBox="0 0 576 512"
-              >
-                <path
-                  d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
-                  fill="#ffb804"
-                />
-              </RatingStar>
-              <RatingSpan>{titleObj}</RatingSpan>
-              <SelectBox>
-                <Select
-                  defaultValue={popularLanguage[0]}
-                  options={popularLanguage}
-                  onChange={handleChange}
-                  styles={customStyles}
-                />
-              </SelectBox>
-            </RatingContainer>
+            <SliderTitle titleObj={titleObj}></SliderTitle>
+            <SelectBox>
+              <Select
+                defaultValue={popularLanguage[0]}
+                options={popularLanguage}
+                onChange={handleChange}
+                styles={customStyles}
+              />
+            </SelectBox>
             <InnerContainer drag="x" dragConstraints={constraintsRef}>
               {handleValue?.slice(0, 10).map((i) => (
                 <Box
@@ -206,14 +205,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                     <Link to={`${content?.id}/details`}>
                       <SmallArrowBtn></SmallArrowBtn>
                     </Link>
-                    <BigOverview>
-                      {content?.overview.slice(
-                        0,
-                        content?.overview.indexOf(" ", 250)
-                      )}
-                      {content && content?.overview.length > 250 ? "..." : "."}
-                      {/* overview 긴것 자름 */}
-                    </BigOverview>
+                    <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
                   </BoxModal>
                 </>
               ) : null}
@@ -223,24 +215,14 @@ const Popular = ({ dataType }: { dataType: string }) => {
       ) : (
         <Section>
           <SliderContainer>
-            <RatingContainer>
-              <RatingStar
-                viewBox="0 0 576 512"
-              >
-                <path
-                  d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"
-                  fill="#ffb804"
-                />
-              </RatingStar>
-              <RatingSpan>{tvTitleObj.title[2]}</RatingSpan>
-              <SelectBox>
-                <Select
-                  defaultValue={popularLanguage[0]}
-                  options={popularLanguage}
-                  onChange={handleChange} // 선택한 obj return
-                />
-              </SelectBox>
-            </RatingContainer>
+            <SliderTitle titleObj={tvTitleObj.title[2]}></SliderTitle>
+            <SelectBox>
+              <Select
+                defaultValue={popularLanguage[0]}
+                options={popularLanguage}
+                onChange={handleChange} // 선택한 obj return
+              />
+            </SelectBox>
             <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
             <MovingSlider
               style={{ right: "0" }}
@@ -315,13 +297,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                   >
                     <SmallArrowBtn></SmallArrowBtn>
                   </Link>
-                  <BigOverview>
-                    {content?.overview.slice(
-                      0,
-                      content?.overview.indexOf(" ", 350)
-                    )}
-                    {content && content?.overview.length > 350 ? "..." : "."}
-                  </BigOverview>
+                  <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
                 </BoxModal>
               </>
             ) : null}
