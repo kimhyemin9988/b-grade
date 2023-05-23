@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 import { recoilPersist } from 'recoil-persist'
-import { movieData } from "./MovieF/Movie";
 
 export interface IPopularLanguage {
   value: string;
