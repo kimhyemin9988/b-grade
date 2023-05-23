@@ -2,6 +2,7 @@ import { motion, useCycle } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { Link, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import SearchIconC from "./components/SearchIconC";
 
 interface IForm {
   keyword: string;
@@ -103,15 +104,6 @@ const Input = styled.input`
   }
 `;
 
-const SearchIcon = styled(motion.svg)`
-  height: 100%;
-  z-index: 1;
-  @media screen and (max-width: 550px) {
-    height: 1.2rem;
-    cursor: pointer;
-    margin-right: 0.2rem;
-  }
-`;
 const SearchContainer = styled(motion.div)`
   width: 100%;
   height: 8vh;
@@ -202,17 +194,7 @@ const HomeHeader = () => {
               />
             </SearchDiv>
           </SearchContainer>
-          <SearchIcon
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            onClick={() => toggleOpen()}
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clipRule="evenodd"
-            ></path>
-          </SearchIcon>
+          <SearchIconC toggleOpen={toggleOpen}></SearchIconC>
         </>
       ) : (
         <SearchDiv onSubmit={handleSubmit(onValid)}>
@@ -220,16 +202,7 @@ const HomeHeader = () => {
             placeholder="Search for movie or tv show..."
             {...register("keyword", { required: true, minLength: 2 })}
           />
-          <SearchIcon
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clipRule="evenodd"
-            ></path>
-          </SearchIcon>
+          <SearchIconC toggleOpen={toggleOpen}></SearchIconC>
         </SearchDiv>
       )}
     </Header>
