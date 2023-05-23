@@ -25,7 +25,7 @@ import {
   SliderContainer,
 } from "../MovieF/Movie";
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
@@ -102,7 +102,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
   const [id, setId] = useState<null | string>(null);
 
   const [content, setContent] = useState<movieData>();
-  const navigate = useNavigate();
   const [sliderDirection, setSliderDirection] = useState(0);
 
   const popularLanguage = useRecoilValue(PopularLanguage);
@@ -163,9 +162,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
                   onClick={() => {
                     setId(`${i.id}`);
                     setContent(i);
-                    dataType === "movie"
-                      ? navigate(`movie/${i.id}`)
-                      : navigate(`${i.id}`);
                   }}
                   layoutId={`${i.id}${titleObj}`}
                 >
@@ -187,7 +183,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
                     variants={overlay}
                     onClick={() => {
                       setId(null);
-                      navigate("");
                     }}
                     initial="hidden"
                     animate="visible"
@@ -279,9 +274,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
                       onClick={() => {
                         setId(`${i.id}`);
                         setContent(i);
-                        navigate(
-                          dataType === "movie" ? `movie/${i.id}` : `${i.id}`
-                        );
                       }}
                       layoutId={`${i.id}${titleObj}`}
                     >
@@ -304,7 +296,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
                   variants={overlay}
                   onClick={() => {
                     setId(null);
-                    navigate("");
                   }}
                   initial="hidden"
                   animate="visible"
