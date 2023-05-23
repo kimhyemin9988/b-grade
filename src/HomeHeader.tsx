@@ -148,7 +148,6 @@ const HomeHeader = () => {
         <HomeLogo variants={logoVariants} whileHover="active" initial="normal">
           {/* framer-motion을 사용해 Hover시 animation이 동작함 */}
           <svg
-            xmlns="http://www.w3.org/2000/svg"
             className="svg-stars"
             viewBox="0 0 500 100"
           >
@@ -206,7 +205,6 @@ const HomeHeader = () => {
           <SearchIcon
             fill="currentColor"
             viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
             onClick={() => toggleOpen()}
           >
             <path
@@ -225,7 +223,6 @@ const HomeHeader = () => {
           <SearchIcon
             fill="currentColor"
             viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               fillRule="evenodd"
