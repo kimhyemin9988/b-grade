@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import styled from "styled-components";
-import { getCredits, getDetails, getVideos } from "../api";
+import { indepthDetail, getDetails } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Container } from "../MovieF/LatestMovies";
 import {
@@ -122,11 +122,11 @@ const TvDetails = () => {
   );
   const { isLoading: CreditsLoading, data: CreditsData } = useQuery<Credits>(
     ["Credits", `${tvId}`],
-    () => getCredits(distStr, tvId)
+    () => indepthDetail(distStr, tvId, 'credits')
   );
   const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(
     ["Videos", `${tvId}`],
-    () => getVideos(distStr, tvId)
+    () => indepthDetail(distStr, tvId, 'videos')
   );
 
   return (

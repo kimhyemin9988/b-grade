@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import styled from "styled-components";
-import { getCredits, getDetails, getVideos } from "../api";
+import {  getDetails, indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Container } from "../MovieF/LatestMovies";
 import {
@@ -224,18 +224,18 @@ const MovieDetails = () => {
   const params = useParams();
   const movieId = params.movieId;
   const distStr = Object.keys(params)[0].slice(0, -2);
-  //console.log(distStr);
+
   const { isLoading: detailsLoading, data: detailsData } = useQuery<details>(
     ["details", `${movieId}`],
     () => getDetails(distStr, movieId)
   );
   const { isLoading: CreditsLoading, data: CreditsData } = useQuery<Credits>(
     ["Credits", `${movieId}`],
-    () => getCredits(distStr, movieId)
+    () => indepthDetail(distStr, movieId , 'credits')
   );
   const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(
     ["Videos", `${movieId}`],
-    () => getVideos(distStr, movieId)
+    () => indepthDetail(distStr, movieId , 'videos')
   );
   return (
     <>

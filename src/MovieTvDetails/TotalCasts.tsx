@@ -2,7 +2,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
-import { getCredits } from "../api";
+import { indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Main, Overview, Title } from "../MovieF/Movie";
 import { CastBox, Credits, SmallCircle } from "./MovieDetails";
@@ -14,7 +14,7 @@ const TotalCasts = () => {
 
   const { isLoading: CreditsLoading, data: CreditsData } = useQuery<Credits>(
     ["Credits", `${state}`],
-    () => getCredits(distStr, state)
+    () => indepthDetail(distStr, state, 'credits')
   );
   return (
     <>

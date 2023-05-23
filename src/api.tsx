@@ -1,7 +1,14 @@
 import { movieData } from "./MovieF/Movie";
 import { LatestShowsData } from "./Tv/LatestTopShows";
 
+
 export const dbApiKey = process.env.REACT_APP_DB_API_KEY;
+
+const removeData = (json: any) => {
+  return json.results
+    .filter((i: movieData) => i.poster_path !== null)
+    .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+}
 
 const movieList = async () => {
   let page = 1;
@@ -11,9 +18,7 @@ const movieList = async () => {
       `https://api.themoviedb.org/3/discover/movie?api_key=${dbApiKey}&sort_by=release_date.desc&include_adult=false&include_video=false&page=${page}&vote_average.gte=4.5&vote_average.lte=5.5&with_watch_monetization_types=flatrat&include_video=false`
     );
     const json = await response.json();
-    const data: [] = await json.results
-      .filter((i: movieData) => i.poster_path !== null)
-      .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+    const data: [] = await removeData(json);
     page++;
     dataArray = [...dataArray, ...data];
   }
@@ -40,9 +45,7 @@ const tvPopular = async () => {
       `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page}`
     );
     const json = await response.json();
-    const data: [] = await json.results
-      .filter((i: movieData) => i.poster_path !== null)
-      .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+    const data: [] = await removeData(json);
     page++;
     dataArray = [...dataArray, ...data];
     /* 각 나라별 10개가 되면 종료
@@ -69,9 +72,7 @@ const tvAiring = async () => {
       `https://api.themoviedb.org/3/tv/on_the_air?api_key=${dbApiKey}&language=en-US&page=${page}`
     );
     const json = await response.json();
-    const data: [] = await json.results
-      .filter((i: movieData) => i.poster_path !== null)
-      .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+    const data: [] = await removeData(json);
     page++;
     dataArray = [...dataArray, ...data];
   }
@@ -87,9 +88,7 @@ const tvTopRated = async () => {
       `https://api.themoviedb.org/3/tv/top_rated?api_key=${dbApiKey}&language=en-US&page=${page}`
     );
     const json = await response.json();
-    const data: [] = await json.results
-      .filter((i: movieData) => i.poster_path !== null)
-      .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+    const data: [] = await removeData(json);
     page++;
     dataArray = [...dataArray, ...data];
   }
@@ -145,11 +144,7 @@ const latestMovies = async () => {
     `https://api.themoviedb.org/3/movie/now_playing?api_key=${dbApiKey}&sort_by=popularity.asc&include_adult=false&page=1&release_date.lte=${date}&with_watch_monetization_types=flatrate`
   );
   const json = await response.json();
-
-  const data = await json.results
-    .filter((i: movieData) => i.poster_path !== null)
-    .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "")
-    .slice(0, 1);
+  const data = await removeData(json).slice(0, 1);
 
   const videoResponse = await fetch(
     `https://api.themoviedb.org/3/movie/${data?.[0].id}/videos?api_key=${dbApiKey}`
@@ -173,9 +168,7 @@ const topRatedMovies = async () => {
       `https://api.themoviedb.org/3/movie/top_rated?api_key=${dbApiKey}&${page}`
     );
     const json = await response.json();
-    const data: [] = await json.results
-      .filter((i: movieData) => i.poster_path !== null)
-      .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+    const data: [] = await removeData(json);
     page++;
     dataArray = [...dataArray, ...data];
   }
@@ -191,9 +184,7 @@ const upcomingMovies = async () => {
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${dbApiKey}&${page}`
     );
     const json = await response.json();
-    const data: [] = await json.results
-      .filter((i: movieData) => i.poster_path !== null)
-      .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+    const data: [] = await removeData(json);
     page++;
     dataArray = [...dataArray, ...data];
   }
@@ -207,12 +198,9 @@ const SearchData = async (keyword: string | null, page: number) => {
   const response = await fetch(`
         https://api.themoviedb.org/3/search/multi?api_key=${dbApiKey}&query=${keyword}&page=${newPage}&include_adult=false`);
   const json = await response.json();
-  const data: [] = await json.results
-    .filter((i: movieData) => i.poster_path !== null)
-    .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "")
-    .filter(
-      (i: movieData) => Object.keys(i).includes("backdrop_path") === true
-    );
+  const data: [] = await removeData(json).filter(
+    (i: movieData) => Object.keys(i).includes("backdrop_path") === true
+  );
   dataArray = [...dataArray, ...data];
 
   return dataArray;
@@ -233,38 +221,16 @@ const getDetails = async (
 };
 export { getDetails };
 
-const getCredits = async (
-  distStr: string | undefined,
-  id: string | undefined
-) => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/${distStr}/${id}/credits?api_key=${dbApiKey}`
-  );
-  const json = await response.json();
-  return json;
-};
-export { getCredits };
 
-const getImages = async (
+const indepthDetail = async (
   distStr: string | undefined,
-  id: string | undefined
-) => {
+  id: string | undefined,
+  sort : string | undefined,
+) =>{
   const response = await fetch(
-    `https://api.themoviedb.org/3/${distStr}/${id}/images?api_key=${dbApiKey}`
+    `https://api.themoviedb.org/3/${distStr}/${id}/${sort}?api_key=${dbApiKey}`
   );
   const json = await response.json();
   return json;
-};
-export { getImages };
-
-const getVideos = async (
-  distStr: string | undefined,
-  id: string | undefined
-) => {
-  const response = await fetch(
-    `https://api.themoviedb.org/3/${distStr}/${id}/videos?api_key=${dbApiKey}`
-  );
-  const json = await response.json();
-  return json;
-};
-export { getVideos };
+}
+export { indepthDetail };

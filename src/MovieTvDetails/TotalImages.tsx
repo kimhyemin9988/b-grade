@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
-import { getImages } from "../api";
+import { indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Main } from "../MovieF/Movie";
 import { BackdropPhoto, TitleDiv } from "./MovieDetails";
@@ -35,7 +35,7 @@ const TotalImages = () => {
   const distStr = pathname.split("/")[1]; // movie of tv
   const { isLoading: getImagesLoading, data: getImagesData } = useQuery<Images>(
     ["getImages", `${state}`],
-    () => getImages(distStr, state)
+    () => indepthDetail(distStr, state, 'images')
   );
   return (
     <Main style={{ paddingTop: "13vh" }}>

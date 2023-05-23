@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import YouTube from "react-youtube";
-import { getVideos } from "../api";
+import { indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Main, Wrapper, largeVideo, smallVideo } from "../MovieF/Movie";
 import { TitleDiv, Videos } from "./MovieDetails";
@@ -12,7 +12,7 @@ const TotalVideos = () => {
   const distStr = pathname.split("/")[1]; // movie of tv
   const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(
     ["Videos", `${state}`],
-    () => getVideos(distStr, state)
+    () => indepthDetail(distStr, state, 'videos')
   );
   return (
     <Main style={{ paddingTop: "13vh", width: "100%" }}>
