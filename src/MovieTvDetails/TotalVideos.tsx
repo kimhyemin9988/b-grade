@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import YouTube from "react-youtube";
 import { getVideos } from "../api";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Main, Wrapper, largeVideo, smallVideo } from "../MovieF/Movie";
 import { TitleDiv, Videos } from "./MovieDetails";
 import { MainImage } from "./TotalImages";

@@ -26,13 +26,13 @@ import {
 } from "../MovieF/Movie";
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { IPopularLanguage, PopularLanguage } from "../Atoms";
 import Select, { SingleValue } from "react-select";
-import SmallArrowBtn from "../miniModule/SmallArrowBtn";
+import SmallArrowBtn from "../components/SmallArrowBtn";
 import { tvTitleObj } from "./Tv";
 
 export const PopularBox = styled.div`
@@ -138,7 +138,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
           <MobileSlider ref={constraintsRef}>
             <RatingContainer>
               <RatingStar
-                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 576 512"
               >
                 <path
@@ -231,7 +230,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
           <SliderContainer>
             <RatingContainer>
               <RatingStar
-                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 576 512"
               >
                 <path
@@ -239,7 +237,6 @@ const Popular = ({ dataType }: { dataType: string }) => {
                   fill="#ffb804"
                 />
               </RatingStar>
-              {/*! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc.*/}
               <RatingSpan>{tvTitleObj.title[2]}</RatingSpan>
               <SelectBox>
                 <Select

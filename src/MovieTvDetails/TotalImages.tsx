@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import { getImages } from "../api";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Main } from "../MovieF/Movie";
 import { BackdropPhoto, TitleDiv } from "./MovieDetails";
 import styled from "styled-components";

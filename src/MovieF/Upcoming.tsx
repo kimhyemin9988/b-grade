@@ -4,10 +4,10 @@ import {
   movieData,
   titleObj,
 } from "./Movie";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Section } from "./TopRatedMovies";
-import MobileSliderC from "../miniModule/MobileSliderC";
-import WebSliderC from "../miniModule/WebSliderC";
+import MobileSliderC from "../components/MobileSliderC";
+import WebSliderC from "../components/WebSliderC";
 
 const Upcoming = () => {
   /* 데이터 받아오기 */

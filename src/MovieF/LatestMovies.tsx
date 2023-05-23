@@ -1,7 +1,6 @@
 import { latestMovies } from "../api";
 import { useQuery } from "react-query";
 import {
-  BigCover,
   movieData,
   Overview,
   RatingSpan,
@@ -10,9 +9,9 @@ import {
 } from "./Movie";
 import styled from "styled-components";
 import YouTube from "react-youtube";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Link } from "react-router-dom";
-import SmallArrowBtn from "../miniModule/SmallArrowBtn";
+import SmallArrowBtn from "../components/SmallArrowBtn";
 
 export const Container = styled.section<{ bgPhoto: string | undefined }>`
   width: 100%;

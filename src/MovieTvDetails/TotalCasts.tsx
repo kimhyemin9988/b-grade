@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
 import { getCredits } from "../api";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Main, Overview, Title } from "../MovieF/Movie";
 import { CastBox, Credits, SmallCircle } from "./MovieDetails";
 import { MainVideo } from "./TvDetails";

@@ -18,9 +18,9 @@ import {
 } from "../MovieF/Movie";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { ErrorMain } from "../NotFound";
-import SmallArrowBtn from "../miniModule/SmallArrowBtn";
+import SmallArrowBtn from "../components/SmallArrowBtn";
 import { MainDetail } from "../MovieTvDetails/MovieDetails";
 /* import { Keyword } from "../Atoms";
 import { useRecoilState } from "recoil";

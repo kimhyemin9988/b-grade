@@ -1,10 +1,10 @@
 import { useQuery } from "react-query";
 import { movieData } from "../MovieF/Movie";
 import { tvTopRated } from "../api";
-import LoadingC from "../miniModule/LoadingC";
+import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
-import MobileSliderC from "../miniModule/MobileSliderC";
-import WebSliderC from "../miniModule/WebSliderC";
+import MobileSliderC from "../components/MobileSliderC";
+import WebSliderC from "../components/WebSliderC";
 import { tvTitleObj } from "./Tv";
 const TopRated = () => {
   const { isLoading, data } = useQuery<movieData[]>(["tvTopRated"], tvTopRated);
