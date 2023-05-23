@@ -7,18 +7,17 @@ import {
   BoxModal,
   Info,
   MovingSlider,
-  Overlay,
   Row,
   Slider,
   SliderContainer,
   movieData,
-  overlay,
 } from "../MovieF/Movie";
 import { AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import SmallArrowBtn from "./SmallArrowBtn";
 import SliderTitle from "./SliderTitle";
 import OverviewComponent from "./OverviewComponent";
+import OverlayC from "./OverlayC";
 
 export interface MoviesProps {
   data?: movieData[] | undefined;
@@ -155,15 +154,7 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
       <AnimatePresence>
         {id ? (
           <>
-            <Overlay
-              variants={overlay}
-              onClick={() => {
-                setId(null);
-              }}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            ></Overlay>
+            <OverlayC setId={setId}></OverlayC>
             <BoxModal layoutId={id + titleObj}>
               <BigCover
                 bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}

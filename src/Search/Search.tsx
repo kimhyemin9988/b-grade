@@ -4,7 +4,6 @@ import { SearchData } from "../api";
 import { AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import {
   BigCover,
-  BigOverview,
   BigTitle,
   Box,
   BoxModal,
@@ -12,8 +11,6 @@ import {
   Info,
   infoVariants,
   movieData,
-  overlay,
-  Overlay,
   Wrapper,
 } from "../MovieF/Movie";
 import { useEffect, useState } from "react";
@@ -23,6 +20,7 @@ import { ErrorMain } from "../NotFound";
 import SmallArrowBtn from "../components/SmallArrowBtn";
 import { MainDetail } from "../MovieTvDetails/MovieDetails";
 import OverviewComponent from "../components/OverviewComponent";
+import OverlayC from "../components/OverlayC";
 /* import { Keyword } from "../Atoms";
 import { useRecoilState } from "recoil";
  */
@@ -133,16 +131,7 @@ const Search = () => {
                 <AnimatePresence>
                   {id ? (
                     <>
-                      <Overlay
-                        variants={overlay}
-                        onClick={() => {
-                          setId(null);
-                          navigate(`?keyword=${keyword}`);
-                        }}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                      ></Overlay>
+                    <OverlayC setId={setId}></OverlayC>
                       <BoxModal layoutId={id}>
                         <BigCover
                           bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}

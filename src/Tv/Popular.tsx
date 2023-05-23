@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
 import {
   BigCover,
-  BigOverview,
   BigTitle,
   Box,
   BoxModal,
@@ -14,11 +13,6 @@ import {
   MobileSlider,
   movieData,
   MovingSlider,
-  overlay,
-  Overlay,
-  RatingContainer,
-  RatingSpan,
-  RatingStar,
   Row,
   rowVariants,
   Slider,
@@ -36,6 +30,7 @@ import SmallArrowBtn from "../components/SmallArrowBtn";
 import { tvTitleObj } from "./Tv";
 import SliderTitle from "../components/SliderTitle";
 import OverviewComponent from "../components/OverviewComponent";
+import OverlayC from "../components/OverlayC";
 
 export const PopularBox = styled.div`
   background-color: ${(props) => props.theme.bodyFtColor};
@@ -86,7 +81,7 @@ const customStyles = {
   }),
 };
 
-// const dataType = "tv" Popular내부에서 정의 시 비교가 의미없음
+
 const Popular = ({ dataType }: { dataType: string }) => {
   const titleObj = tvTitleObj.title[2];
   const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
@@ -96,6 +91,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
       data?.filter((i: movieData) => i.original_language === "en")
     );
   }, [data]);
+
   const [handleValue, setHandleValue] = useState<movieData[]>();
   const handleChange = (e: SingleValue<IPopularLanguage>) => {
     const value = e?.value;
@@ -178,15 +174,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
             <AnimatePresence>
               {id ? (
                 <>
-                  <Overlay
-                    variants={overlay}
-                    onClick={() => {
-                      setId(null);
-                    }}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                  ></Overlay>
+                  <OverlayC setId={setId}></OverlayC>
                   <BoxModal
                     initial={{ y: "150%" }}
                     animate={{ y: 0 }}
@@ -274,15 +262,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
           <AnimatePresence>
             {id ? (
               <>
-                <Overlay
-                  variants={overlay}
-                  onClick={() => {
-                    setId(null);
-                  }}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                ></Overlay>
+                <OverlayC setId={setId}></OverlayC>
                 <BoxModal layoutId={id + titleObj}>
                   <BigCover
                     bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}

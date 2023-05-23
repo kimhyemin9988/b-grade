@@ -7,9 +7,7 @@ import {
   BoxModal,
   InnerContainer,
   MobileSlider,
-  Overlay,
   movieData,
-  overlay,
 } from "../MovieF/Movie";
 import { AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -17,6 +15,7 @@ import SmallArrowBtn from "./SmallArrowBtn";
 import { MoviesProps } from "./WebSliderC";
 import SliderTitle from "./SliderTitle";
 import OverviewComponent from "./OverviewComponent";
+import OverlayC from "./OverlayC";
 
 const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
   const [id, setId] = useState<null | string>(null);
@@ -44,15 +43,7 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
         <AnimatePresence>
           {id ? (
             <>
-              <Overlay
-                variants={overlay}
-                onClick={() => {
-                  setId(null);
-                }}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              ></Overlay>
+              <OverlayC setId={setId}></OverlayC>
               <BoxModal
                 initial={{ y: "200%" }}
                 animate={{ y: id && 0 }}
