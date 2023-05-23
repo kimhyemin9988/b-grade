@@ -22,6 +22,7 @@ import LoadingC from "../components/LoadingC";
 import { ErrorMain } from "../NotFound";
 import SmallArrowBtn from "../components/SmallArrowBtn";
 import { MainDetail } from "../MovieTvDetails/MovieDetails";
+import OverviewComponent from "../components/OverviewComponent";
 /* import { Keyword } from "../Atoms";
 import { useRecoilState } from "recoil";
  */
@@ -154,15 +155,7 @@ const Search = () => {
                         >
                           <SmallArrowBtn></SmallArrowBtn>
                         </Link>
-                        <BigOverview>
-                          {content?.overview.slice(
-                            0,
-                            content?.overview.indexOf(" ", 350)
-                          )}
-                          {content && content?.overview.length > 350
-                            ? "..."
-                            : "."}
-                        </BigOverview>
+                        <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
                       </BoxModal>
                     </>
                   ) : null}

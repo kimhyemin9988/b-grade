@@ -14,6 +14,7 @@ import LoadingC from "../components/LoadingC";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
 import SmallArrowBtn from "../components/SmallArrowBtn";
+import BannerOverview from "../components/BannerOverview";
 
 export const Main = styled.div`
   width: 100%;
@@ -397,17 +398,7 @@ const Home = () => {
                 bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}
               >
                 <Title>{data?.[0].title}</Title>
-                {window.outerWidth <= 550 ? (
-                  <Overview>
-                    {data?.[0].overview.slice(
-                      0,
-                      data?.[0].overview.indexOf(" ", 350)
-                    )}
-                    {data?.[0] && data?.[0].overview.length > 350 ? "..." : "."}
-                  </Overview>
-                ) : (
-                  <Overview>{data?.[0].overview}</Overview>
-                )}
+                <BannerOverview content={data?.[0]} sliceLength={350}></BannerOverview>
                 <Link to={`movie/${data?.[0].id}/details`}>
                   <SmallArrowBtn></SmallArrowBtn>
                 </Link>

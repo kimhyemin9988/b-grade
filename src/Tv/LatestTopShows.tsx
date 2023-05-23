@@ -1,16 +1,13 @@
 import { useQuery } from "react-query";
 import {
-  ArrowSvg,
   Banner,
-  BigTitle,
-  DetailBtn,
-  Overview,
   Title,
 } from "../MovieF/Movie";
 import { tvLatest } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Link } from "react-router-dom";
 import SmallArrowBtn from "../components/SmallArrowBtn";
+import BannerOverview from "../components/BannerOverview";
 export interface LatestShowsData {
   adult: boolean;
   backdrop_path: string;
@@ -59,13 +56,7 @@ const LatestTopShows = () => {
             bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}
           >
             <Title>{data?.[0].name}</Title>
-            <Overview>
-              {data?.[0].overview.slice(
-                0,
-                data?.[0].overview.indexOf(" ", 250)
-              )}
-              {data?.[0] && data?.[0].overview.length > 250 ? "..." : "."}
-            </Overview>
+            <BannerOverview content={data?.[0]} sliceLength={350}></BannerOverview>
             <Link to={`${data?.[0].id}/details`}>
               <SmallArrowBtn></SmallArrowBtn>
             </Link>
