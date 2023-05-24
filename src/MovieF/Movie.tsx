@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Helmet } from "react-helmet";
 import { movieList } from "../api";
 import { useState } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { useQuery } from "react-query";
 import {
   motion,
@@ -13,8 +13,9 @@ import Upcoming from "./Upcoming";
 import LoadingC from "../components/LoadingC";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
-import SmallArrowBtn from "../components/SmallArrowBtn";
+import SmallArrowBtn from "../components/BtnDetail";
 import BannerOverview from "../components/BannerOverview";
+import SmallArrowBtnDetail from "../components/BtnDetail";
 
 export const Main = styled.div`
   width: 100%;
@@ -366,6 +367,7 @@ const Home = () => {
   };
 
   const dataType = "movie";
+
   return (
     <>
       <Helmet>
@@ -383,9 +385,7 @@ const Home = () => {
               >
                 <Title>{data?.[0].title}</Title>
                 <BannerOverview content={data?.[0]} sliceLength={350}></BannerOverview>
-                <Link to={`movie/${data?.[0].id}/details`}>
-                  <SmallArrowBtn></SmallArrowBtn>
-                </Link>
+                <SmallArrowBtnDetail dataType={dataType} contentId={data?.[0].id}></SmallArrowBtnDetail>
               </Banner>
               {window.outerWidth <= 550 ? (
                 <MobileSliderC
@@ -403,9 +403,9 @@ const Home = () => {
             </>
           )}
         </Wrapper>
-        <LatestMovies></LatestMovies>
-        <TopRatedMovies></TopRatedMovies>
-        <Upcoming></Upcoming>
+        <LatestMovies dataType={dataType}></LatestMovies>
+        <TopRatedMovies dataType={dataType}></TopRatedMovies>
+        <Upcoming dataType={dataType}></Upcoming>
       </Main>
     </>
   );

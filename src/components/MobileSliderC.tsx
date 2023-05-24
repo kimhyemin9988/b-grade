@@ -1,7 +1,6 @@
 import { useRef, useState } from "react";
 import {
   BigCover,
-  BigOverview,
   BigTitle,
   Box,
   BoxModal,
@@ -10,8 +9,7 @@ import {
   movieData,
 } from "../MovieF/Movie";
 import { AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import SmallArrowBtn from "./SmallArrowBtn";
+import BtnDetail from "./BtnDetail";
 import { MoviesProps } from "./WebSliderC";
 import SliderTitle from "./SliderTitle";
 import OverviewComponent from "./OverviewComponent";
@@ -59,15 +57,7 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                 <BigTitle>
                   {content?.title ? content?.title : content?.name}
                 </BigTitle>
-                <Link
-                  to={
-                    dataType === "movie"
-                      ? `movie/${content?.id}/details`
-                      : `${content?.id}/details`
-                  }
-                >
-                  <SmallArrowBtn></SmallArrowBtn>
-                </Link>
+                <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
                 <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
               </BoxModal>
             </>

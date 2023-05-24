@@ -5,9 +5,8 @@ import {
 } from "../MovieF/Movie";
 import { tvLatest } from "../api";
 import LoadingC from "../components/LoadingC";
-import { Link } from "react-router-dom";
-import SmallArrowBtn from "../components/SmallArrowBtn";
 import BannerOverview from "../components/BannerOverview";
+import BtnDetail from "../components/BtnDetail";
 export interface LatestShowsData {
   adult: boolean;
   backdrop_path: string;
@@ -41,7 +40,7 @@ export interface LatestShowsData {
 }
 
 /*인기있는 최신 tv */
-const LatestTopShows = () => {
+const LatestTopShows = ({ dataType }: { dataType: string }) => {
   const { isLoading, data } = useQuery<LatestShowsData[]>(
     ["tvLatest"],
     tvLatest
@@ -57,9 +56,7 @@ const LatestTopShows = () => {
           >
             <Title>{data?.[0].name}</Title>
             <BannerOverview content={data?.[0]} sliceLength={350}></BannerOverview>
-            <Link to={`${data?.[0].id}/details`}>
-              <SmallArrowBtn></SmallArrowBtn>
-            </Link>
+            <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
           </Banner>
         </>
       )}

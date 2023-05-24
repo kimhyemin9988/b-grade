@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   BigCover,
-  BigOverview,
   BigTitle,
   Box,
   BoxModal,
@@ -13,11 +12,10 @@ import {
   movieData,
 } from "../MovieF/Movie";
 import { AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
-import SmallArrowBtn from "./SmallArrowBtn";
 import SliderTitle from "./SliderTitle";
 import OverviewComponent from "./OverviewComponent";
 import OverlayC from "./OverlayC";
+import BtnDetail from "./BtnDetail";
 
 export interface MoviesProps {
   data?: movieData[] | undefined;
@@ -156,21 +154,11 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
           <>
             <OverlayC setId={setId}></OverlayC>
             <BoxModal layoutId={id + titleObj}>
-              <BigCover
-                bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
-              />
+              <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
               <BigTitle>
                 {content?.title ? content?.title : content?.name}
               </BigTitle>
-              <Link
-                to={
-                  dataType === "movie"
-                    ? `movie/${content?.id}/details`
-                    : `${content?.id}/details`
-                }
-              >
-                <SmallArrowBtn></SmallArrowBtn>
-              </Link>
+              <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
               <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
             </BoxModal>
           </>

@@ -10,8 +10,7 @@ import {
 import styled from "styled-components";
 import YouTube from "react-youtube";
 import LoadingC from "../components/LoadingC";
-import { Link } from "react-router-dom";
-import SmallArrowBtn from "../components/SmallArrowBtn";
+import BtnDetail from "../components/BtnDetail";
 
 export const Container = styled.section<{ bgPhoto: string | undefined }>`
   width: 100%;
@@ -58,7 +57,7 @@ export const xLarge = {
   width: "528",
 };
 
-const LatestMovies = () => {
+const LatestMovies = ({ dataType }: { dataType: string }) => {
   /* 데이터 받아오기 */
   const { isLoading, data } = useQuery<movieData[]>(
     ["latestMovies"],
@@ -85,9 +84,7 @@ const LatestMovies = () => {
                 }}
               >
                 {data?.[0].original_title}
-                <Link to={`movie/${data?.[0].id}/details`}>
-                  <SmallArrowBtn></SmallArrowBtn>
-                </Link>
+                <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
               </RatingSpan>
               <SqureBox
                 style={{ gridArea: "posterbg", marginLeft: "10px" }}
@@ -120,9 +117,7 @@ const LatestMovies = () => {
                 }}
               >
                 {data?.[0].original_title}
-                <Link to={`movie/${data?.[0].id}/details`}>
-                  <SmallArrowBtn></SmallArrowBtn>
-                </Link>
+                <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
               </RatingSpan>
               <SqureBox
                 style={{ gridArea: "posterbg" }}

@@ -19,18 +19,17 @@ import {
   SliderContainer,
 } from "../MovieF/Movie";
 import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { IPopularLanguage, PopularLanguage } from "../Atoms";
 import Select, { SingleValue } from "react-select";
-import SmallArrowBtn from "../components/SmallArrowBtn";
 import { tvTitleObj } from "./Tv";
 import SliderTitle from "../components/SliderTitle";
 import OverviewComponent from "../components/OverviewComponent";
 import OverlayC from "../components/OverlayC";
+import BtnDetail from "../components/BtnDetail";
 
 export const PopularBox = styled.div`
   background-color: ${(props) => props.theme.bodyFtColor};
@@ -190,9 +189,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                     <BigTitle>
                       {content?.title ? content?.title : content?.name}
                     </BigTitle>
-                    <Link to={`${content?.id}/details`}>
-                      <SmallArrowBtn></SmallArrowBtn>
-                    </Link>
+                    <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
                     <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
                   </BoxModal>
                 </>
@@ -268,15 +265,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
                     bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
                   />
                   <BigTitle>{content?.name}</BigTitle>
-                  <Link
-                    to={
-                      dataType === "movie"
-                        ? `movie/${content?.id}/details`
-                        : `${content?.id}/details`
-                    }
-                  >
-                    <SmallArrowBtn></SmallArrowBtn>
-                  </Link>
+                  <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
                   <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
                 </BoxModal>
               </>
