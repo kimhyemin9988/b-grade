@@ -1,4 +1,12 @@
-import { BigOverview, movieData } from "../MovieF/Movie";
+import styled from "styled-components";
+import { movieData } from "../MovieF/Movie";
+
+export const BigOverview = styled.p`
+  font-size: 0.3rem;
+  position: relative;
+  color: ${(props) => props.theme.bodyFtColor};
+  padding: 5px;
+`;
 
 const OverviewComponent = ({ content, sliceLength }: { content: movieData | undefined, sliceLength: number }) => {
     return (

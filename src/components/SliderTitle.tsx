@@ -1,7 +1,25 @@
-import { RatingContainer, RatingSpan, RatingStar } from "../MovieF/Movie";
+import styled from "styled-components";
+import { RatingSpan } from "../MovieF/Movie";
 import { MoviesProps } from "./WebSliderC";
 
-const SliderTitle = ({ titleObj }: MoviesProps ) => {
+export const RatingContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  @media screen and (max-width: 550px) {
+    padding: 0;
+    margin-left: 0.2rem;
+  }
+`;
+
+export const RatingStar = styled.svg`
+  height: 0.7rem;
+  width: 0.7rem;
+  margin-right: 0.3em;
+`;
+const SliderTitle = ({ titleObj }: MoviesProps) => {
     return (
         <RatingContainer>
             <RatingStar viewBox="0 0 576 512">

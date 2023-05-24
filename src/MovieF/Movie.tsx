@@ -13,9 +13,8 @@ import Upcoming from "./Upcoming";
 import LoadingC from "../components/LoadingC";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
-import SmallArrowBtn from "../components/BtnDetail";
 import BannerOverview from "../components/BannerOverview";
-import SmallArrowBtnDetail from "../components/BtnDetail";
+import BtnDetail from "../components/BtnDetail";
 
 export const Main = styled.div`
   width: 100%;
@@ -248,12 +247,6 @@ export const BigTitle = styled.p`
   font-weight: 700;
 `;
 
-export const BigOverview = styled.p`
-  font-size: 0.3rem;
-  position: relative;
-  color: ${(props) => props.theme.bodyFtColor};
-  padding: 5px;
-`;
 
 export const SliderContainer = styled.div`
   top: -150px;
@@ -267,11 +260,7 @@ export const SliderContainer = styled.div`
   border: 1px solid ${(props) => props.theme.bodyFtColor};
   overflow-y: hidden;
 `;
-export const RatingStar = styled.svg`
-  height: 0.7rem;
-  width: 0.7rem;
-  margin-right: 0.3em;
-`;
+
 export const ArrowSvg = styled.svg`
   height: 0.5rem;
   width: 0.5rem;
@@ -284,17 +273,6 @@ export const RatingSpan = styled.p`
   font-size: 0.5rem;
   font-weight: 600;
   display: flex;
-`;
-export const RatingContainer = styled.div`
-  display: flex;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 20px;
-  @media screen and (max-width: 550px) {
-    padding: 0;
-    margin-left: 0.2rem;
-  }
 `;
 
 export const DetailBtn = styled.button`
@@ -385,7 +363,7 @@ const Home = () => {
               >
                 <Title>{data?.[0].title}</Title>
                 <BannerOverview content={data?.[0]} sliceLength={350}></BannerOverview>
-                <SmallArrowBtnDetail dataType={dataType} contentId={data?.[0].id}></SmallArrowBtnDetail>
+                <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
               </Banner>
               {window.outerWidth <= 550 ? (
                 <MobileSliderC
