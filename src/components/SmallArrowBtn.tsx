@@ -4,14 +4,13 @@ import { Overview } from "../MovieF/Movie";
 export const DetailBtnSmall = styled.button`
   width: 1.9rem;
   height: 0.5rem;
-  margin: 0.1rem;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
   border-radius: 0.1rem;
   font-weight: 900;
   text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 0;
@@ -30,7 +29,7 @@ export const ArrowSvgSmall = styled.svg`
 `;
 const SmallArrowBtn = () => {
   return (
-    <DetailBtnSmall style={{ marginLeft: "10px" }}>
+    <DetailBtnSmall>
       <Overview style={{ color: "black", fontSize: "0.25rem" }}>
         Details
       </Overview>

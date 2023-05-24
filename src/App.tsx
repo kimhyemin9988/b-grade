@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ReactQueryDevtools } from "react-query/devtools";
-import { Outlet } from "react-router-dom";
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import { Link, Outlet } from "react-router-dom";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { Darktheme, Lighttheme } from "./style/theme";
 import HomeHeader from "./HomeHeader";
 
@@ -83,6 +83,13 @@ a{
     text-decoration: none;
 }
 `;
+
+export const LinkStyle = styled(Link)`
+  display: inline-flex;
+  width: fit-content;
+  height: fit-content;
+  margin: 10px;
+`
 
 const App = () => {
   const [isDark, setIsDark] = useState<boolean>(true);

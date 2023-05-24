@@ -16,6 +16,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { DetailContainer, MainVideo } from "./TvDetails";
+import { LinkStyle } from "../App";
 
 export interface details {
   adult: boolean;
@@ -256,11 +257,11 @@ const MovieDetails = () => {
                   <OverviewSpan>{detailsData?.original_title}</OverviewSpan>
                 </OverviewTitle>
               </TitleDiv>
-              <Link to={`../images`} state={movieId}>
+              <LinkStyle to={`../images`} state={movieId}>
                 <DetailBtn>
                   <p>more Image</p>
                 </DetailBtn>
-              </Link>
+              </LinkStyle>
             </TextBox>
             <WrapperDetail>
               <DetailContainer style={{ width: "fit-content" }}>
@@ -400,11 +401,11 @@ const MovieDetails = () => {
                   <TitleDiv>Videos</TitleDiv>
                   {VideosData?.results.length !== undefined &&
                     VideosData?.results.length > 3 && (
-                      <Link to={`../videos`} state={movieId}>
-                        <DetailBtn style={{ marginLeft: "10px" }}>
+                      <LinkStyle to={`../videos`} state={movieId}>
+                        <DetailBtn>
                           <p>more Video</p>
                         </DetailBtn>
-                      </Link>
+                      </LinkStyle>
                     )}
                 </DetailData>
                 <MainVideo style={{ marginLeft: "10px" }}>
@@ -437,11 +438,11 @@ const MovieDetails = () => {
                   <TitleDiv>Casts</TitleDiv>
                   {CreditsData?.cast.length !== undefined &&
                     CreditsData?.cast.length > 5 && (
-                      <Link to={`../casts`} state={movieId}>
-                        <DetailBtn style={{ marginLeft: "10px" }}>
+                      <LinkStyle to={`../casts`} state={movieId}>
+                        <DetailBtn>
                           <p>total cast</p>
                         </DetailBtn>
-                      </Link>
+                      </LinkStyle>
                     )}
                 </DetailData>
                 <MainVideo style={{ marginLeft: "10px" }}>

@@ -33,6 +33,7 @@ import {
   Width10,
   WrapperDetail,
 } from "./MovieDetails";
+import { LinkStyle } from "../App";
 
 export interface tvDetails {
   adult: boolean;
@@ -151,11 +152,12 @@ const TvDetails = () => {
                   <OverviewSpan>{detailsData?.original_name}</OverviewSpan>
                 </OverviewTitle>
               </TitleDiv>
-              <Link to={`../images`} state={tvId}>
+              <TitleDiv></TitleDiv>
+              <LinkStyle to={`../images`} state={tvId}>
                 <DetailBtn>
                   <p>more Image</p>
                 </DetailBtn>
-              </Link>
+              </LinkStyle>
             </TextBox>
             <WrapperDetail>
               <DetailContainer style={{ width: "fit-content" }}>
@@ -313,11 +315,11 @@ const TvDetails = () => {
                   <TitleDiv>Videos</TitleDiv>
                   {VideosData?.results.length !== undefined &&
                     VideosData?.results.length > 3 && (
-                      <Link to={`../videos`} state={tvId}>
-                        <DetailBtn style={{ marginLeft: "10px" }}>
+                      <LinkStyle to={`../videos`} state={tvId}>
+                        <DetailBtn>
                           <p>more Video</p>
                         </DetailBtn>
-                      </Link>
+                      </LinkStyle>
                     )}
                 </DetailData>
                 <MainVideo style={{ marginLeft: "10px" }}>
@@ -350,11 +352,11 @@ const TvDetails = () => {
                   <TitleDiv>Casts</TitleDiv>
                   {CreditsData?.cast?.length !== undefined &&
                     CreditsData?.cast.length > 5 && (
-                      <Link to={`../casts`} state={tvId}>
-                        <DetailBtn style={{ marginLeft: "10px" }}>
+                      <LinkStyle to={`../casts`} state={tvId}>
+                        <DetailBtn>
                           <p>total cast</p>
                         </DetailBtn>
-                      </Link>
+                      </LinkStyle>
                     )}
                 </DetailData>
                 <MainVideo style={{ marginLeft: "10px" }}>

@@ -21,6 +21,7 @@ import SmallArrowBtn from "../components/SmallArrowBtn";
 import { MainDetail } from "../MovieTvDetails/MovieDetails";
 import OverviewComponent from "../components/OverviewComponent";
 import OverlayC from "../components/OverlayC";
+import { LinkStyle } from "../App";
 /* import { Keyword } from "../Atoms";
 import { useRecoilState } from "recoil";
  */
@@ -139,11 +140,11 @@ const Search = () => {
                         <BigTitle>
                           {content?.title ? content?.title : content?.name}
                         </BigTitle>
-                        <Link
+                        <LinkStyle
                           to={`../${content?.media_type}/${content?.id}/details`}
                         >
                           <SmallArrowBtn></SmallArrowBtn>
-                        </Link>
+                        </LinkStyle>
                         <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
                       </BoxModal>
                     </>
