@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-import { DetailBtnSmall } from "./SmallArrowBtn";
+import SmallArrowBtn from "./SmallArrowBtn";
 
 const BtnDetail = ({ dataType, contentId }: { dataType: string | undefined, contentId: number | undefined }) => {
   return (
     <Link to={dataType === "movie"
       ? `${dataType}/${contentId}/details`
       : `${contentId}/details`}>
-        <DetailBtnSmall></DetailBtnSmall>
+      <SmallArrowBtn></SmallArrowBtn>
     </Link >
   );
 };
