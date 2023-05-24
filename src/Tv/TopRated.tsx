@@ -6,9 +6,8 @@ import { Section } from "../MovieF/TopRatedMovies";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
 import { tvTitleObj } from "./Tv";
-const TopRated = () => {
+const TopRated = ({ dataType }: { dataType: string }) => {
   const { isLoading, data } = useQuery<movieData[]>(["tvTopRated"], tvTopRated);
-  const dataType = "tv";
   return (
     <>
       {isLoading ? (

@@ -16,12 +16,11 @@ export const Section = styled.section`
   margin-top: 1rem;
 `;
 
-const TopRatedMovies = () => {
+const TopRatedMovies = ({ dataType }: { dataType: string }) => {
   const { isLoading, data } = useQuery<movieData[]>(
     ["topRatedMovies"],
     topRatedMovies
   );
-  const dataType = "movie";
 
   return (
     <>

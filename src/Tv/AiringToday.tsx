@@ -7,9 +7,8 @@ import { Section } from "../MovieF/TopRatedMovies";
 import WebSliderC from "../components/WebSliderC";
 import { tvTitleObj } from "./Tv";
 
-const AiringToday = () => {
+const AiringToday = ({ dataType }: { dataType: string }) => {
   const { isLoading, data } = useQuery<movieData[]>(["airingToday"], tvAiring);
-  const dataType = "tv";
   return (
     <>
       {isLoading ? (

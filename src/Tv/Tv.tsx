@@ -13,11 +13,11 @@ const Tv = () => {
     return (
         <Main>
             <Wrapper>
-                <LatestTopShows></LatestTopShows>
-                <AiringToday></AiringToday>
+                <LatestTopShows dataType={dataType}></LatestTopShows>
+                <AiringToday dataType={dataType}></AiringToday>
             </Wrapper>
             <Popular dataType={dataType}></Popular>
-            <TopRated></TopRated>
+            <TopRated dataType={dataType}></TopRated>
         </Main>
     );
 

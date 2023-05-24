@@ -9,13 +9,12 @@ import { Section } from "./TopRatedMovies";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
 
-const Upcoming = () => {
+const Upcoming = ({ dataType }: { dataType: string }) => {
   /* 데이터 받아오기 */
   const { isLoading, data } = useQuery<movieData[]>(
     ["upcomingMovies"],
     upcomingMovies
   );
-  const dataType = "movie";
   return (
     <>
       {isLoading ? (
