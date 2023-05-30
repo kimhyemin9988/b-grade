@@ -1,12 +1,7 @@
 import { useQuery } from "react-query";
-import {
-  Banner,
-  Title,
-} from "../MovieF/Movie";
 import { tvLatest } from "../api";
 import LoadingC from "../components/LoadingC";
 import BannerOverview from "../components/BannerOverview";
-import BtnDetail from "../components/BtnDetail";
 export interface LatestShowsData {
   adult: boolean;
   backdrop_path: string;
@@ -47,19 +42,12 @@ const LatestTopShows = ({ dataType }: { dataType: string }) => {
   );
   return (
     <>
-      {isLoading ? (
-        <LoadingC></LoadingC>
-      ) : (
-        <>
-          <Banner
-            bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}
-          >
-            <Title>{data?.[0].name}</Title>
-            <BannerOverview content={data?.[0]} sliceLength={350}></BannerOverview>
-            <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
-          </Banner>
-        </>
-      )}
+      {
+        isLoading ? (
+          <LoadingC></LoadingC >
+        ) : (
+          <BannerOverview content={data?.[0]} sliceLength={350} dataType={dataType}></BannerOverview>
+        )}
     </>
   );
 };

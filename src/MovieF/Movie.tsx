@@ -14,7 +14,6 @@ import LoadingC from "../components/LoadingC";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
 import BannerOverview from "../components/BannerOverview";
-import BtnDetail from "../components/BtnDetail";
 
 export const Main = styled.div`
   width: 100%;
@@ -66,26 +65,6 @@ export const Wrapper = styled.div`
   min-height: 30vh;
 `;
 
-export const Banner = styled.div<{ bgPhoto: string | undefined }>`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8%;
-  background-image: linear-gradient(
-      rgba(0, 0, 0, 0) 20%,
-      ${(props) => props.theme.bodyBgColor}
-    ),
-    url(${(props) => props.bgPhoto});
-  background-size: 100% 100%;
-  height: 75vh;
-  margin-top: 13vh;
-  font-weight: 600;
-  @media screen and (max-width: 550px) {
-    margin-top: 8vh;
-    height: 33vh;
-  }
-`;
-
 export const Title = styled.p`
   margin-bottom: 5%;
   font-size: 1rem;
@@ -134,7 +113,7 @@ export const Row = styled(motion.div)`
   align-items: center;
 `;
 
-export const Box = styled(motion.article)<{ posterbg?: string | undefined }>`
+export const Box = styled(motion.article) <{ posterbg?: string | undefined }>`
   width: 200px;
   height: 300px;
   font-size: 100%;
@@ -358,13 +337,7 @@ const Home = () => {
             <LoadingC></LoadingC>
           ) : (
             <>
-              <Banner
-                bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}
-              >
-                <Title>{data?.[0].title}</Title>
-                <BannerOverview content={data?.[0]} sliceLength={350}></BannerOverview>
-                <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
-              </Banner>
+              <BannerOverview content={data?.[0]} sliceLength={350} dataType={dataType}></BannerOverview>
               {window.outerWidth <= 550 ? (
                 <MobileSliderC
                   data={data}
