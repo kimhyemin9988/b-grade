@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import YouTube from "react-youtube";
 import styled from "styled-components";
-import {  getDetails, indepthDetail } from "../api";
+import { getDetails, indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Container } from "../MovieF/LatestMovies";
 import {
@@ -17,6 +17,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { DetailContainer, MainVideo } from "./TvDetails";
 import { LinkStyle } from "../App";
+import MoreDetailBtn from "../components/MoreDetailBtn";
+
+
 
 export interface details {
   adult: boolean;
@@ -65,7 +68,7 @@ export interface Credits {
       profile_path: string;
       id: string;
     }
-  ];
+  ] | [];
   crew: [
     {
       job: string;
@@ -76,21 +79,19 @@ export interface Credits {
 }
 export interface Videos {
   id: string;
-  results:
-    | [
-        {
-          iso_639_1: string;
-          iso_3166_1: string;
-          name: string; // video 이름
-          key: string; // 비디오 api로 불러올 수 있음
-          size: number;
-          type: string;
-          official: true;
-          published_at: string;
-          id: string;
-        }
-      ]
-    | [];
+  results: [
+    {
+      iso_639_1: string;
+      iso_3166_1: string;
+      name: string; // video 이름
+      key: string; // 비디오 api로 불러올 수 있음
+      size: number;
+      type: string;
+      official: true;
+      published_at: string;
+      id: string;
+    }
+  ] | [];
 }
 
 export const LargeBox = styled.div<{ posterbg: string | undefined }>`
@@ -232,11 +233,11 @@ const MovieDetails = () => {
   );
   const { isLoading: CreditsLoading, data: CreditsData } = useQuery<Credits>(
     ["Credits", `${movieId}`],
-    () => indepthDetail(distStr, movieId , 'credits')
+    () => indepthDetail(distStr, movieId, 'credits')
   );
   const { isLoading: VideosLoading, data: VideosData } = useQuery<Videos>(
     ["Videos", `${movieId}`],
-    () => indepthDetail(distStr, movieId , 'videos')
+    () => indepthDetail(distStr, movieId, 'videos')
   );
   return (
     <>
@@ -301,11 +302,10 @@ const MovieDetails = () => {
                       {detailsData?.genres.map(
                         (i) =>
                           i.name +
-                          `${
-                            detailsData?.genres.indexOf(i) ===
+                          `${detailsData?.genres.indexOf(i) ===
                             detailsData?.genres?.length - 1
-                              ? `. `
-                              : `, `
+                            ? `. `
+                            : `, `
                           }`
                       )}
                     </OverviewSpan>
@@ -348,7 +348,7 @@ const MovieDetails = () => {
                             <OverviewSpan key={i.id}>
                               {i.name}
                               {detailsData?.production_companies?.indexOf(i) ===
-                              5
+                                5
                                 ? `.`
                                 : `,`}
                             </OverviewSpan>
@@ -359,7 +359,7 @@ const MovieDetails = () => {
                 </Width10>
               </DetailContainer>
               {detailsData?.belongs_to_collection &&
-              detailsData?.belongs_to_collection.backdrop_path ? (
+                detailsData?.belongs_to_collection.backdrop_path ? (
                 <BackdropPhoto
                   style={{
                     marginTop: window.outerWidth <= 550 ? "0.5rem" : "0",
@@ -395,19 +395,9 @@ const MovieDetails = () => {
           {VideosLoading ? (
             <LoadingC></LoadingC>
           ) : (
-            VideosData?.results.length !== 0 && (
+            VideosData?.results.length !== (0 && undefined) && (
               <Main>
-                <DetailData>
-                  <TitleDiv>Videos</TitleDiv>
-                  {VideosData?.results.length !== undefined &&
-                    VideosData?.results.length > 3 && (
-                      <LinkStyle to={`../videos`} state={movieId}>
-                        <DetailBtn>
-                          <p>more Video</p>
-                        </DetailBtn>
-                      </LinkStyle>
-                    )}
-                </DetailData>
+                <MoreDetailBtn moreNumber={3} data={VideosData?.results} id={movieId} url={"videos"} btnType={"Videos"}></MoreDetailBtn>
                 <MainVideo style={{ marginLeft: "10px" }}>
                   {VideosData?.results.slice(0, 3).map((i) => {
                     return (
@@ -432,19 +422,9 @@ const MovieDetails = () => {
           {CreditsLoading ? (
             <LoadingC></LoadingC>
           ) : (
-            CreditsData?.cast.length !== undefined && (
+            CreditsData?.cast.length !== (0 && undefined) && (
               <Main>
-                <DetailData>
-                  <TitleDiv>Casts</TitleDiv>
-                  {CreditsData?.cast.length !== undefined &&
-                    CreditsData?.cast.length > 5 && (
-                      <LinkStyle to={`../casts`} state={movieId}>
-                        <DetailBtn>
-                          <p>total cast</p>
-                        </DetailBtn>
-                      </LinkStyle>
-                    )}
-                </DetailData>
+                <MoreDetailBtn moreNumber={5} data={VideosData?.results} id={movieId} url={"casts"} btnType={"Casts"}></MoreDetailBtn>
                 <MainVideo style={{ marginLeft: "10px" }}>
                   {CreditsData?.cast?.slice(0, 5).map((i) => {
                     return (

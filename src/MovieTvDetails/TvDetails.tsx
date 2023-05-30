@@ -34,17 +34,18 @@ import {
   WrapperDetail,
 } from "./MovieDetails";
 import { LinkStyle } from "../App";
+import MoreDetailBtn from "../components/MoreDetailBtn";
 
 export interface tvDetails {
   adult: boolean;
   backdrop_path: string;
   created_by:
-    | [
-        {
-          name: string;
-        }
-      ]
-    | [];
+  | [
+    {
+      name: string;
+    }
+  ]
+  | [];
   episode_run_time: [
     {
       0: number;
@@ -152,7 +153,6 @@ const TvDetails = () => {
                   <OverviewSpan>{detailsData?.original_name}</OverviewSpan>
                 </OverviewTitle>
               </TitleDiv>
-              <TitleDiv></TitleDiv>
               <LinkStyle to={`../images`} state={tvId}>
                 <DetailBtn>
                   <p>more Image</p>
@@ -203,11 +203,10 @@ const TvDetails = () => {
                       {`${detailsData?.genres.map(
                         (i) =>
                           i.name +
-                          `${
-                            detailsData?.genres.indexOf(i) ===
+                          `${detailsData?.genres.indexOf(i) ===
                             detailsData?.genres?.length - 1
-                              ? `.`
-                              : ``
+                            ? `.`
+                            : ``
                           }`
                       )}`}
                     </OverviewSpan>
@@ -262,7 +261,7 @@ const TvDetails = () => {
                             <OverviewSpan key={i.id}>
                               {i.name}
                               {detailsData?.production_companies?.indexOf(i) ===
-                              3
+                                3
                                 ? `.`
                                 : `,`}
                             </OverviewSpan>
@@ -273,7 +272,7 @@ const TvDetails = () => {
                 </Width10>
               </DetailContainer>
               {detailsData?.belongs_to_collection &&
-              detailsData?.belongs_to_collection.backdrop_path ? (
+                detailsData?.belongs_to_collection.backdrop_path ? (
                 <BackdropPhoto
                   style={{
                     marginTop: window.outerWidth <= 550 ? "0.5rem" : "0",
@@ -309,19 +308,9 @@ const TvDetails = () => {
           {VideosLoading ? (
             <LoadingC></LoadingC>
           ) : (
-            VideosData?.results.length !== 0 && (
+            VideosData?.results.length !== undefined && (
               <Main>
-                <DetailData>
-                  <TitleDiv>Videos</TitleDiv>
-                  {VideosData?.results.length !== undefined &&
-                    VideosData?.results.length > 3 && (
-                      <LinkStyle to={`../videos`} state={tvId}>
-                        <DetailBtn>
-                          <p>more Video</p>
-                        </DetailBtn>
-                      </LinkStyle>
-                    )}
-                </DetailData>
+                <MoreDetailBtn moreNumber={3} data={VideosData?.results} id={tvId} url={"videos"} btnType={"Videos"}></MoreDetailBtn>
                 <MainVideo style={{ marginLeft: "10px" }}>
                   {VideosData?.results.slice(0, 3).map((i) => {
                     return (
@@ -348,17 +337,7 @@ const TvDetails = () => {
           ) : (
             CreditsData?.cast?.length !== undefined && (
               <Main>
-                <DetailData>
-                  <TitleDiv>Casts</TitleDiv>
-                  {CreditsData?.cast?.length !== undefined &&
-                    CreditsData?.cast.length > 5 && (
-                      <LinkStyle to={`../casts`} state={tvId}>
-                        <DetailBtn>
-                          <p>total cast</p>
-                        </DetailBtn>
-                      </LinkStyle>
-                    )}
-                </DetailData>
+                <MoreDetailBtn moreNumber={5} data={VideosData?.results} id={tvId} url={"casts"} btnType={"Casts"}></MoreDetailBtn>
                 <MainVideo style={{ marginLeft: "10px" }}>
                   {CreditsData?.cast?.slice(0, 5).map((i) => {
                     return (
