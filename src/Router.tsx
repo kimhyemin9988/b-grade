@@ -19,7 +19,7 @@ import TvDetails from "./MovieTvDetails/TvDetails";
 const RouterApp = createBrowserRouter(
   [
     {
-      path: "/",
+      path: "",
       element: <App />,
       children: [
         {
