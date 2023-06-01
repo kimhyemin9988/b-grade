@@ -26,6 +26,7 @@ import SliderTitle from "../components/SliderTitle";
 import ModalC from "../components/ModalC";
 import PopularSelect from "../components/PopularSelect";
 import WebSliderC from "../components/WebSliderC";
+import MobileSliderC from "../components/MobileSliderC";
 
 export const PopularBox = styled.div`
   background-color: ${(props) => props.theme.bodyFtColor};
@@ -51,76 +52,16 @@ const Popular = ({ dataType }: { dataType: string }) => {
   const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
 
   const handleValue = useRecoilValue(HandleValue);
-  /* 데이터 받아오기 
-  const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
 
-  const [id, setId] = useState<null | string>(null);
-
-  const [content, setContent] = useState<movieData>();
-*/
-/*
-  const [sliderDirection, setSliderDirection] = useState(0);
-
-  // 나라별 인기 top 10 
-  const incraseIndex = (indexN: number) => {
-    if (data) {
-      if (leaving) return;
-      else {
-        setSliderDirection(indexN);
-        setLeaving(true);
-        setIndex((prev) => {
-          if (indexN === 1) {
-            // 1이면 오른쪽 이동
-            prev = index === 0 ? 1 : 0;
-          } else {
-            // -1이면 왼쪽 이동
-            prev = index === 1 ? 0 : 1;
-          }
-          return prev;
-        });
-      }
-    }
-  };
-*/
-  const constraintsRef = useRef(null);
   return (
     <>
       {isLoading ? (
         <LoadingC></LoadingC>
       ) : window.outerWidth <= 550 ? (
-        {/* <>
-          <MobileSlider ref={constraintsRef}>
-            <SliderTitle titleObj={tvTitleObj.title[2]}></SliderTitle>
-            <PopularSelect data={handleValue}></PopularSelect>
-            <InnerContainer drag="x" dragConstraints={constraintsRef}>
-              {handleValue?.slice(0, 10).map((i) => (
-                <Box
-                  key={handleValue?.indexOf(i)}
-                  posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
-                  onClick={() => {
-                    setId(`${i.id}`);
-                    setContent(i);
-                  }}
-                  layoutId={`${i.id}${titleObj}`}
-                >
-                  <PopularBox>
-                    <p>{handleValue?.indexOf(i) + 1}</p>
-                  </PopularBox>
-                  <Info variants={infoVariants} key={i.id}>
-                    <p>{i.name}</p>
-                  </Info>
-                </Box>
-              ))}
-            </InnerContainer>
-          </MobileSlider>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <ModalC id={id} setId={setId} titleObj={titleObj} content={content} dataType={dataType}></ModalC>
-          </div>
-        </>  */}
+        <MobileSliderC data={handleValue} titleObj={titleObj} dataType={dataType} totalData={data}></MobileSliderC>
       ) : (
         <Section>
-          <WebSliderC data={handleValue} titleObj={titleObj} dataType={dataType} totalData={data}></WebSliderC> 
+          <WebSliderC data={handleValue} titleObj={titleObj} dataType={dataType} totalData={data}></WebSliderC>
         </Section>
       )}
     </>
