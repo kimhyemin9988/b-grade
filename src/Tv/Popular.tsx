@@ -2,10 +2,7 @@ import { tvPopular } from "../api";
 import { useQuery } from "react-query";
 import { AnimatePresence } from "framer-motion";
 import {
-  BigCover,
-  BigTitle,
   Box,
-  BoxModal,
   boxVariants,
   Info,
   infoVariants,
@@ -18,18 +15,16 @@ import {
   Slider,
   SliderContainer,
 } from "../MovieF/Movie";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
-import { IPopularLanguage, PopularLanguage } from "../Atoms";
-import Select, { SingleValue } from "react-select";
+import { HandleValue } from "../Atoms";
 import { tvTitleObj } from "./Tv";
 import SliderTitle from "../components/SliderTitle";
-import OverviewComponent from "../components/OverviewComponent";
-import OverlayC from "../components/OverlayC";
-import BtnDetail from "../components/BtnDetail";
+import ModalC from "../components/ModalC";
+import PopularSelect from "../components/PopularSelect";
 
 export const PopularBox = styled.div`
   background-color: ${(props) => props.theme.bodyFtColor};
@@ -42,63 +37,21 @@ export const PopularBox = styled.div`
   font-weight: 600;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
 `;
-const SelectBox = styled.div`
-  width: 4rem;
-  font-size: 0.2rem;
-  font-weight: 600;
-  z-index: 4;
-  right: 0;
-  margin-left: 1rem;
-  color: ${(props) => props.theme.bodyBgColor};
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 20px;
-  @media screen and (max-width: 550px) {
-    margin: 5px;
-  }
-`;
+
 export const MiniP = styled.p`
   font-size: 0.2rem;
   font-weight: 600;
   color: ${(props) => props.theme.bodyFtColor};
 `;
-const customStyles = {
-  control: (base: any) => ({
-    ...base,
-    height: 25,
-    minHeight: 25,
-    alignContent: "center",
-  }),
-  valueContainer: (base: any) => ({
-    ...base,
-    alignItems: "center",
-  }),
-  menuList: (base: any) => ({
-    ...base,
-    color: "black",
-  }),
-};
-
 
 const Popular = ({ dataType }: { dataType: string }) => {
   const titleObj = tvTitleObj.title[2];
+
   const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
-  /* 언어별 차트 */
-  useEffect(() => {
-    setHandleValue(
-      data?.filter((i: movieData) => i.original_language === "en")
-    );
-  }, [data]);
 
-  const [handleValue, setHandleValue] = useState<movieData[]>();
-  const handleChange = (e: SingleValue<IPopularLanguage>) => {
-    const value = e?.value;
-    setHandleValue(
-      data?.filter((i: movieData) => i.original_language === value) || []
-    );
-  };
 
+/*   const [handleValue, setHandleValue] = useState<movieData[]>(); */
+  const handleValue = useRecoilValue(HandleValue);
   /* 데이터 받아오기 */
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
@@ -106,9 +59,9 @@ const Popular = ({ dataType }: { dataType: string }) => {
   const [id, setId] = useState<null | string>(null);
 
   const [content, setContent] = useState<movieData>();
-  const [sliderDirection, setSliderDirection] = useState(0);
 
-  const popularLanguage = useRecoilValue(PopularLanguage);
+
+  const [sliderDirection, setSliderDirection] = useState(0);
 
   /* 나라별 인기 top 10 */
   const incraseIndex = (indexN: number) => {
@@ -139,15 +92,8 @@ const Popular = ({ dataType }: { dataType: string }) => {
       ) : window.outerWidth <= 550 ? (
         <>
           <MobileSlider ref={constraintsRef}>
-            <SliderTitle titleObj={titleObj}></SliderTitle>
-            <SelectBox>
-              <Select
-                defaultValue={popularLanguage[0]}
-                options={popularLanguage}
-                onChange={handleChange}
-                styles={customStyles}
-              />
-            </SelectBox>
+            <SliderTitle titleObj={tvTitleObj.title[2]}></SliderTitle>
+            <PopularSelect data={handleValue}></PopularSelect>
             <InnerContainer drag="x" dragConstraints={constraintsRef}>
               {handleValue?.slice(0, 10).map((i) => (
                 <Box
@@ -170,50 +116,21 @@ const Popular = ({ dataType }: { dataType: string }) => {
             </InnerContainer>
           </MobileSlider>
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <AnimatePresence>
-              {id ? (
-                <>
-                  <OverlayC setId={setId}></OverlayC>
-                  <BoxModal
-                    initial={{ y: "150%" }}
-                    animate={{ y: 0 }}
-                    transition={{
-                      type: "linear",
-                      duration: 0.1,
-                    }}
-                    exit={{ y: "150%" }}
-                  >
-                    <BigCover
-                      bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
-                    />
-                    <BigTitle>
-                      {content?.title ? content?.title : content?.name}
-                    </BigTitle>
-                    <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
-                    <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
-                  </BoxModal>
-                </>
-              ) : null}
-            </AnimatePresence>
+            <ModalC id={id} setId={setId} titleObj={titleObj} content={content} dataType={dataType}></ModalC>
           </div>
         </>
       ) : (
         <Section>
+          {/* <WebSliderC data={handleValue} titleObj={tvTitleObj.title[2]} dataType={dataType}></WebSliderC> */}
           <SliderContainer>
             <SliderTitle titleObj={tvTitleObj.title[2]}></SliderTitle>
-            <SelectBox>
-              <Select
-                defaultValue={popularLanguage[0]}
-                options={popularLanguage}
-                onChange={handleChange} // 선택한 obj return
-              />
-            </SelectBox>
+            <PopularSelect data={data}></PopularSelect>
             <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
             <MovingSlider
               style={{ right: "0" }}
               onClick={() => incraseIndex(1)}
             >{`>`}</MovingSlider>
-            <Slider style={{ top: "0" }}>
+            <Slider titleObj={titleObj}>
               <AnimatePresence
                 custom={sliderDirection}
                 initial={false}
@@ -248,7 +165,8 @@ const Popular = ({ dataType }: { dataType: string }) => {
                         <p>{handleValue?.indexOf(i) + 1}</p>
                       </PopularBox>
                       <Info variants={infoVariants} key={i.id}>
-                        <p>{i.name}</p>
+                        <p>{i.title === undefined ?
+                          i.name : i.title}</p>
                       </Info>
                     </Box>
                   ))}
@@ -256,21 +174,7 @@ const Popular = ({ dataType }: { dataType: string }) => {
               </AnimatePresence>
             </Slider>
           </SliderContainer>
-          <AnimatePresence>
-            {id ? (
-              <>
-                <OverlayC setId={setId}></OverlayC>
-                <BoxModal layoutId={id + titleObj}>
-                  <BigCover
-                    bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
-                  />
-                  <BigTitle>{content?.name}</BigTitle>
-                  <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
-                  <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
-                </BoxModal>
-              </>
-            ) : null}
-          </AnimatePresence>
+          <ModalC id={id} setId={setId} titleObj={titleObj} content={content} dataType={dataType}></ModalC>
         </Section>
       )}
     </>
