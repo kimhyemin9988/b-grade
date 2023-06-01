@@ -92,16 +92,16 @@ export const LinkStyle = styled(Link)`
 `
 
 const App = () => {
-  const [isDark, setIsDark] = useState<boolean>(true);
-  return (
-    <>
-      <ThemeProvider theme={isDark ? Darktheme : Lighttheme}>
-        <GlobalStyle />
-        <HomeHeader></HomeHeader>
-        <Outlet context={[setIsDark]}></Outlet>
-        <ReactQueryDevtools initialIsOpen={true} />
-      </ThemeProvider>
-    </>
-  );
+	const [isDark, setIsDark] = useState<boolean>(true);
+	return (
+		<>
+			<ThemeProvider theme={isDark ? Darktheme : Lighttheme}>
+				<GlobalStyle />
+				<HomeHeader></HomeHeader>
+				<Outlet context={[setIsDark]}></Outlet>
+				<ReactQueryDevtools initialIsOpen={true} />
+			</ThemeProvider>
+		</>
+	);
 };
 export default App;
