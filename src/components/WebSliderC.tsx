@@ -18,6 +18,7 @@ export interface MoviesProps {
   data?: movieData[];
   titleObj?: string;
   dataType?: string;
+  totalData?: movieData[];
 }
 
 export const rowVariants = {
@@ -60,7 +61,7 @@ export const infoVariants = {
   },
 };
 
-const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
+const WebSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
 
   const [id, setId] = useState<null | string>(null);
   const [content, setContent] = useState<movieData>();
@@ -77,9 +78,9 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
         setLeaving(true);
         const dataLength = Math.floor(data?.length / 5);
         if (indexN === 1) {
-          setIndex((prev) => (dataLength - 1 > index ? prev + 1 : 0));
+          setIndex((prev) => prev = titleObj === "Tv Popular" ? (index === 0 ? 1 : 0) : (dataLength - 1 > index ? prev + 1 : 0));
         } else if (indexN === -1) {
-          setIndex((prev) => (index > 0 ? prev - 1 : dataLength - 2));
+          setIndex((prev) => prev = titleObj === "Tv Popular" ? (index === 1 ? 0 : 1) : (index > 0 ? prev - 1 : dataLength - 2));
         }
       }
     }
@@ -95,7 +96,7 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
       <SliderContainer>
         <SliderTitle titleObj={titleObj}></SliderTitle>
         {titleObj === "Tv Popular" &&
-          <PopularSelect data={data}></PopularSelect>
+          <PopularSelect data={totalData}></PopularSelect>
         }
         <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
         <MovingSlider

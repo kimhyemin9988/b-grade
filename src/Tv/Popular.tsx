@@ -25,6 +25,7 @@ import { tvTitleObj } from "./Tv";
 import SliderTitle from "../components/SliderTitle";
 import ModalC from "../components/ModalC";
 import PopularSelect from "../components/PopularSelect";
+import WebSliderC from "../components/WebSliderC";
 
 export const PopularBox = styled.div`
   background-color: ${(props) => props.theme.bodyFtColor};
@@ -49,21 +50,19 @@ const Popular = ({ dataType }: { dataType: string }) => {
 
   const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
 
-
-/*   const [handleValue, setHandleValue] = useState<movieData[]>(); */
   const handleValue = useRecoilValue(HandleValue);
-  /* 데이터 받아오기 */
+  /* 데이터 받아오기 
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
 
   const [id, setId] = useState<null | string>(null);
 
   const [content, setContent] = useState<movieData>();
-
-
+*/
+/*
   const [sliderDirection, setSliderDirection] = useState(0);
 
-  /* 나라별 인기 top 10 */
+  // 나라별 인기 top 10 
   const incraseIndex = (indexN: number) => {
     if (data) {
       if (leaving) return;
@@ -83,14 +82,14 @@ const Popular = ({ dataType }: { dataType: string }) => {
       }
     }
   };
-
+*/
   const constraintsRef = useRef(null);
   return (
     <>
       {isLoading ? (
         <LoadingC></LoadingC>
       ) : window.outerWidth <= 550 ? (
-        <>
+        {/* <>
           <MobileSlider ref={constraintsRef}>
             <SliderTitle titleObj={tvTitleObj.title[2]}></SliderTitle>
             <PopularSelect data={handleValue}></PopularSelect>
@@ -118,63 +117,10 @@ const Popular = ({ dataType }: { dataType: string }) => {
           <div style={{ display: "flex", justifyContent: "center" }}>
             <ModalC id={id} setId={setId} titleObj={titleObj} content={content} dataType={dataType}></ModalC>
           </div>
-        </>
+        </>  */}
       ) : (
         <Section>
-          {/* <WebSliderC data={handleValue} titleObj={tvTitleObj.title[2]} dataType={dataType}></WebSliderC> */}
-          <SliderContainer>
-            <SliderTitle titleObj={tvTitleObj.title[2]}></SliderTitle>
-            <PopularSelect data={data}></PopularSelect>
-            <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
-            <MovingSlider
-              style={{ right: "0" }}
-              onClick={() => incraseIndex(1)}
-            >{`>`}</MovingSlider>
-            <Slider titleObj={titleObj}>
-              <AnimatePresence
-                custom={sliderDirection}
-                initial={false}
-                onExitComplete={() => {
-                  setLeaving((prev) => !prev);
-                }}
-              >
-                <Row
-                  variants={rowVariants}
-                  custom={sliderDirection}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  transition={{ type: "tween", duration: 0.5 }}
-                  key={index}
-                >
-                  {handleValue?.slice(5 * index, 5 * (index + 1)).map((i) => (
-                    <Box
-                      key={i.id}
-                      posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
-                      whileHover="hover"
-                      initial="normal"
-                      variants={boxVariants}
-                      transition={{ type: "tween" }}
-                      onClick={() => {
-                        setId(`${i.id}`);
-                        setContent(i);
-                      }}
-                      layoutId={`${i.id}${titleObj}`}
-                    >
-                      <PopularBox>
-                        <p>{handleValue?.indexOf(i) + 1}</p>
-                      </PopularBox>
-                      <Info variants={infoVariants} key={i.id}>
-                        <p>{i.title === undefined ?
-                          i.name : i.title}</p>
-                      </Info>
-                    </Box>
-                  ))}
-                </Row>
-              </AnimatePresence>
-            </Slider>
-          </SliderContainer>
-          <ModalC id={id} setId={setId} titleObj={titleObj} content={content} dataType={dataType}></ModalC>
+          <WebSliderC data={handleValue} titleObj={titleObj} dataType={dataType} totalData={data}></WebSliderC> 
         </Section>
       )}
     </>
