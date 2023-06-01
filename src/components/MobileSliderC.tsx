@@ -14,6 +14,7 @@ import { MoviesProps } from "./WebSliderC";
 import SliderTitle from "./SliderTitle";
 import OverviewComponent from "./OverviewComponent";
 import OverlayC from "./OverlayC";
+import ModalC from "./ModalC";
 
 const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
   const [id, setId] = useState<null | string>(null);
@@ -38,31 +39,7 @@ const MobileSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
         </InnerContainer>
       </MobileSlider>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <AnimatePresence>
-          {id ? (
-            <>
-              <OverlayC setId={setId}></OverlayC>
-              <BoxModal
-                initial={{ y: "200%" }}
-                animate={{ y: id && 0 }}
-                transition={{
-                  type: "linear",
-                  duration: 0.1,
-                }}
-                exit={{ y: "200%" }}
-              >
-                <BigCover
-                  bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
-                />
-                <BigTitle>
-                  {content?.title ? content?.title : content?.name}
-                </BigTitle>
-                <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
-                <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
-              </BoxModal>
-            </>
-          ) : null}
-        </AnimatePresence>
+        <ModalC id={id} setId={setId} titleObj={titleObj} content={content} dataType={dataType}></ModalC>
       </div>
     </>
   );
