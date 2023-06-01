@@ -32,7 +32,7 @@ const tvPopular = async () => {
   const languageFilter = (dataArray: movieData[]) => {
     let boolean = ["en", "zh", "ja", "ko"].map(
       (k) =>
-        dataArray.filter((i: movieData) => i.original_language === k).length >
+        dataArray.filter((i: movieData) => i.original_language === k).length >=
         10
     );
     return boolean;
@@ -40,7 +40,7 @@ const tvPopular = async () => {
 
   let page = 1;
   let dataArray: [] = [];
-  while (page < 30) {
+  while (1) {
     const response = await fetch(
       `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page}`
     );
