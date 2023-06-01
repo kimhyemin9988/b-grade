@@ -79,9 +79,10 @@ export const Overview = styled.p`
   width: 100%;
 `;
 
-export const Slider = styled.div`
+export const Slider = styled.div<{ titleObj: string | undefined }>`
   position: relative;
   height: 40vh;
+  top: ${(props)=> props.titleObj === "Tv Popular" && 0};
 `;
 export const MovingSlider = styled.button`
   z-index: 5;
