@@ -1,9 +1,6 @@
 import { useState } from "react";
 import {
-  BigCover,
-  BigTitle,
   Box,
-  BoxModal,
   Info,
   MovingSlider,
   Row,
@@ -13,12 +10,12 @@ import {
 } from "../MovieF/Movie";
 import { AnimatePresence } from "framer-motion";
 import SliderTitle from "./SliderTitle";
-import OverviewComponent from "./OverviewComponent";
-import OverlayC from "./OverlayC";
-import BtnDetail from "./BtnDetail";
+import ModalC from "./ModalC";
+import PopularSelect from "./PopularSelect";
+import { PopularBox } from "../Tv/Popular";
 
 export interface MoviesProps {
-  data?: movieData[] | undefined;
+  data?: movieData[];
   titleObj?: string;
   dataType?: string;
 }
@@ -64,6 +61,7 @@ export const infoVariants = {
 };
 
 const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
+
   const [id, setId] = useState<null | string>(null);
   const [content, setContent] = useState<movieData>();
 
@@ -96,12 +94,15 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
     <>
       <SliderContainer>
         <SliderTitle titleObj={titleObj}></SliderTitle>
+        {titleObj === "Tv Popular" &&
+          <PopularSelect data={data}></PopularSelect>
+        }
         <MovingSlider onClick={() => incraseIndex(-1)}>{`<`}</MovingSlider>
         <MovingSlider
           style={{ right: "0" }}
           onClick={() => incraseIndex(1)}
         >{`>`}</MovingSlider>
-        <Slider>
+        <Slider titleObj={titleObj}>
           <AnimatePresence
             custom={sliderDirection}
             initial={false}
@@ -109,7 +110,6 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
               setLeaving((prev) => !prev);
             }}
           >
-            {/* AnimatePresence나 Slider에 key값 주면 오류남*/}
             <Row
               variants={rowVariants}
               custom={sliderDirection}
@@ -120,9 +120,7 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
               key={index}
             >
               {/*Row가 index가 0이 될때까지  반복, random한 수로 하면 오류*/}
-              {data
-                ?.slice(1)
-                .slice(5 * index, 5 * (index + 1))
+              {data?.slice(5 * index, 5 * (index + 1))
                 .map(
                   (i) => (
                     <Box
@@ -139,8 +137,14 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
                       layoutId={`${i.id}${titleObj}`}
                     >
                       {/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 -> 문자추가*/}
+                      {titleObj === "Tv Popular" &&
+                        <PopularBox>
+                          <p>{data?.indexOf(i) + 1}</p>
+                        </PopularBox>
+                      }
                       <Info variants={infoVariants} key={i.id}>
-                        <p>{i.title}</p>
+                        <p>{i.title === undefined ?
+                          i.name : i.title}</p>
                       </Info>
                     </Box>
                   )
@@ -149,21 +153,7 @@ const WebSliderC = ({ data, titleObj, dataType }: MoviesProps) => {
           </AnimatePresence>
         </Slider>
       </SliderContainer>
-      <AnimatePresence>
-        {id ? (
-          <>
-            <OverlayC setId={setId}></OverlayC>
-            <BoxModal layoutId={id + titleObj}>
-              <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
-              <BigTitle>
-                {content?.title ? content?.title : content?.name}
-              </BigTitle>
-              <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
-              <OverviewComponent content={content} sliceLength={300}></OverviewComponent>
-            </BoxModal>
-          </>
-        ) : null}
-      </AnimatePresence>
+      <ModalC id={id} setId={setId} titleObj={titleObj} content={content} dataType={dataType}></ModalC>
     </>
   );
 };
