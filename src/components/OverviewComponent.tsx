@@ -8,7 +8,7 @@ export const BigOverview = styled.p`
   padding: 5px;
 `;
 
-const OverviewComponent = ({ content, sliceLength }: { content: movieData | undefined, sliceLength: number }) => {
+const OverviewComponent = ({ content, sliceLength }: { content?: movieData, sliceLength: number }) => {
     return (
         <BigOverview>
             {content?.overview.slice(0,

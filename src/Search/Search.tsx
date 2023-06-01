@@ -14,7 +14,7 @@ import {
   Wrapper,
 } from "../MovieF/Movie";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoadingC from "../components/LoadingC";
 import { ErrorMain } from "../NotFound";
 import SmallArrowBtn from "../components/SmallArrowBtn";

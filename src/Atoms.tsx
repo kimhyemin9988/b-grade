@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 import { recoilPersist } from 'recoil-persist'
+import { movieData } from "./MovieF/Movie";
 
 export interface IPopularLanguage {
   value: string;
@@ -26,3 +27,8 @@ export const PopularLanguage = atom<IPopularLanguage[]>({
   ],
 });
 
+
+export const HandleValue = atom<movieData[]>({
+  key: "SelectHandleValue",
+  default: [],
+});

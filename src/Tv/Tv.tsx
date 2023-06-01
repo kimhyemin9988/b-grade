@@ -7,7 +7,8 @@ import TopRated from "./TopRated";
 export const tvTitleObj =
 {
     title: ["Tv On The Air", "Top Rated", "Tv Popular"]
-}
+};
+
 const Tv = () => {
     const dataType = "tv"
     return (

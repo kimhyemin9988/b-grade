@@ -40,6 +40,7 @@ const LatestTopShows = ({ dataType }: { dataType: string }) => {
     ["tvLatest"],
     tvLatest
   );
+
   return (
     <>
       {
