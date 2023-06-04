@@ -6,8 +6,7 @@ export const dbApiKey = process.env.REACT_APP_DB_API_KEY;
 
 const removeData = (json: any) => {
   return json.results
-    .filter((i: movieData) => i.poster_path !== null)
-    .filter((i: movieData) => i.backdrop_path !== null && i.overview !== "");
+    .filter((i: movieData) => i.poster_path !== null && i.backdrop_path !== null && i.overview !== "");
 }
 
 const movieList = async () => {
@@ -46,21 +45,28 @@ const tvPopular = async () => {
     );
     const json = await response.json();
     const data: [] = await removeData(json);
-    page++;
-    dataArray = [...dataArray, ...data];
+
     /* 각 나라별 10개가 되면 종료
-        배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료
-        */
+      배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료 */
     let boolean = languageFilter(dataArray);
+    page++;
+
+    dataArray = [...dataArray, ...data];
+
     if (!boolean.includes(false)) {
       break;
     }
   }
+
   dataArray.sort((a: movieData, b: movieData) => {
     return b.popularity - a.popularity;
   });
 
-  return dataArray;
+  let newDataArray = ["en", "zh", "ja", "ko"].map(
+    (k) => dataArray.filter((i: movieData) => i.original_language === k).slice(0, 10)
+  ).flat();
+
+  return newDataArray;
 };
 export { tvPopular };
 
@@ -225,8 +231,8 @@ export { getDetails };
 const indepthDetail = async (
   distStr: string | undefined,
   id: string | undefined,
-  sort : string | undefined,
-) =>{
+  sort: string | undefined,
+) => {
   const response = await fetch(
     `https://api.themoviedb.org/3/${distStr}/${id}/${sort}?api_key=${dbApiKey}`
   );
