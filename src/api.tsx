@@ -3,7 +3,7 @@ import { LatestShowsData } from "./Tv/LatestTopShows";
 
 /**** 오늘 날짜 불러오기 ****/
 const fullDate = new Date();
-const alertDayLenth = (number : number) => {
+const alertDayLenth = (number: number) => {
   let dayNumber = JSON.stringify(number);
   if (dayNumber.length === 1) {
     dayNumber = 0 + dayNumber;
@@ -22,7 +22,7 @@ export const dbApiKey = process.env.REACT_APP_DB_API_KEY;
 const removeData = (json: any) => {
   return json.results
     .filter((i: movieData | LatestShowsData) => i.poster_path !== null && i.backdrop_path !== null && i.overview !== "");
-}
+};
 
 const movieList = async () => {
   let page = 1;
@@ -75,7 +75,7 @@ const tvPopular = async () => {
   }
 
   dataArray.sort((a: movieData, b: movieData) => {
-    return b.popularity - a.popularity;
+    return b.popularity - a.popularity
   });
 
   let newDataArray = ["en", "zh", "ja", "ko"].map(
@@ -87,29 +87,13 @@ const tvPopular = async () => {
 
 export { tvPopular };
 
-const tvAiring = async () => {
-  let page = 1;
-  let dataArray: [] = [];
-  while (dataArray.length <= 25) {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/tv/on_the_air?api_key=${dbApiKey}&page=${page}`
-    );
-    const json = await response.json();
-    const data: [] = await removeData(json);
-    page++;
-    dataArray = [...dataArray, ...data];
-  }
-  const resultArray = dataArray.slice(0, 25);
-  return resultArray;
-};
-export { tvAiring };
 
-const tvTopRated = async () => {
+const tvTopAndAiring = async (url: string) => {
   let page = 1;
   let dataArray: [] = [];
   while (dataArray.length <= 25) {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/top_rated?api_key=${dbApiKey}&page=${page}`
+      `https://api.themoviedb.org/3/tv/${url}?api_key=${dbApiKey}&page=${page}`
     );
     const json = await response.json();
     const data: [] = await removeData(json);
@@ -118,12 +102,12 @@ const tvTopRated = async () => {
   }
   const resultArray = dataArray.slice(0, 25);
   return resultArray;
-};
-export { tvTopRated };
+}
+export { tvTopAndAiring };
 
 const tvLatest = async () => {
   let page = 1;
-  const dataArray: LatestShowsData[] = [];
+  let dataArray: LatestShowsData[] = [];
 
   while (dataArray.length === 0) {
     const response = await fetch(
@@ -132,7 +116,7 @@ const tvLatest = async () => {
     const json = await response.json();
     const data: LatestShowsData[] = await removeData(json);
     page++;
-    dataArray.push(...data);
+    dataArray = [...dataArray, ...data];
   }
   return dataArray;
 };
