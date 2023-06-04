@@ -1,4 +1,3 @@
-import { upcomingMovies } from "../api";
 import { useQuery } from "react-query";
 import {
   movieData,
@@ -8,12 +7,14 @@ import LoadingC from "../components/LoadingC";
 import { Section } from "./TopRatedMovies";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
+import { topAndUpcomingMovies } from "../api";
 
 const Upcoming = ({ dataType }: { dataType: string }) => {
   /* 데이터 받아오기 */
+  const url="upcoming"
   const { isLoading, data } = useQuery<movieData[]>(
     ["upcomingMovies"],
-    upcomingMovies
+    ()=>topAndUpcomingMovies(url)
   );
   return (
     <>

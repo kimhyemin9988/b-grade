@@ -3,7 +3,7 @@ import {
   movieData,
   titleObj,
 } from "./Movie";
-import { topRatedMovies } from "../api";
+import { topAndUpcomingMovies } from "../api";
 import LoadingC from "../components/LoadingC";
 import styled from "styled-components";
 import WebSliderC from "../components/WebSliderC";
@@ -17,9 +17,10 @@ export const Section = styled.section`
 `;
 
 const TopRatedMovies = ({ dataType }: { dataType: string }) => {
+  const url="top_rated";
   const { isLoading, data } = useQuery<movieData[]>(
     ["topRatedMovies"],
-    topRatedMovies
+    ()=>topAndUpcomingMovies(url)
   );
 
   return (
