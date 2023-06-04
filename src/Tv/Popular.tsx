@@ -1,30 +1,14 @@
 import { tvPopular } from "../api";
 import { useQuery } from "react-query";
-import { AnimatePresence } from "framer-motion";
 import {
-  Box,
-  boxVariants,
-  Info,
-  infoVariants,
-  InnerContainer,
-  MobileSlider,
   movieData,
-  MovingSlider,
-  Row,
-  rowVariants,
-  Slider,
-  SliderContainer,
 } from "../MovieF/Movie";
-import { useState, useRef } from "react";
 import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { HandleValue } from "../Atoms";
 import { tvTitleObj } from "./Tv";
-import SliderTitle from "../components/SliderTitle";
-import ModalC from "../components/ModalC";
-import PopularSelect from "../components/PopularSelect";
 import WebSliderC from "../components/WebSliderC";
 import MobileSliderC from "../components/MobileSliderC";
 

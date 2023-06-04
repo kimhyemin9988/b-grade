@@ -1,8 +1,7 @@
 import { Main, Wrapper } from "../MovieF/Movie";
-import AiringToday from "./AiringToday";
 import LatestTopShows from "./LatestTopShows";
 import Popular from "./Popular";
-import TopRated from "./TopRated";
+import TopAndAiringC from "./TopAndAiringC";
 
 export const tvTitleObj =
 {
@@ -11,14 +10,16 @@ export const tvTitleObj =
 
 const Tv = () => {
     const dataType = "tv"
+    const top_rated_url = "top_rated"
+    const on_the_air_url = "on_the_air"
     return (
         <Main>
             <Wrapper>
                 <LatestTopShows dataType={dataType}></LatestTopShows>
-                <AiringToday dataType={dataType}></AiringToday>
+                <TopAndAiringC dataType={dataType} url={on_the_air_url} titleObj={tvTitleObj.title[0]}></TopAndAiringC>
             </Wrapper>
-            <Popular dataType={dataType}></Popular>
-            <TopRated dataType={dataType}></TopRated>
+            <Popular dataType={dataType} ></Popular>
+            <TopAndAiringC dataType={dataType} url={top_rated_url} titleObj={tvTitleObj.title[1]}></TopAndAiringC>
         </Main>
     );
 

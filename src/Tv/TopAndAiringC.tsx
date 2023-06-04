@@ -1,13 +1,12 @@
 import { useQuery } from "react-query";
 import { movieData } from "../MovieF/Movie";
-import { tvTopRated } from "../api";
+import { tvTopAndAiring } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/TopRatedMovies";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
-import { tvTitleObj } from "./Tv";
-const TopRated = ({ dataType }: { dataType: string }) => {
-  const { isLoading, data } = useQuery<movieData[]>(["tvTopRated"], tvTopRated);
+const TopAndAiringC = ({ dataType, url, titleObj }: { dataType: string, url: string, titleObj: string}) => {
+  const { isLoading, data } = useQuery<movieData[]>([url], ()=>tvTopAndAiring(url));
   return (
     <>
       {isLoading ? (
@@ -15,14 +14,14 @@ const TopRated = ({ dataType }: { dataType: string }) => {
       ) : window.outerWidth <= 550 ? (
         <MobileSliderC
           data={data}
-          titleObj={tvTitleObj.title[1]}
+          titleObj={titleObj}
           dataType={dataType}
         ></MobileSliderC>
       ) : (
         <Section>
           <WebSliderC
             data={data}
-            titleObj={tvTitleObj.title[1]}
+            titleObj={titleObj}
             dataType={dataType}
           ></WebSliderC>
         </Section>
@@ -30,4 +29,4 @@ const TopRated = ({ dataType }: { dataType: string }) => {
     </>
   );
 };
-export default TopRated;
+export default TopAndAiringC;
