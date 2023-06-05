@@ -14,27 +14,23 @@ export const Container = styled.section<{ bgPhoto: string | undefined }>`
   width: 100%;
   background-image: url(${(props) => props.bgPhoto});
   background-size: cover;
-  height: 80vh;
+  height: fit-content;
   background-size: 100% 100%;
-  @media screen and (max-width: 550px) {
-    height: 50vh;
-  }
 `;
 export const Blur = styled.div`
   background-color: rgba(255, 255, 255, 0.034);
   backdrop-filter: blur(50px);
-  height: 80vh;
+  height: fit-content;
   display: grid;
   grid-template-areas:
     "title title title"
     "video posterbg posterbg"
     "overview overview overview";
   @media screen and (max-width: 550px) {
-    height: 50vh;
     grid-template-areas:
+      "video video"
       "title title"
-      "posterbg overview"
-      "video video";
+      "posterbg overview";
   }
 `;
 const SqureBox = styled.article<{ posterbg: string | undefined }>`
@@ -60,11 +56,14 @@ export const xLarge = {
 };
 
 const YouTubeStyle = styled(YouTube)`
-  height: 300px;
-  padding-left: 20px;
+  height: fit-content;
   grid-area: video;
+  padding-left: 20px;
   @media screen and (max-width: 550px) {
-    padding-left: 10px;
+    padding-left:0;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
   }
 `
 const LatestOriginal = styled.p`
@@ -90,7 +89,7 @@ const LatestWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   display: flex;
-  min-height: 30vh;
+  min-height: 50vh;
   margin-bottom: 180px;
   @media screen and (max-width: 550px) {
     margin-bottom: 20px;
@@ -115,7 +114,7 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
           <Container
             bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
             <Blur>
-              <div style={{ display: "flex", alignItems:"center", gridArea:"title" }}>
+              <div style={{ display: "flex", alignItems: "center", gridArea: "title" }}>
                 <LatestOriginal>
                   {data?.[0].original_title}
                 </LatestOriginal>

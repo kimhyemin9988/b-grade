@@ -305,8 +305,8 @@ export const largeVideo = {
   width: "368",
 };
 export const smallVideo = {
-  height: "153",
-  width: "272",
+  height: "171",
+  width: "304",
 };
 
 const Home = () => {
