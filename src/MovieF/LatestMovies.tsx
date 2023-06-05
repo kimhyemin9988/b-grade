@@ -2,13 +2,13 @@ import { latestMovies } from "../api";
 import { useQuery } from "react-query";
 import {
   movieData,
-  smallVideo,
 } from "./Movie";
 import styled from "styled-components";
 import YouTube from "react-youtube";
 import LoadingC from "../components/LoadingC";
 import BtnDetail from "../components/BtnDetail";
 import { Overview } from "./Movie";
+import { changeVideoSize } from "../ModuleFx";
 
 export const Container = styled.section<{ bgPhoto: string | undefined }>`
   width: 100%;
@@ -41,6 +41,7 @@ const SqureBox = styled.article<{ posterbg: string | undefined }>`
   grid-area: posterbg;
   @media screen and (max-width: 550px) {
     margin-left: 10px;
+    margin-bottom: 10px;
   }
 `;
 export const OverviewContainer = styled.div`
@@ -50,12 +51,8 @@ export const OverviewContainer = styled.div`
     padding: 10px;
   }
 `;
-export const xLarge = {
-  height: "297",
-  width: "528",
-};
 
-const YouTubeStyle = styled(YouTube)`
+export const YouTubeStyle = styled(YouTube)`
   height: fit-content;
   grid-area: video;
   padding-left: 20px;
@@ -125,7 +122,7 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
               ></SqureBox>
               <YouTubeStyle
                 videoId={data?.[1].key}
-                opts={window.outerWidth <= 550 ? smallVideo : xLarge} />
+                opts={changeVideoSize()} />
               <OverviewContainer>
                 <Overview>{data?.[0].overview}</Overview>
               </OverviewContainer>

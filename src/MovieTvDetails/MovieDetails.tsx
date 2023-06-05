@@ -1,23 +1,21 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import YouTube from "react-youtube";
 import styled from "styled-components";
 import { getDetails, indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
-import { Container } from "../MovieF/LatestMovies";
+import { Container, YouTubeStyle } from "../MovieF/LatestMovies";
 import {
   Main,
   Overview,
   Wrapper,
   DetailBtn,
-  smallVideo,
-  largeVideo,
 } from "../MovieF/Movie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { DetailContainer, MainVideo } from "./TvDetails";
 import { LinkStyle } from "../App";
 import MoreDetailBtn from "../components/MoreDetailBtn";
+import { changeVideoSize } from "../ModuleFx";
 
 
 
@@ -399,17 +397,13 @@ const MovieDetails = () => {
               <Main>
                 <MoreDetailBtn moreNumber={3} data={VideosData?.results} id={movieId} url={"videos"} btnType={"Videos"}></MoreDetailBtn>
                 <MainVideo style={{ marginLeft: "10px" }}>
-                  {VideosData?.results.slice(0, 3).map((i) => {
+                  {VideosData?.results.slice(0, 2).map((i) => {
                     return (
                       <Wrapper key={i.id}>
-                        <YouTube
-                          style={{
-                            paddingLeft:
-                              window.outerWidth <= 550 ? "0" : "20px",
-                          }}
+                        <YouTubeStyle
                           videoId={i.key}
                           opts={
-                            window.outerWidth <= 550 ? smallVideo : largeVideo
+                            changeVideoSize()
                           }
                         />
                       </Wrapper>

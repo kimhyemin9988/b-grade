@@ -1,17 +1,14 @@
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
-import YouTube from "react-youtube";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { indepthDetail, getDetails } from "../api";
 import LoadingC from "../components/LoadingC";
-import { Container } from "../MovieF/LatestMovies";
+import { Container, YouTubeStyle } from "../MovieF/LatestMovies";
 import {
   Main,
   Overview,
   Wrapper,
   DetailBtn,
-  smallVideo,
-  largeVideo,
 } from "../MovieF/Movie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -21,7 +18,6 @@ import {
   CompanySvgSmall,
   Credits,
   DetailBlur,
-  DetailData,
   LargeBox,
   MainDetail,
   OverviewSpan,
@@ -35,6 +31,7 @@ import {
 } from "./MovieDetails";
 import { LinkStyle } from "../App";
 import MoreDetailBtn from "../components/MoreDetailBtn";
+import { changeVideoSize } from "../ModuleFx";
 
 export interface tvDetails {
   adult: boolean;
@@ -312,19 +309,14 @@ const TvDetails = () => {
               <Main>
                 <MoreDetailBtn moreNumber={3} data={VideosData?.results} id={tvId} url={"videos"} btnType={"Videos"}></MoreDetailBtn>
                 <MainVideo style={{ marginLeft: "10px" }}>
-                  {VideosData?.results.slice(0, 3).map((i) => {
+                  {VideosData?.results.slice(0, 2).map((i) => {
                     return (
                       <Wrapper key={i.id}>
-                        <YouTube
-                          style={{
-                            paddingLeft:
-                              window.outerWidth <= 550 ? "0" : "20px",
-                          }}
+                        <YouTubeStyle
                           videoId={i.key}
                           opts={
-                            window.outerWidth <= 550 ? smallVideo : largeVideo
-                          }
-                        />
+                            changeVideoSize()
+                          } />
                       </Wrapper>
                     );
                   })}

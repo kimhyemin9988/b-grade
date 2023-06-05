@@ -300,14 +300,6 @@ export const titleObj = {
   title: ["Rating 4.5 ~ 5.5/10", "Top Rating", "Upcoming releases"],
 };
 
-export const largeVideo = {
-  height: "207",
-  width: "368",
-};
-export const smallVideo = {
-  height: "171",
-  width: "304",
-};
 
 const Home = () => {
   /* 데이터 받아오기 */

@@ -1,11 +1,12 @@
 import { useQuery } from "react-query";
 import { useLocation } from "react-router-dom";
-import YouTube from "react-youtube";
 import { indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
-import { Main, Wrapper, largeVideo, smallVideo } from "../MovieF/Movie";
+import { Main, Wrapper } from "../MovieF/Movie";
 import { TitleDiv, Videos } from "./MovieDetails";
 import { MainImage } from "./TotalImages";
+import { YouTubeStyle } from "../MovieF/LatestMovies";
+import { changeVideoSize } from "../ModuleFx";
 
 const TotalVideos = () => {
   const { state, pathname } = useLocation();
@@ -24,13 +25,11 @@ const TotalVideos = () => {
           VideosData?.results.slice(3).map((i) => {
             return (
               <Wrapper key={i.id}>
-                <YouTube
-                  style={{
-                    paddingLeft: window.outerWidth <= 550 ? "0" : "20px",
-                  }}
+                <YouTubeStyle
                   videoId={i.key}
-                  opts={window.outerWidth <= 550 ? smallVideo : largeVideo}
-                />
+                  opts={
+                    changeVideoSize()
+                  } />
               </Wrapper>
             );
           })
