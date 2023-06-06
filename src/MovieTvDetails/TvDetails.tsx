@@ -312,10 +312,10 @@ const TvDetails = () => {
                     return (
                       <Wrapper key={i.id}>
                         <YouTubeStyle
-                          videoId={i.key}
-                          opts={
-                            changeVideoSize()
-                          } />
+                          widthAndHeight={changeVideoSize()}
+                          src={`https://www.youtube.com/embed/${i.key}`}>
+                        </YouTubeStyle>
+
                       </Wrapper>
                     );
                   })}

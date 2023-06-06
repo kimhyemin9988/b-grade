@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getDetails, indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
-import { Container, YouTubeStyle } from "../MovieF/LatestMovies";
+import { Container, YouTubeStyle, } from "../MovieF/LatestMovies";
 import {
   Main,
   Overview,
@@ -400,11 +400,9 @@ const MovieDetails = () => {
                     return (
                       <Wrapper key={i.id}>
                         <YouTubeStyle
-                          videoId={i.key}
-                          opts={
-                            changeVideoSize()
-                          }
-                        />
+                          widthAndHeight={changeVideoSize()}
+                          src={`https://www.youtube.com/embed/${i.key}`}>
+                        </YouTubeStyle>
                       </Wrapper>
                     );
                   })}

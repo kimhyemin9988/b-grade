@@ -4,7 +4,6 @@ import {
   movieData,
 } from "./Movie";
 import styled from "styled-components";
-import YouTube from "react-youtube";
 import LoadingC from "../components/LoadingC";
 import BtnDetail from "../components/BtnDetail";
 import { Overview } from "./Movie";
@@ -52,17 +51,6 @@ export const OverviewContainer = styled.div`
   }
 `;
 
-export const YouTubeStyle = styled(YouTube)`
-  height: fit-content;
-  grid-area: video;
-  padding-left: 20px;
-  @media screen and (max-width: 550px) {
-    padding-left:0;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-  }
-`
 const LatestOriginal = styled.p`
   padding-left: 20px;
   font-size: 0.5rem;
@@ -92,6 +80,23 @@ const LatestWrapper = styled.div`
     margin-bottom: 20px;
   }
 `
+export const YouTubeStyle = styled.iframe<{
+  widthAndHeight: {
+    width?: number;
+    height?: number;
+  }
+}>`
+ width: ${({ widthAndHeight }) => `${widthAndHeight.width}px`};
+  height: ${({ widthAndHeight }) => `${widthAndHeight.height}px`};
+  grid-area: video;
+  padding-left: 20px;
+  @media screen and (max-width: 550px) {
+    padding-left:0;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+`
 
 const LatestMovies = ({ dataType }: { dataType: string }) => {
   /* 데이터 받아오기 */
@@ -99,6 +104,7 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
     ["latestMovies"],
     latestMovies
   );
+
   return (
     <>
       {isLoading ? (
@@ -121,8 +127,9 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
                 posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
               ></SqureBox>
               <YouTubeStyle
-                videoId={data?.[1].key}
-                opts={changeVideoSize()} />
+                widthAndHeight={changeVideoSize()}
+                src={`https://www.youtube.com/embed/${data?.[1].key}`}>
+              </YouTubeStyle>
               <OverviewContainer>
                 <Overview>{data?.[0].overview}</Overview>
               </OverviewContainer>
