@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { indepthDetail, getDetails } from "../api";
+import { getDetails, indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Container, YouTubeStyle } from "../MovieF/LatestMovies";
 import {
@@ -304,7 +304,7 @@ const TvDetails = () => {
           {VideosLoading ? (
             <LoadingC></LoadingC>
           ) : (
-            VideosData?.results.length !== undefined && (
+            VideosData?.results.length !== 0 && (
               <Main>
                 <MoreDetailBtn moreNumber={3} data={VideosData?.results} id={tvId} url={"videos"} btnType={"Videos"}></MoreDetailBtn>
                 <MainVideo style={{ marginLeft: "10px" }}>
