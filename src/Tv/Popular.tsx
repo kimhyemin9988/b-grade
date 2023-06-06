@@ -4,7 +4,7 @@ import {
   movieData,
 } from "../MovieF/Movie";
 import LoadingC from "../components/LoadingC";
-import { Section } from "../MovieF/TopRatedMovies";
+import { Section } from "../MovieF/UpcomingTopRated";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { HandleValue } from "../Atoms";

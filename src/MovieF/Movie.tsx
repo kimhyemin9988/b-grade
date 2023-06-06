@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Helmet } from "react-helmet";
 import { movieList } from "../api";
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
@@ -8,12 +7,11 @@ import {
   motion,
 } from "framer-motion";
 import LatestMovies from "./LatestMovies";
-import TopRatedMovies from "./TopRatedMovies";
-import Upcoming from "./Upcoming";
 import LoadingC from "../components/LoadingC";
 import MobileSliderC from "../components/MobileSliderC";
 import WebSliderC from "../components/WebSliderC";
 import BannerOverview from "../components/BannerOverview";
+import UpcomingTopRated from "./UpcomingTopRated";
 
 export const Main = styled.div`
   width: 100%;
@@ -136,12 +134,9 @@ const Home = () => {
   };
 
   const dataType = "movie";
-
+  const top_rated_url="top_rated";
+  const upcoming_url="upcoming"
   return (
-    <>
-      <Helmet>
-        <title>B-Grade</title>
-      </Helmet>
       <Main>
         <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
         <Wrapper>
@@ -167,10 +162,9 @@ const Home = () => {
           )}
         </Wrapper>
         <LatestMovies dataType={dataType}></LatestMovies>
-        <TopRatedMovies dataType={dataType}></TopRatedMovies>
-        <Upcoming dataType={dataType}></Upcoming>
+        <UpcomingTopRated url={top_rated_url} dataType={dataType} titleObj={titleObj.title[1]}></UpcomingTopRated>
+        <UpcomingTopRated url={upcoming_url} dataType={dataType} titleObj={titleObj.title[2]}></UpcomingTopRated>
       </Main>
-    </>
   );
 };
 export default Home;

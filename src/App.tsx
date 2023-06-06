@@ -4,6 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { Darktheme, Lighttheme } from "./style/theme";
 import HomeHeader from "./HomeHeader";
+import { Helmet } from "react-helmet";
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -97,6 +98,9 @@ const App = () => {
 		<>
 			<ThemeProvider theme={isDark ? Darktheme : Lighttheme}>
 				<GlobalStyle />
+				<Helmet>
+					<title>B-Grade</title>
+				</Helmet>
 				<HomeHeader></HomeHeader>
 				<Outlet context={[setIsDark]}></Outlet>
 				<ReactQueryDevtools initialIsOpen={true} />
