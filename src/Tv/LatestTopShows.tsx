@@ -36,11 +36,9 @@ export interface LatestShowsData {
 
 /*인기있는 최신 tv */
 const LatestTopShows = ({ dataType }: { dataType: string }) => {
-  const { isLoading, data } = useQuery<LatestShowsData[]>(
-    ["tvLatest"],
-    tvLatest
-  );
 
+  const { isLoading, data } = useQuery<LatestShowsData[]>(
+    ["tvLatest"], tvLatest );
   return (
     <>
       {
