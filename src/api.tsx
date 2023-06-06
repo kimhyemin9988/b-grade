@@ -25,15 +25,13 @@ const removeData = (json: any) => {
 };
 
 const movieList = async () => {
-  let page = 1;
   let dataArray: [] = [];
-  while (dataArray.length <= 25) {
+  for (let page = 1; dataArray.length <= 25; page++) {
     const response = await fetch(
       `https://api.themoviedb.org/3/discover/movie?api_key=${dbApiKey}&sort_by=release_date.desc&include_adult=false&include_video=false&page=${page}&vote_average.gte=4.5&vote_average.lte=5.5&with_watch_monetization_types=flatrat&include_video=false`
     );
     const json = await response.json();
     const data: [] = await removeData(json);
-    page++;
     dataArray = [...dataArray, ...data];
   }
   const resultArray = dataArray.slice(0, 25);
@@ -52,9 +50,8 @@ const tvPopular = async () => {
     );
   };
 
-  let page = 1;
   let dataArray: [] = [];
-  while (1) {
+  for (let page = 1; ;page++) { // 조건문을 안넣어 while(1)
     const response = await fetch(
       `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page}`
     );
@@ -64,7 +61,6 @@ const tvPopular = async () => {
     /* 각 나라별 10개가 되면 종료
       배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료 */
     let boolean = languageFilter(dataArray);
-    page++;
     dataArray = [...dataArray, ...data];
     if(!boolean.includes(false)){
       break;
@@ -86,15 +82,13 @@ export { tvPopular };
 
 
 const tvTopAndAiring = async (url: string) => {
-  let page = 1;
   let dataArray: [] = [];
-  while (dataArray.length <= 25) {
+  for (let page = 1; dataArray.length <= 25; page++) {
     const response = await fetch(
       `https://api.themoviedb.org/3/tv/${url}?api_key=${dbApiKey}&page=${page}`
     );
     const json = await response.json();
     const data: [] = await removeData(json);
-    page++;
     dataArray = [...dataArray, ...data];
   }
   const resultArray = dataArray.slice(0, 25);
@@ -103,16 +97,13 @@ const tvTopAndAiring = async (url: string) => {
 export { tvTopAndAiring };
 
 const tvLatest = async () => {
-  let page = 1;
   let dataArray: LatestShowsData[] = [];
-
-  while (dataArray.length === 0) {
+  for (let page = 1; dataArray.length === 0; page++){
     const response = await fetch(
       `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page}&first_air_date.gte=${full_date}`
     );
     const json = await response.json();
     const data: LatestShowsData[] = await removeData(json);
-    page++;
     dataArray = [...dataArray, ...data];
   }
   return dataArray;
@@ -150,15 +141,13 @@ export { latestMovies };
 /* upcoming, topRated는 data의 양이 많지 않아 여러 page의 정보를 받으면 반복해서 똑같은 정보가 쌓임 */
 
 const topAndUpcomingMovies = async (url: string) => {
-  let page = 1;
   let dataArray: [] = [];
-  while (page < 2) {
+  for (let page = 1; dataArray.length < 2; page++) {
     const response = await fetch(
       `https://api.themoviedb.org/3/movie/${url}?api_key=${dbApiKey}&${page}`
     );
     const json = await response.json();
     const data: [] = await removeData(json);
-    page++;
     dataArray = [...dataArray, ...data];
   }
   return dataArray;
