@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Overview } from "../MovieF/Movie";
 
-export const DetailBtnSmall = styled.button`
+const DetailBtnSmall = styled.button`
   width: 1.9rem;
   height: 0.5rem;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
@@ -22,7 +22,7 @@ export const DetailBtnSmall = styled.button`
     width: 2.1rem;
   }
 `;
-export const ArrowSvgSmall = styled.svg`
+const ArrowSvgSmall = styled.svg`
   height: 0.4rem;
   width: 0.4rem;
   fill: black;

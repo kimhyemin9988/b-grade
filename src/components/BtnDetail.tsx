@@ -1,6 +1,5 @@
 import SmallArrowBtn from "./SmallArrowBtn";
 import { LinkStyle } from "../App";
-import { Link } from "react-router-dom";
 
 const BtnDetail = ({ dataType, contentId }: { dataType?: string, contentId?: number }) => {
   return (

@@ -20,7 +20,7 @@ export const Main = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const ToggleThemeBtn = styled.button`
+const ToggleThemeBtn = styled.button`
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
   border-radius: 0.2rem;
   font-weight: 900;
@@ -79,41 +79,6 @@ export const Overview = styled.p`
   width: 100%;
 `;
 
-export const Slider = styled.div<{ titleObj: string | undefined }>`
-  position: relative;
-  height: 40vh;
-  top: ${(props)=> props.titleObj === "Tv Popular" && 0};
-`;
-export const MovingSlider = styled.button`
-  z-index: 5;
-  position: absolute;
-  background-color: #ffffff;
-  border-radius: 0.3rem;
-  font-weight: 900;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid white;
-  height: 0.8rem;
-  width: 0.8rem;
-  margin: 20px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
-`;
-
-export const Row = styled(motion.div)`
-  display: grid;
-  gap: 10px;
-  @media screen and (max-width: 550px) {
-    display: flex;
-    position: static;
-  }
-  grid-template-columns: repeat(6, 1fr);
-  width: 100%;
-  margin: 10px;
-  padding: 10px;
-  position: absolute;
-  align-items: center;
-`;
-
 export const Box = styled(motion.article) <{ posterbg?: string | undefined }>`
   width: 200px;
   height: 300px;
@@ -137,77 +102,6 @@ export const Box = styled(motion.article) <{ posterbg?: string | undefined }>`
   }
 `;
 
-export const boxVariants = {
-  normal: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.1,
-    y: -40,
-    transition: {
-      delay: 0.3,
-      duaration: 0.3,
-    },
-  },
-};
-
-export const rowVariants = {
-  hidden: (sliderDirection: number) => {
-    return {
-      x: sliderDirection > 0 ? 1200 : -1200,
-    };
-  },
-  visible: {
-    x: 0,
-    zIndex: 1,
-  },
-  exit: (sliderDirection: number) => {
-    return {
-      x: sliderDirection < 0 ? 1200 : -1200,
-    };
-  },
-};
-
-export const Info = styled(motion.div)`
-  background-color: ${(props) => props.theme.bodyBgColor};
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  opacity: 0;
-  border-end-end-radius: 10px;
-  border-end-start-radius: 10px;
-  padding: 5px;
-  p {
-    text-align: center;
-    font-size: 0.3rem;
-  }
-`;
-
-export const infoVariants = {
-  hover: {
-    opacity: 1,
-    transition: {
-      delay: 0.1,
-    },
-  },
-};
-
-/* 모달창 */
-export const BoxModal = styled(motion.div)`
-  width: 12rem;
-  height: 10rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  background-color: ${(props) => props.theme.bodyBgColor};
-  z-index: 20;
-  position: fixed;
-  top: 1rem;
-  @media screen and (max-width: 550px) {
-    width: 8rem;
-    height: 11rem;
-  }
-`;
-
 
 export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   width: 100%;
@@ -219,81 +113,6 @@ export const BigCover = styled.div<{ bgPhoto: string | undefined }>`
   @media screen and (max-width: 550px) {
     height: 50%;
   }
-`;
-
-export const BigTitle = styled.p`
-  font-size: 0.4rem;
-  padding: 5px;
-  font-weight: 700;
-`;
-
-
-export const SliderContainer = styled.div`
-  top: -150px;
-  width: 1200px;
-  height: 460px;
-  border-radius: 20px;
-  align-items: center;
-  display: flex;
-  position: relative;
-  overflow-x: hidden;
-  border: 1px solid ${(props) => props.theme.bodyFtColor};
-  overflow-y: hidden;
-`;
-
-export const ArrowSvg = styled.svg`
-  height: 0.5rem;
-  width: 0.5rem;
-  @media screen and (max-width: 550px) {
-    height: 0.3rem;
-    width: 0.3rem;
-  }
-`;
-export const RatingSpan = styled.p`
-  font-size: 0.5rem;
-  font-weight: 600;
-  display: flex;
-`;
-
-export const DetailBtn = styled.button`
-  width: 2.2rem;
-  height: 0.6rem;
-  margin-top: 0.1rem;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
-  border-radius: 0.1rem;
-  border: 0;
-  font-weight: 900;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.25rem;
-  &:hover {
-    background-color: #ffffff96;
-    color: black;
-  }
-  p {
-    font-weight: 600;
-  }
-`;
-
-export const MobileSlider = styled(motion.div)`
-  width: 100%;
-  height: 300px;
-  display: flex;
-  overflow-x: hidden;
-  touch-action: pan-y;
-  align-items: center;
-  position: relative;
-  @media screen and (max-width: 550px) {
-    height: 6.5rem;
-  }
-`;
-export const InnerContainer = styled(motion.div)`
-  width: fit-content;
-  display: flex;
 `;
 
 export const titleObj = {

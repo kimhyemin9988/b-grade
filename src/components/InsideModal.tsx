@@ -1,7 +1,13 @@
-import { BigCover, BigTitle, movieData } from "../MovieF/Movie";
-import { MoviesProps } from "./WebSliderC";
+import styled from "styled-components";
+import { BigCover, movieData } from "../MovieF/Movie";
 import BtnDetail from "./BtnDetail";
 import OverviewComponent from "./OverviewComponent";
+
+export const BigTitle = styled.p`
+  font-size: 0.4rem;
+  padding: 5px;
+  font-weight: 700;
+`;
 
 const InsideModal = ({ content, dataType }: { content?: movieData, dataType?: string }) => {
     return (

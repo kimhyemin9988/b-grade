@@ -1,8 +1,6 @@
 import { useRef, useState } from "react";
 import {
   Box,
-  InnerContainer,
-  MobileSlider,
   movieData,
 } from "../MovieF/Movie";
 import { MoviesProps } from "./WebSliderC";
@@ -10,6 +8,27 @@ import SliderTitle from "./SliderTitle";
 import ModalC from "./ModalC";
 import PopularSelect from "./PopularSelect";
 import { PopularBox } from "../Tv/Popular";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+
+
+export const MobileSlider = styled(motion.div)`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  align-items: center;
+  position: relative;
+  @media screen and (max-width: 550px) {
+    height: 6.5rem;
+  }
+`;
+
+export const InnerContainer = styled(motion.div)`
+  width: fit-content;
+  display: flex;
+`;
 
 const MobileSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
   const [id, setId] = useState<null | string>(null);

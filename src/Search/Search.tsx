@@ -4,12 +4,7 @@ import { SearchData } from "../api";
 import { AnimatePresence, useMotionValueEvent, useScroll } from "framer-motion";
 import {
   BigCover,
-  BigTitle,
   Box,
-  BoxModal,
-  boxVariants,
-  Info,
-  infoVariants,
   movieData,
   Wrapper,
 } from "../MovieF/Movie";
@@ -22,6 +17,9 @@ import { MainDetail } from "../MovieTvDetails/MovieDetails";
 import OverviewComponent from "../components/OverviewComponent";
 import OverlayC from "../components/OverlayC";
 import { LinkStyle } from "../App";
+import { BoxModal } from "../components/ModalC";
+import { Info, boxVariants, infoVariants } from "../components/WebSliderC";
+import { BigTitle } from "../components/InsideModal";
 /* import { Keyword } from "../Atoms";
 import { useRecoilState } from "recoil";
  */

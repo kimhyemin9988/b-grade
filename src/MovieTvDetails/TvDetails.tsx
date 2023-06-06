@@ -8,7 +8,6 @@ import {
   Main,
   Overview,
   Wrapper,
-  DetailBtn,
 } from "../MovieF/Movie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
@@ -30,7 +29,7 @@ import {
   WrapperDetail,
 } from "./MovieDetails";
 import { LinkStyle } from "../App";
-import MoreDetailBtn from "../components/MoreDetailBtn";
+import MoreDetailBtn, { DetailBtn } from "../components/MoreDetailBtn";
 import { changeVideoSize } from "../ModuleFx";
 
 export interface tvDetails {

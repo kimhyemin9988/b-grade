@@ -23,7 +23,7 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   }
 `;
 
-const BannerOverview = ({ content, sliceLength, dataType }: { content: { overview: string, title?: string, id: number, backdrop_path: string, name?: string } | undefined, sliceLength: number, dataType: string | undefined }) => {
+const BannerOverview = ({ content, sliceLength, dataType }: { content?: { overview: string, title?: string, id: number, backdrop_path: string, name?: string }, sliceLength: number, dataType?: string }) => {
   return (
     <Banner
       bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}>

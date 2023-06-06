@@ -1,9 +1,7 @@
 import styled from "styled-components";
-import { RatingSpan, movieData } from "../MovieF/Movie";
 import { MoviesProps } from "./WebSliderC";
-import PopularSelect from "./PopularSelect";
 
-export const RatingContainer = styled.div`
+const RatingContainer = styled.div`
   display: flex;
   position: absolute;
   top: 0;
@@ -15,11 +13,19 @@ export const RatingContainer = styled.div`
   }
 `;
 
-export const RatingStar = styled.svg`
+const RatingStar = styled.svg`
   height: 0.7rem;
   width: 0.7rem;
   margin-right: 0.3em;
 `;
+
+
+const RatingSpan = styled.p`
+  font-size: 0.5rem;
+  font-weight: 600;
+  display: flex;
+`;
+
 const SliderTitle = ({ titleObj }: MoviesProps) => {
   return (
     <RatingContainer>

@@ -1,18 +1,14 @@
 import { useState } from "react";
 import {
   Box,
-  Info,
-  MovingSlider,
-  Row,
-  Slider,
-  SliderContainer,
   movieData,
 } from "../MovieF/Movie";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import SliderTitle from "./SliderTitle";
 import ModalC from "./ModalC";
 import PopularSelect from "./PopularSelect";
 import { PopularBox } from "../Tv/Popular";
+import styled from "styled-components";
 
 export interface MoviesProps {
   data?: movieData[];
@@ -21,7 +17,7 @@ export interface MoviesProps {
   totalData?: movieData[];
 }
 
-export const rowVariants = {
+const rowVariants = {
   hidden: (sliderDirection: number) => {
     return {
       x: sliderDirection > 0 ? 1200 : -1200,
@@ -60,6 +56,72 @@ export const infoVariants = {
     },
   },
 };
+
+export const Info = styled(motion.div)`
+  background-color: ${(props) => props.theme.bodyBgColor};
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  opacity: 0;
+  border-end-end-radius: 10px;
+  border-end-start-radius: 10px;
+  padding: 5px;
+  p {
+    text-align: center;
+    font-size: 0.3rem;
+  }
+`;
+
+
+const SliderContainer = styled.div`
+  top: -150px;
+  width: 1200px;
+  height: 460px;
+  border-radius: 20px;
+  align-items: center;
+  display: flex;
+  position: relative;
+  overflow-x: hidden;
+  border: 1px solid ${(props) => props.theme.bodyFtColor};
+  overflow-y: hidden;
+`;
+
+
+const Row = styled(motion.div)`
+  display: grid;
+  gap: 10px;
+  @media screen and (max-width: 550px) {
+    display: flex;
+    position: static;
+  }
+  grid-template-columns: repeat(6, 1fr);
+  width: 100%;
+  margin: 10px;
+  padding: 10px;
+  position: absolute;
+  align-items: center;
+`;
+
+const MovingSlider = styled.button`
+  z-index: 5;
+  position: absolute;
+  background-color: #ffffff;
+  border-radius: 0.3rem;
+  font-weight: 900;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid white;
+  height: 0.8rem;
+  width: 0.8rem;
+  margin: 20px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 10px 20px rgba(0, 0, 0, 0.2);
+`;
+
+export const Slider = styled.div<{ titleObj: string | undefined }>`
+  position: relative;
+  height: 40vh;
+  top: ${(props)=> props.titleObj === "Tv Popular" && 0};
+`;
 
 const WebSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
 
