@@ -45,12 +45,11 @@ export { movieList };
 
 const tvPopular = async () => {
   const languageFilter = (dataArray: movieData[]) => {
-    let boolean = ["en", "zh", "ja", "ko"].map(
+    return ["en", "zh", "ja", "ko"].map(
       (k) =>
         dataArray.filter((i: movieData) => i.original_language === k).length >=
         10
     );
-    return boolean;
   };
 
   let page = 1;
@@ -66,10 +65,8 @@ const tvPopular = async () => {
       배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료 */
     let boolean = languageFilter(dataArray);
     page++;
-
     dataArray = [...dataArray, ...data];
-
-    if (!boolean.includes(false)) {
+    if(!boolean.includes(false)){
       break;
     }
   }

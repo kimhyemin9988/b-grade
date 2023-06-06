@@ -18,7 +18,7 @@ const Tv = () => {
                 <LatestTopShows dataType={dataType}></LatestTopShows>
                 <TopAndAiringC dataType={dataType} url={on_the_air_url} titleObj={tvTitleObj.title[0]}></TopAndAiringC>
             </Wrapper>
-            <Popular dataType={dataType} ></Popular>
+            <Popular dataType={dataType} titleObj={tvTitleObj.title[2]}></Popular>
             <TopAndAiringC dataType={dataType} url={top_rated_url} titleObj={tvTitleObj.title[1]}></TopAndAiringC>
         </Main>
     );

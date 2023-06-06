@@ -30,9 +30,7 @@ export const MiniP = styled.p`
   color: ${(props) => props.theme.bodyFtColor};
 `;
 
-const Popular = ({ dataType }: { dataType: string }) => {
-  const titleObj = tvTitleObj.title[2];
-
+const Popular = ({ dataType, titleObj }: { dataType: string, titleObj: string }) => {
   const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
 
   const handleValue = useRecoilValue(HandleValue);
