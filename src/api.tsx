@@ -7,6 +7,7 @@ const alertDayLenth = (number: number) => {
   let dayNumber = JSON.stringify(number);
   if (dayNumber.length === 1) {
     dayNumber = 0 + dayNumber;
+    console.log(dayNumber);
   }
   return dayNumber;
 }
@@ -51,7 +52,7 @@ const tvPopular = async () => {
   };
 
   let dataArray: [] = [];
-  for (let page = 1; ;page++) { // 조건문을 안넣어 while(1)
+  for (let page = 1; ; page++) { // 조건문을 안넣어 while(1)
     const response = await fetch(
       `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page}`
     );
@@ -62,7 +63,7 @@ const tvPopular = async () => {
       배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료 */
     let boolean = languageFilter(dataArray);
     dataArray = [...dataArray, ...data];
-    if(!boolean.includes(false)){
+    if (!boolean.includes(false)) {
       break;
     }
   }
@@ -81,11 +82,11 @@ const tvPopular = async () => {
 export { tvPopular };
 
 
-const tvTopAndAiring = async (url: string) => {
+const tvTopAndAiring = async (url: string, dataType : string) => {
   let dataArray: [] = [];
-  for (let page = 1; dataArray.length <= 25; page++) {
+  for (let page = 1; dataArray.length < 25; page++) {
     const response = await fetch(
-      `https://api.themoviedb.org/3/tv/${url}?api_key=${dbApiKey}&page=${page}`
+      `https://api.themoviedb.org/3/${dataType}/${url}?api_key=${dbApiKey}&page=${page}`
     );
     const json = await response.json();
     const data: [] = await removeData(json);
@@ -96,14 +97,33 @@ const tvTopAndAiring = async (url: string) => {
 }
 export { tvTopAndAiring };
 
+/* upcoming, topRated는 data의 양이 많지 않아 여러 page의 정보를 받으면 반복해서 똑같은 정보가 쌓임 */
+
+const topAndUpcomingMovies = async (url: string , dataType : string) => {
+  let dataArray: [] = [];
+  for (let page = 1; dataArray.length < 2; page++) {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/${dataType}/${url}?api_key=${dbApiKey}&page=${page}`
+    );
+    const json = await response.json();
+    const data: [] = await removeData(json);
+    dataArray = [...dataArray, ...data];
+  }
+  return dataArray;
+};
+export { topAndUpcomingMovies };
+
+
+
+
 const tvLatest = async () => {
-  let dataArray: LatestShowsData[] = [];
-  for (let page = 1; dataArray.length === 0; page++){
+  let dataArray: [] = [];
+  for (let page = 1; dataArray.length === 0; page++) {
     const response = await fetch(
       `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page}&first_air_date.gte=${full_date}`
     );
     const json = await response.json();
-    const data: LatestShowsData[] = await removeData(json);
+    const data: [] = await removeData(json);
     dataArray = [...dataArray, ...data];
   }
   return dataArray;
@@ -131,28 +151,13 @@ const latestMovies = async () => {
   );
   const videoJson = await videoResponse.json();
   const videoObj = await videoJson.results.filter(
-    (i: videoData) => i.name === "Official Trailer" || i.name === "Official Trailer 1"
+    (i : videoData) => i.name === "Official Trailer" || i.name === "Official Trailer 1"
   )[0];
   await data.push(videoObj);
   return data;
 };
 export { latestMovies };
 
-/* upcoming, topRated는 data의 양이 많지 않아 여러 page의 정보를 받으면 반복해서 똑같은 정보가 쌓임 */
-
-const topAndUpcomingMovies = async (url: string) => {
-  let dataArray: [] = [];
-  for (let page = 1; dataArray.length < 2; page++) {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/movie/${url}?api_key=${dbApiKey}&${page}`
-    );
-    const json = await response.json();
-    const data: [] = await removeData(json);
-    dataArray = [...dataArray, ...data];
-  }
-  return dataArray;
-};
-export { topAndUpcomingMovies };
 
 
 const SearchData = async (keyword: string | null, page: number) => {
@@ -173,8 +178,8 @@ export { SearchData };
 /* Details */
 
 const getDetails = async (
-  distStr: string | undefined,
-  id: string | undefined
+  distStr?: string,
+  id?: string
 ) => {
   const response = await fetch(
     `https://api.themoviedb.org/3/${distStr}/${id}?api_key=${dbApiKey}`
@@ -186,9 +191,9 @@ export { getDetails };
 
 
 const indepthDetail = async (
-  distStr: string | undefined,
-  id: string | undefined,
-  sort: string | undefined,
+  distStr?: string,
+  id?: string,
+  sort?: string,
 ) => {
   const response = await fetch(
     `https://api.themoviedb.org/3/${distStr}/${id}/${sort}?api_key=${dbApiKey}`

@@ -18,7 +18,7 @@ export const Section = styled.section`
 const UpcomingTopRated = ({ dataType, url, titleObj }: { dataType: string, url: string, titleObj: string}) => {
   const { isLoading, data } = useQuery<movieData[]>(
     [url],
-    ()=>topAndUpcomingMovies(url)
+    ()=>topAndUpcomingMovies(url, dataType)
   );
 
   return (
