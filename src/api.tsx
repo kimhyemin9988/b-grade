@@ -154,7 +154,6 @@ const latestMovies = async () => {
     `https://api.themoviedb.org/3/movie/${data?.[0].id}/videos?api_key=${dbApiKey}`
   );
   const videoJson = await videoResponse.json();
-  console.log(videoJson);
   const videoObj = await videoJson.results.filter(
     (i: videoData) =>
     {
