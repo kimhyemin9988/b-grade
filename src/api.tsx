@@ -7,7 +7,6 @@ const alertDayLenth = (number: number) => {
   let dayNumber = JSON.stringify(number);
   if (dayNumber.length === 1) {
     dayNumber = 0 + dayNumber;
-    console.log(dayNumber);
   }
   return dayNumber;
 }
@@ -24,6 +23,14 @@ const removeData = (json: any) => {
   return json.results
     .filter((i: movieData | LatestShowsData) => i.poster_path !== null && i.backdrop_path !== null && i.overview !== "");
 };
+/* fetch 함수 
+
+const fetch_data = (dataArray: [], url: string) => {
+  const response = await fetch(url);
+  const json = await response.json();
+  const data: [] = await removeData(json);
+  return [...dataArray, ...data];
+}*/
 
 const movieList = async () => {
   let dataArray: [] = [];
@@ -58,11 +65,10 @@ const tvPopular = async () => {
     );
     const json = await response.json();
     const data: [] = await removeData(json);
-
+    dataArray = [...dataArray, ...data];
     /* 각 나라별 10개가 되면 종료
       배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료 */
     let boolean = languageFilter(dataArray);
-    dataArray = [...dataArray, ...data];
     if (!boolean.includes(false)) {
       break;
     }
@@ -72,17 +78,15 @@ const tvPopular = async () => {
     return b.popularity - a.popularity
   });
 
-  let newDataArray = ["en", "zh", "ja", "ko"].map(
+  return ["en", "zh", "ja", "ko"].map(
     (k) => dataArray.filter((i: movieData) => i.original_language === k).slice(0, 10)
   ).flat();
-
-  return newDataArray;
 };
 
 export { tvPopular };
 
 
-const tvTopAndAiring = async (url: string, dataType : string) => {
+const tvTopAndAiring = async (url: string, dataType: string) => {
   let dataArray: [] = [];
   for (let page = 1; dataArray.length < 25; page++) {
     const response = await fetch(
@@ -99,7 +103,7 @@ export { tvTopAndAiring };
 
 /* upcoming, topRated는 data의 양이 많지 않아 여러 page의 정보를 받으면 반복해서 똑같은 정보가 쌓임 */
 
-const topAndUpcomingMovies = async (url: string , dataType : string) => {
+const topAndUpcomingMovies = async (url: string, dataType: string) => {
   let dataArray: [] = [];
   for (let page = 1; dataArray.length < 2; page++) {
     const response = await fetch(
@@ -150,9 +154,19 @@ const latestMovies = async () => {
     `https://api.themoviedb.org/3/movie/${data?.[0].id}/videos?api_key=${dbApiKey}`
   );
   const videoJson = await videoResponse.json();
+  console.log(videoJson);
   const videoObj = await videoJson.results.filter(
-    (i : videoData) => i.name === "Official Trailer" || i.name === "Official Trailer 1"
-  )[0];
+    (i: videoData) =>
+    {
+      if(i.name === "Official Trailer" || i.name === "Official Trailer 1"){
+        return i.name === "Official Trailer" || i.name === "Official Trailer 1";
+      }
+      else{
+        return videoJson.results[0]
+      }
+    }    
+    )[0];
+  
   await data.push(videoObj);
   return data;
 };
