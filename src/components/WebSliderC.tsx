@@ -120,10 +120,13 @@ const MovingSlider = styled.button`
 export const Slider = styled.div<{ titleObj: string | undefined }>`
   position: relative;
   height: 40vh;
-  top: ${(props)=> props.titleObj === "Tv Popular" && 0};
+  top: ${(props) => props.titleObj === "Tv Popular" && 0};
 `;
 
 const WebSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
+
+  console.log(totalData, "totalData, movie 10");
+  console.log(data, "data");
 
   const [id, setId] = useState<null | string>(null);
   const [content, setContent] = useState<movieData>();
@@ -182,7 +185,6 @@ const WebSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
               transition={{ type: "tween", duration: 0.5 }}
               key={index}
             >
-              {/*Row가 index가 0이 될때까지  반복, random한 수로 하면 오류*/}
               {data?.slice(5 * index, 5 * (index + 1))
                 .map(
                   (i) => (
@@ -199,7 +201,6 @@ const WebSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
                       }}
                       layoutId={`${i.id}${titleObj}`}
                     >
-                      {/* number->string layoutId을 id로만 하면 다른 컴포넌트에 같은 tv show가 있을 시 오류남 -> 문자추가*/}
                       {titleObj === "Tv Popular" &&
                         <PopularBox>
                           <p>{data?.indexOf(i) + 1}</p>
