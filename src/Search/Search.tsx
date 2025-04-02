@@ -9,7 +9,6 @@ import {
   Wrapper,
 } from "../MovieF/Movie";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import LoadingC from "../components/LoadingC";
 import { ErrorMain } from "../NotFound";
 import SmallArrowBtn from "../components/SmallArrowBtn";
@@ -27,7 +26,6 @@ import { useRecoilState } from "recoil";
 const Search = () => {
   const [id, setId] = useState<null | string>(null);
   const [content, setContent] = useState<movieData>();
-  const navigate = useNavigate();
 
   /* 무한 스크롤 */
   /* 스크롤이 하단에 도달할 때 마다 다음 페이지를 데이터를 가져옴 */
@@ -35,19 +33,9 @@ const Search = () => {
   const keyword = new URLSearchParams(location.search).get("keyword"); // url에서 키워드 가져옴
   const [keepData, setkeepData] = useState<movieData[]>([]);
 
-  /*   const [recoilkeyword, setKeyword] = useRecoilState(Keyword);  
-
-  const keywordChange = () => {
-    setkeepData((prev) => prev = []); 
-  }
- */
   useEffect(() => {
-    setkeepData((prev) => (prev = []));
-    /*     if(recoilkeyword !==keyword)
-    {
-      setKeyword((prev) => prev = keyword);
-      keywordChange();
-    } */
+    setkeepData(() => []);
+
   }, [keyword]);
 
   /*상세보기 창에서 뒤로 가기를 눌렀을때 기존의 데이터가 유지 : 1) 키워드 세션에 저장*/

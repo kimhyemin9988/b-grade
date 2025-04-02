@@ -1,7 +1,4 @@
 import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
   createBrowserRouter,
 } from "react-router-dom";
 import NotFound from "./NotFound";
