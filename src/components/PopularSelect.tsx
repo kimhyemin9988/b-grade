@@ -2,7 +2,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { HandleValue, IPopularLanguage, PopularLanguage } from "../Atoms";
 import { movieData } from "../MovieF/Movie";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import Select, { SingleValue } from "react-select";
 
 const SelectBox = styled.div`
@@ -45,18 +45,22 @@ const PopularSelect = ({ data }: { data: movieData[] | undefined }) => {
 
     /* defalt "en" tv 시리즈 */
     useEffect(() => {
-        data && setHandleValue((prev) =>
-            prev = data?.filter((i: movieData) => i.original_language === "en")
-        );
-    }, []);
+        if (data) {
+            setHandleValue(data.filter((i: movieData) => i.original_language === "en"));
+        }
+    }, [data]); //초기 값 "en"
 
-
-    const handleChange = (e: SingleValue<IPopularLanguage>) => {
-        const value = e?.value;
-        setHandleValue((prev) =>
-            prev = data?.filter((i: movieData) => i.original_language === value) || []
-        );
-    };
+    const handleChange = useCallback(
+        (e: SingleValue<IPopularLanguage>) => {
+            const value = e?.value;
+        if (data) {
+                setHandleValue(data.filter((i: movieData) => i.original_language === value));
+            } else {
+                setHandleValue([]); // 데이터가 없을 경우 빈 배열 할당
+            }
+          },
+          [data] //  useCallback으로 최적화
+      );
 
     return (
         <SelectBox>
