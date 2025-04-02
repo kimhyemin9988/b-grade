@@ -4,7 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import { Darktheme, Lighttheme } from "./style/theme";
 import HomeHeader from "./HomeHeader";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -95,19 +95,12 @@ export const LinkStyle = styled(Link)`
 const App = () => {
 	const [isDark, setIsDark] = useState<boolean>(true);
 	return (
-		<>
-			<ThemeProvider theme={isDark ? Darktheme : Lighttheme}>
-				<GlobalStyle />
-					<HelmetProvider>
-					<Helmet>
-						<title>B-Grade</title>
-					</Helmet>
-					</HelmetProvider>
-				<HomeHeader></HomeHeader>
-				<Outlet context={[setIsDark]}></Outlet>
-				<ReactQueryDevtools initialIsOpen={true} />
-			</ThemeProvider>
-		</>
+	<ThemeProvider theme={isDark ? Darktheme : Lighttheme}>
+		<GlobalStyle />
+		<HomeHeader></HomeHeader>
+		<Outlet context={[setIsDark]}></Outlet>
+		<ReactQueryDevtools initialIsOpen={true} />
+	</ThemeProvider>
 	);
 };
 export default App;
