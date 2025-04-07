@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Box,
   movieData,
@@ -132,7 +132,10 @@ const WebSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
   const [leaving, setLeaving] = useState(false);
   /* slideIndex Count */
   const [sliderDirection, setSliderDirection] = useState(0);
-  const incraseIndex = (indexN: number) => {
+  const isTvPopular = titleObj === "Tv Popular";
+  const dataLength = data ? Math.floor(data.length / 5) : 0;
+
+  const incraseIndex = useCallback((indexN: number) => {
     if (data) {
       if (leaving) return;
       else {
@@ -146,7 +149,7 @@ const WebSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => {
         }
       }
     }
-  };
+  },[data, leaving, isTvPopular, dataLength]);
   /* onExitComplete :  끝났을 때 실행
     애니메이션이 끝나기 전에 다음 boxs가 생기면 겹친다
     눌렀을때 아직 박스가 없어지지 않았다면 클릭해도 함수가 실행되지 않도록 하며

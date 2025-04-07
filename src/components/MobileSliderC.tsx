@@ -46,7 +46,7 @@ const MobileSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => 
           {
           data?.map((i) => (
             <Box
-              key={data?.indexOf(i)}
+              key={i.id}
               posterbg={`https://image.tmdb.org/t/p/w400/${i.poster_path}`}
               onClick={() => {
                 setId(`${i.id}`);
@@ -55,7 +55,7 @@ const MobileSliderC = ({ data, titleObj, dataType, totalData }: MoviesProps) => 
             >
               {titleObj === "Tv Popular" &&
                 <PopularBox>
-                  <p>{data?.indexOf(i) + 1}</p>
+                  <p>{data.indexOf(i) + 1}</p>
                 </PopularBox>
               }
             </Box>
