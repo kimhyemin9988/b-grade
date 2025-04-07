@@ -127,6 +127,7 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
                 posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
               ></SqureBox>
               <YouTubeStyle
+                title="movieYouTube"
                 loading="lazy"
                 widthAndHeight={changeVideoSize()}
                 src={`https://www.youtube-nocookie.com/embed/${data?.[1].key}`}>
