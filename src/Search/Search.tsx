@@ -19,9 +19,7 @@ import { LinkStyle } from "../App";
 import { BoxModal } from "../components/ModalC";
 import { Info, boxVariants, infoVariants } from "../components/WebSliderC";
 import { BigTitle } from "../components/InsideModal";
-/* import { Keyword } from "../Atoms";
-import { useRecoilState } from "recoil";
- */
+
 
 const Search = () => {
   const [id, setId] = useState<null | string>(null);
