@@ -115,7 +115,7 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
             Popular Movies In Theaters
           </LatestTitle>
           <Container
-            bgPhoto={`https://image.tmdb.org/t/p/original/${data?.[0].backdrop_path}`}>
+            bgPhoto={`https://image.tmdb.org/t/p/w1280/${data?.[0].backdrop_path}`}>
             <Blur>
               <div style={{ display: "flex", alignItems: "center", gridArea: "title" }}>
                 <LatestOriginal>
@@ -127,8 +127,9 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
                 posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
               ></SqureBox>
               <YouTubeStyle
+                loading="lazy"
                 widthAndHeight={changeVideoSize()}
-                src={`https://www.youtube.com/embed/${data?.[1].key}`}>
+                src={`https://www.youtube-nocookie.com/embed/${data?.[1].key}`}>
               </YouTubeStyle>
               <OverviewContainer>
                 <Overview>{data?.[0].overview}</Overview>

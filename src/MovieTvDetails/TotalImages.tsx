@@ -37,6 +37,12 @@ const TotalImages = () => {
     ["getImages", `${state}`],
     () => indepthDetail(distStr, state, 'images')
   );
+
+  const preloadImage = new Image();
+  const screenSize = window.innerWidth;
+  const imgSize = screenSize < 550 ? "w780" : "w1280";
+  preloadImage.src = `https://image.tmdb.org/t/p/${imgSize}/${i.file_path}`;
+
   return (
     <Main style={{ paddingTop: "13vh" }}>
       <TitleDiv>images</TitleDiv>
@@ -48,7 +54,7 @@ const TotalImages = () => {
             return (
               <BackdropPhoto
                 style={{ width: "10rem", height: "6rem" }}
-                bgPhoto={`https://image.tmdb.org/t/p/original/${i.file_path}`}
+                bgPhoto={preloadImage.src}
                 key={getImagesData?.backdrops.indexOf(i)}
               ></BackdropPhoto>
             );

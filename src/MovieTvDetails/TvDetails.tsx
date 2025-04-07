@@ -135,7 +135,7 @@ const TvDetails = () => {
         <MainDetail>
           <Container
             style={{ height: "fit-content" }}
-            bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}
+            bgPhoto={`https://image.tmdb.org/t/p/w1280/${detailsData?.backdrop_path}`}
           ></Container>
           <DetailBlur>
             <TextBox>
@@ -275,7 +275,7 @@ const TvDetails = () => {
                     height: "6.6rem",
                     width: "15rem",
                   }}
-                  bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.belongs_to_collection.backdrop_path}`}
+                  bgPhoto={`https://image.tmdb.org/t/p/w1280/${detailsData?.belongs_to_collection.backdrop_path}`}
                 ></BackdropPhoto>
               ) : (
                 detailsData?.backdrop_path && (
@@ -285,7 +285,7 @@ const TvDetails = () => {
                       height: "6.6rem",
                       width: "15rem",
                     }}
-                    bgPhoto={`https://image.tmdb.org/t/p/original/${detailsData?.backdrop_path}`}
+                    bgPhoto={`https://image.tmdb.org/t/p/w1280/${detailsData?.backdrop_path}`}
                   ></BackdropPhoto>
                 )
               )}

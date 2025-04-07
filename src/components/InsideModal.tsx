@@ -10,9 +10,15 @@ export const BigTitle = styled.p`
 `;
 
 const InsideModal = ({ content, dataType }: { content?: movieData, dataType?: string }) => {
+    
+    const preloadImage = new Image();
+    const screenSize = window.innerWidth;
+    const imgSize = screenSize < 550 ? "w780" : "w1280";
+    preloadImage.src = `https://image.tmdb.org/t/p/${imgSize}/${content?.backdrop_path}`;
+
     return (
         <>
-            <BigCover bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`} />
+            <BigCover bgPhoto={preloadImage.src} />
             <BigTitle>
                 {content?.title ? content?.title : content?.name}
             </BigTitle>

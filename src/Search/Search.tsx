@@ -121,7 +121,7 @@ const Search = () => {
                     <OverlayC setId={setId}></OverlayC>
                       <BoxModal layoutId={id}>
                         <BigCover
-                          bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}
+                          bgPhoto={`https://image.tmdb.org/t/p/w1280/${content?.backdrop_path}`}
                         />
                         <BigTitle>
                           {content?.title ? content?.title : content?.name}

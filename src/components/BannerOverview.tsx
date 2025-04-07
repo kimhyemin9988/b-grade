@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Overview, Title } from "../MovieF/Movie";
 import BtnDetail from "./BtnDetail";
+import React from "react";
 
 export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   display: flex;
@@ -23,10 +24,16 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   }
 `;
 
-const BannerOverview = ({ content, sliceLength, dataType }: { content?: { overview: string, title?: string, id: number, backdrop_path: string, name?: string }, sliceLength: number, dataType?: string }) => {
+const BannerOverview = React.memo(({ content, sliceLength, dataType }: { content?: { overview: string, title?: string, id: number, backdrop_path: string, name?: string }, sliceLength: number, dataType?: string }) => {
+  
+  const preloadImage = new Image();
+  const screenSize = window.innerWidth;
+  const imgSize = screenSize < 550 ? "w780" : "w1280";
+  preloadImage.src = `https://image.tmdb.org/t/p/${imgSize}/${content?.backdrop_path}`;
+
   return (
     <Banner
-      bgPhoto={`https://image.tmdb.org/t/p/original/${content?.backdrop_path}`}>
+      bgPhoto={preloadImage.src}>
       <Title>{content?.title === undefined ? content?.name : content?.title}</Title>
       {content?.overview !== "" &&
         <Overview>
@@ -39,7 +46,7 @@ const BannerOverview = ({ content, sliceLength, dataType }: { content?: { overvi
       <BtnDetail dataType={dataType} contentId={content?.id}></BtnDetail>
     </Banner>
   )
-};
+});
 
 export default BannerOverview;
 
