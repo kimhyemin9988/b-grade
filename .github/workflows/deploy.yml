@@ -3,7 +3,7 @@ name: Deploy React App to GitHub Pages
 on:
   push:
     branches:
-      - main  # main 브랜치에 push될 때마다 배포됨
+      - master  # master 브랜치에 push될 때마다 배포됨
 
 jobs:
   build-and-deploy:
