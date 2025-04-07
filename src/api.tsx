@@ -1,6 +1,17 @@
 import { movieData } from "./MovieF/Movie";
 import { LatestShowsData } from "./Tv/LatestTopShows";
 
+/**** 배경, 포스터, 개요 없는것 삭제 ****/
+const removeData = (json: any) => {
+  return json.results.filter(
+    (item: movieData | LatestShowsData) =>
+      item.poster_path !== null &&
+      item.backdrop_path !== null &&
+      item.overview !== ""
+  );
+};
+export { removeData };
+
 /**** 오늘 날짜 불러오기 ****/
 const fullDate = new Date();
 const alertDayLenth = (number: number) => {
@@ -18,19 +29,6 @@ const full_date = [year, month, day].join("-");
 /**** DB 키 ****/
 export const dbApiKey = process.env.REACT_APP_DB_API_KEY;
 
-/**** 배경, 포스터, 개요 없는것 삭제 ****/
-const removeData = (json: any) => {
-  return json.results
-    .filter((i: movieData | LatestShowsData) => i.poster_path !== null && i.backdrop_path !== null && i.overview !== "");
-};
-/* fetch 함수 
-
-const fetch_data = (dataArray: [], url: string) => {
-  const response = await fetch(url);
-  const json = await response.json();
-  const data: [] = await removeData(json);
-  return [...dataArray, ...data];
-}*/
 
 const movieList = async () => {
   let dataArray: [] = [];
@@ -48,42 +46,6 @@ const movieList = async () => {
 export { movieList };
 
 /******************* TV *******************/
-
-const tvPopular = async () => {
-  const languageFilter = (dataArray: movieData[]) => {
-    return ["en", "zh", "ja", "ko"].map(
-      (k) =>
-        dataArray.filter((i: movieData) => i.original_language === k).length >=
-        10
-    );
-  };
-
-  let dataArray: [] = [];
-  for (let page = 1; ; page++) { // 조건문을 안넣어 while(1)
-    const response = await fetch(
-      `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page}`
-    );
-    const json = await response.json();
-    const data: [] = await removeData(json);
-    dataArray = [...dataArray, ...data];
-    /* 각 나라별 10개가 되면 종료
-      배열 original_language의 개수가 ['en','zh','ja','ko'] 각각 10개가 넘으면 반복문 종료 */
-    let boolean = languageFilter(dataArray);
-    if (!boolean.includes(false)) {
-      break;
-    }
-  }
-
-  dataArray.sort((a: movieData, b: movieData) => {
-    return b.popularity - a.popularity
-  });
-
-  return ["en", "zh", "ja", "ko"].map(
-    (k) => dataArray.filter((i: movieData) => i.original_language === k).slice(0, 10)
-  ).flat();
-};
-
-export { tvPopular };
 
 
 const tvTopAndAiring = async (url: string, dataType: string) => {

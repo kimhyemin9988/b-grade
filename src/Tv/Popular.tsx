@@ -1,4 +1,4 @@
-import { tvPopular } from "../api";
+import { fetchTvPopular } from "../fetchTvPopular";
 import { useQuery } from "react-query";
 import {
   movieData,
@@ -30,7 +30,7 @@ export const MiniP = styled.p`
 `;
 
 const Popular = ({ dataType, titleObj }: { dataType: string, titleObj: string }) => {
-  const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], tvPopular);
+  const { isLoading, data } = useQuery<movieData[]>(["tvPopular"], fetchTvPopular);
 
   const handleValue = useRecoilValue(HandleValue);
 
