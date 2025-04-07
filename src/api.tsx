@@ -29,7 +29,6 @@ const full_date = [year, month, day].join("-");
 /**** DB 키 ****/
 export const dbApiKey = process.env.REACT_APP_DB_API_KEY;
 
-
 const movieList = async () => {
   let dataArray: [] = [];
   for (let page = 1; dataArray.length <= 25; page++) {

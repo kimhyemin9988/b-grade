@@ -25,7 +25,6 @@ const Search = () => {
   const [id, setId] = useState<null | string>(null);
   const [content, setContent] = useState<movieData>();
 
-  /* 무한 스크롤 */
   /* 스크롤이 하단에 도달할 때 마다 다음 페이지를 데이터를 가져옴 */
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword"); // url에서 키워드 가져옴
