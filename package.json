@@ -59,7 +59,8 @@
     "@types/react-helmet": "^6.1.6",
     "@types/react-helmet-async": "^1.0.1",
     "@types/styled-components": "^5.1.26",
-    "gh-pages": "^5.0.0"
+    "gh-pages": "^5.0.0",
+    "prettier": "^3.5.3"
   },
   "homepage": "https://kimhyemin9988.github.io/b-grade"
 }
