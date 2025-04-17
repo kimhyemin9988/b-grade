@@ -11,7 +11,7 @@ import {
 } from "../MovieF/Movie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { DetailContainer, MainVideo } from "./TvDetails";
+import { DetailContainer, MainVideo } from "./MainDetails";
 import { LinkStyle } from "../App";
 import MoreDetailBtn, { DetailBtn } from "../components/MoreDetailBtn";
 import { changeVideoSize } from "../ModuleFx";

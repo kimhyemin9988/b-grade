@@ -5,7 +5,7 @@ import LoadingC from "../components/LoadingC";
 import { Main } from "../MovieF/Movie";
 import { BackdropPhoto, TitleDiv } from "./MovieDetails";
 import styled from "styled-components";
-import { MainVideo } from "./TvDetails";
+import { MainVideo } from "./MainDetails";
 
 export interface Images {
   backdrops: [

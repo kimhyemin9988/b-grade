@@ -11,7 +11,7 @@ import TotalCasts from "./MovieTvDetails/TotalCasts";
 import TotalVideos from "./MovieTvDetails/TotalVideos";
 import MovieDetails from "./MovieTvDetails/MovieDetails";
 import DetailOutlet from "./MovieTvDetails/DetailOutlet";
-import TvDetails from "./MovieTvDetails/TvDetails";
+import TvDetails from "./MovieTvDetails/MainDetails";
 
 const RouterApp = createBrowserRouter(
   [

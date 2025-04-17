@@ -6,7 +6,7 @@ import { indepthDetail } from "../api";
 import LoadingC from "../components/LoadingC";
 import { Main, Overview, Title } from "../MovieF/Movie";
 import { CastBox, Credits, SmallCircle } from "./MovieDetails";
-import { MainVideo } from "./TvDetails";
+import { MainVideo } from "./MainDetails";
 
 const TotalCasts = () => {
   const { state, pathname } = useLocation();
