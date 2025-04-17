@@ -3,7 +3,6 @@ import {
   movieData,
 } from "./Movie";
 import { topAndUpcomingMovies } from "../api";
-import LoadingC from "../components/LoadingC";
 import styled from "styled-components";
 import WebSliderC from "../components/WebSliderC";
 import MobileSliderC from "../components/MobileSliderC";
