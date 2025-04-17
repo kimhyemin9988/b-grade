@@ -46,14 +46,16 @@ const Search = () => {
 
   useEffect(() => {
     if (data) {
-      let movieArray: movieData[] = data;
-      keepData.map((i) => {
-        // 중복제거
-        return (movieArray = movieArray.filter((k) => k.id !== i.id));
+      setkeepData((prev) => {
+        let movieArray = data.filter(
+          (newItem) => !prev.some((existingItem) => existingItem.id === newItem.id)
+        );
+        return [...prev, ...movieArray];
+        // prev = [...prev, ...movieArray]
       });
-      setkeepData((prev) => (prev = [...prev, ...movieArray]));
     }
   }, [data]);
+    
 
   const { scrollY } = useScroll();
 

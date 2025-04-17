@@ -48,7 +48,7 @@ const PopularSelect = ({ data }: { data: movieData[] | undefined }) => {
         if (data) {
             setHandleValue(data.filter((i: movieData) => i.original_language === "en"));
         }
-    }, [data]); //초기 값 "en"
+    }, [data, setHandleValue]); //초기 값 "en"
 
     const handleChange = useCallback(
         (e: SingleValue<IPopularLanguage>) => {
@@ -59,7 +59,7 @@ const PopularSelect = ({ data }: { data: movieData[] | undefined }) => {
                 setHandleValue([]); // 데이터가 없을 경우 빈 배열 할당
             }
           },
-          [data] //  useCallback으로 최적화
+          [data, setHandleValue] //  useCallback으로 최적화
       );
 
     return (
