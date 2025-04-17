@@ -30,9 +30,12 @@ const fetchWithRetry = async (url: string, retries = 3): Promise<any> => {
     let page = 1;
   
     while (true) {
+
+      const currentPage = page;
+
       const urls = [0, 1, 2].map(
         (i) =>
-          `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${page + i}`
+          `https://api.themoviedb.org/3/tv/popular?api_key=${dbApiKey}&page=${currentPage + i}`
       );
   
       const responses = await Promise.all(
