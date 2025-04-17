@@ -22,6 +22,8 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
     margin-top: 8vh;
     height: 33vh;
   }
+  min-height: 400px; /* 안정적인 기본 높이 추가 */
+  background-color: ${(props) => props.theme.bodyBgColor}; /* 기본 배경 */
 `;
 
 const BannerOverview = React.memo(({ content, sliceLength, dataType }: { content?: { overview: string, title?: string, id: number, backdrop_path: string, name?: string }, sliceLength: number, dataType?: string }) => {
