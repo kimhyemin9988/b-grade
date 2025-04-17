@@ -21,8 +21,9 @@ export const Banner = styled.div<{ bgPhoto: string | undefined }>`
   @media screen and (max-width: 550px) {
     margin-top: 8vh;
     height: 33vh;
+    min-height: 33vh;
   }
-  min-height: 400px; /* 안정적인 기본 높이 추가 */
+  min-height: 75vh; /* 안정적인 기본 높이 추가 */
   background-color: ${(props) => props.theme.bodyBgColor}; /* 기본 배경 */
 `;
 

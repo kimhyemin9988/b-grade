@@ -60,7 +60,10 @@ export const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   display: flex;
-  min-height: 30vh;
+  min-height: 88vh; // 75 + 13 /* 안정적인 기본 높이 추가 */
+  @media screen and (max-width: 550px) {
+    min-height: 41vh; // 33+ 8
+  }
 `;
 
 export const Title = styled.p`

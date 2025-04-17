@@ -13,9 +13,11 @@ export const Section = styled.section`
   align-items: center;
   display: flex;
   margin-top: 1rem;
+  min-height:0.8rem;
 `;
 
 const UpcomingTopRated = ({ dataType, url, titleObj }: { dataType: string, url: string, titleObj: string}) => {
+  //dataType, url, titleObj 전부 정적 데이터
   const { isLoading, data } = useQuery<movieData[]>(
     [url],
     ()=>topAndUpcomingMovies(url, dataType)
@@ -23,18 +25,16 @@ const UpcomingTopRated = ({ dataType, url, titleObj }: { dataType: string, url: 
 
   return (
     <>
-      {isLoading ? (
-        <LoadingC></LoadingC>
-      ) : window.outerWidth <= 550 ? (
+      {window.outerWidth <= 550 ? (
         <MobileSliderC
-          data={data}
+          data={!isLoading ? data : undefined}
           titleObj={titleObj}
           dataType={dataType}
         ></MobileSliderC>
       ) : (
         <Section>
           <WebSliderC
-            data={data}
+            data={!isLoading ? data : undefined}
             titleObj={titleObj}
             dataType={dataType}
           ></WebSliderC>

@@ -86,7 +86,7 @@ export const YouTubeStyle = styled.iframe<{
     height?: number;
   }
 }>`
- width: ${({ widthAndHeight }) => `${widthAndHeight.width}px`};
+  width: ${({ widthAndHeight }) => `${widthAndHeight.width}px`};
   height: ${({ widthAndHeight }) => `${widthAndHeight.height}px`};
   grid-area: video;
   padding-left: 20px;
@@ -106,25 +106,24 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
   );
 
   return (
-    <>
-      {isLoading ? (
-        <LoadingC></LoadingC>
-      ) :
-        <LatestWrapper>
-          <LatestTitle>
-            Popular Movies In Theaters
-          </LatestTitle>
+    <LatestWrapper>
+      <LatestTitle>
+        Popular Movies In Theaters
+      </LatestTitle>
           <Container
-            bgPhoto={`https://image.tmdb.org/t/p/w1280/${data?.[0].backdrop_path}`}>
+            bgPhoto={isLoading ? undefined : `https://image.tmdb.org/t/p/w1280/${data?.[0].backdrop_path}`}>
             <Blur>
+            {isLoading ? (
+            <LoadingC></LoadingC>) : 
+              <>
               <div style={{ display: "flex", alignItems: "center", gridArea: "title" }}>
-                <LatestOriginal>
-                  {data?.[0].original_title}
-                </LatestOriginal>
-                <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
+                  <LatestOriginal>
+                    {data?.[0].original_title}
+                  </LatestOriginal>
+                  <BtnDetail dataType={dataType} contentId={data?.[0].id}></BtnDetail>
               </div>
               <SqureBox
-                posterbg={`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
+                posterbg={isLoading ? undefined :`https://image.tmdb.org/t/p/w300/${data?.[0].poster_path}`}
               ></SqureBox>
               <YouTubeStyle
                 title="movieYouTube"
@@ -135,11 +134,11 @@ const LatestMovies = ({ dataType }: { dataType: string }) => {
               <OverviewContainer>
                 <Overview>{data?.[0].overview}</Overview>
               </OverviewContainer>
+              </>
+              }
             </Blur>
           </Container>
-        </LatestWrapper>
-      }
-    </>
+    </LatestWrapper>
   );
 };
 
