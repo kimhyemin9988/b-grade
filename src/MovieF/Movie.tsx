@@ -8,10 +8,10 @@ import {
 } from "framer-motion";
 import LatestMovies from "./LatestMovies";
 import LoadingC from "../components/LoadingC";
-import MobileSliderC from "../components/MobileSliderC";
-import WebSliderC from "../components/WebSliderC";
-import BannerOverview from "../components/BannerOverview";
-import UpcomingTopRated from "./UpcomingTopRated";
+import MobileSliderC, { MobileSlider } from "../components/MobileSliderC";
+import WebSliderC, { SliderContainer } from "../components/WebSliderC";
+import BannerOverview, { Banner } from "../components/BannerOverview";
+import UpcomingTopRated, { Section } from "./UpcomingTopRated";
 
 export const Main = styled.div`
   width: 100%;
@@ -144,7 +144,14 @@ const Home = () => {
         <ToggleThemeBtn onClick={toggleTheme}>{themeText}</ToggleThemeBtn>
         <Wrapper>
           {isLoading ? (
-            <LoadingC></LoadingC>
+          <>
+            <Banner bgPhoto={undefined}></Banner>
+            {window.outerWidth <= 550 ? 
+            <MobileSlider></MobileSlider> : 
+            <Section>
+              <SliderContainer></SliderContainer>
+            </Section>}
+          </>
           ) : (
             <>
               <BannerOverview content={data?.[0]} sliceLength={350} dataType={dataType}></BannerOverview>
