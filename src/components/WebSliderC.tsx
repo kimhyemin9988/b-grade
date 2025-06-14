@@ -73,7 +73,7 @@ export const Info = styled(motion.div)`
 `;
 
 
-const SliderContainer = styled.div`
+export const SliderContainer = styled.div`
   top: -150px;
   width: 1200px;
   height: 460px;
