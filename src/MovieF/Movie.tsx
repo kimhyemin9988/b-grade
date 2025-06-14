@@ -7,7 +7,6 @@ import {
   motion,
 } from "framer-motion";
 import LatestMovies from "./LatestMovies";
-import LoadingC from "../components/LoadingC";
 import MobileSliderC, { MobileSlider } from "../components/MobileSliderC";
 import WebSliderC, { SliderContainer } from "../components/WebSliderC";
 import BannerOverview, { Banner } from "../components/BannerOverview";

@@ -3,7 +3,6 @@ import { useQuery } from "react-query";
 import {
   movieData,
 } from "../MovieF/Movie";
-import LoadingC from "../components/LoadingC";
 import { Section } from "../MovieF/UpcomingTopRated";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
