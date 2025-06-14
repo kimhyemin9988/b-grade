@@ -8,8 +8,8 @@ import { Section } from "../MovieF/UpcomingTopRated";
 import styled from "styled-components";
 import { useRecoilValue } from "recoil";
 import { HandleValue } from "../Atoms";
-import WebSliderC from "../components/WebSliderC";
-import MobileSliderC from "../components/MobileSliderC";
+import WebSliderC, { SliderContainer } from "../components/WebSliderC";
+import MobileSliderC, { MobileSlider } from "../components/MobileSliderC";
 
 export const PopularBox = styled.div`
   background-color: ${(props) => props.theme.bodyFtColor};
@@ -37,7 +37,13 @@ const Popular = ({ dataType, titleObj }: { dataType: string, titleObj: string })
   return (
     <>
       {isLoading ? (
-        <LoadingC></LoadingC>
+        (
+            window.outerWidth <= 550 ? 
+            <MobileSlider></MobileSlider> : 
+            <Section>
+              <SliderContainer></SliderContainer>
+            </Section>
+          )
       ) : window.outerWidth <= 550 ? (
         <MobileSliderC data={handleValue} titleObj={titleObj} dataType={dataType} totalData={data}></MobileSliderC>
       ) : (
