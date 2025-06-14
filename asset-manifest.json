@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/b-grade/static/js/main.76890edf.js",
+    "main.js": "/b-grade/static/js/main.6d4bb5ca.js",
     "index.html": "/b-grade/index.html",
-    "main.76890edf.js.map": "/b-grade/static/js/main.76890edf.js.map"
+    "main.6d4bb5ca.js.map": "/b-grade/static/js/main.6d4bb5ca.js.map"
   },
   "entrypoints": [
-    "static/js/main.76890edf.js"
+    "static/js/main.6d4bb5ca.js"
   ]
 }
